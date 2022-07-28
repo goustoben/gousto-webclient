@@ -279,13 +279,7 @@ jobs:
       - run:
           name: Upload sourcemaps to datadog
           working_directory: src/apps/webclient
-          command: |
-            DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}"
-            DATADOG_SITE="datadoghq.eu"
-            BUILD_DIR="./public"
-            CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}"
-            ASSET_URL_PREFIX="https://<< parameters.env >>-assets.gousto<< parameters.top_level_domain >>/build/${BUILD_JOB_BUILD_NUM}/"
-            yarn datadog:upload-sourcemaps
+          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" BUILD_DIR="./public" CIRCLE_BUILD_NUM="${BUILD_JOB_BUILD_NUM}" ASSET_URL_PREFIX="https://<< parameters.env >>-assets.gousto<< parameters.top_level_domain >>/build/${BUILD_JOB_BUILD_NUM}/" yarn datadog:upload-sourcemaps
 
   upload-assets-to-s3:
     executor: gousto_platform_image
