@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { BareFetcher } from 'swr'
 import { StockAPIData, StockAPIResponse } from './response'
 import { useHTTPGet } from './useHTTPGet'
@@ -66,18 +67,21 @@ export function useStockSWR({ accessToken, authUserId, deliveryDayId, coreUrl, g
     immutable: true,
   })
 
-  if (error) {
-    return errorReturn(error)
-  }
+  return useMemo(() => {
+    if (error) {
+      return errorReturn(error)
+    }
 
-  if (!response) {
-    return pendingReturn()
-  }
+    if (!response) {
+      return pendingReturn()
+    }
 
-  if (response.status !== 'ok') {
-    // TODO what does a not-ok response look like? anything useful we can bubble up?
-    return errorReturn(response.status)
-  }
+    if (response.status !== 'ok') {
+      // TODO what does a not-ok response look like? anything useful we can bubble up?
+      return errorReturn(response.status)
+    }
 
-  return successReturn(response.result.data)
+    return successReturn(response.result.data)
+
+  }, [response, error])
 }

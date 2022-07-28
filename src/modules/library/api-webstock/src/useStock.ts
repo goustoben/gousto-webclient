@@ -57,6 +57,6 @@ export function useStock(swrArgs: UseStockSWRArgs, deps: UseStockDependencies) {
      *
      * @returns `true` if out of stock, otherwise `false`.
      */
-     isRecipeOutOfStock,
+    isRecipeOutOfStock,
   }
 }

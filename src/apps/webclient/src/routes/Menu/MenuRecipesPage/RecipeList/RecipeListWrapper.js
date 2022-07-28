@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useCallback } from 'react'
 
 import { areEqualArrays } from 'routes/Menu/MenuRecipesPage/RecipeList/utils'
+import { useBasket } from 'routes/Menu/domains/basket'
 import { useStock } from 'routes/Menu/domains/stock'
 
 import { useCurrentCollectionId } from '../../domains/collections'
@@ -12,8 +13,20 @@ import { useSoldOutTracking } from './useSoldOutTracking'
 const RecipeListWrapper = (ownProps) => {
   const currentCollectionId = useCurrentCollectionId()
   const { getRecipesForCollectionId } = useMenu()
-  const { getOutOfStockRecipeIds } = useStock()
+  const { isRecipeInStock, getStockForRecipe } = useStock()
   const { trackSoldOutRecipes } = useSoldOutTracking()
+  const { numPortions } = useBasket()
+
+  const getOutOfStockRecipeIds = useCallback(
+    (recipeIds) => {
+      if (recipeIds.some((id) => getStockForRecipe(id, numPortions) === null)) {
+        return null
+      }
+
+      return recipeIds.filter((id) => isRecipeInStock(id, numPortions))
+    },
+    [numPortions, isRecipeInStock, getStockForRecipe],
+  )
 
   const selectedCuisines = useSelectedCuisines()
 
