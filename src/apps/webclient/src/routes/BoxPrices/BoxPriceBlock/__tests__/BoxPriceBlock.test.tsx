@@ -1,18 +1,9 @@
 import React from 'react'
 
 import { render, screen, fireEvent } from '@testing-library/react'
-import Immutable from 'immutable'
 import * as Redux from 'react-redux'
-import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
-
-import { useIsFiveRecipesEnabled } from 'hooks/useIsFiveRecipesEnabled'
 
 import { BoxPriceBlock } from '../BoxPriceBlock'
-
-jest.mock('hooks/useIsFiveRecipesEnabled', () => ({
-  useIsFiveRecipesEnabled: jest.fn(),
-}))
 
 jest.mock('routes/Menu/domains/basket', () => ({
   useBasket: jest.fn().mockReturnValue({
@@ -44,41 +35,16 @@ const dispatch = jest.fn()
 jest.spyOn(Redux, 'useDispatch').mockImplementation(() => dispatch)
 jest.spyOn(Redux, 'useSelector').mockImplementation(() => false)
 
-const mockStore = configureMockStore()
-const store = mockStore({
-  features: {},
-  auth: Immutable.fromJS({}),
-  basket: Immutable.fromJS({}),
-  menu: Immutable.fromJS({
-    menuLimits: [],
-  }),
-  menuRecipeDetails: Immutable.fromJS({}),
-  tracking: Immutable.fromJS({}),
-  menuCollections: Immutable.OrderedMap([[]]),
-  ribbon: Immutable.fromJS({}),
-})
-
-const useIsFiveRecipesEnabledMock = useIsFiveRecipesEnabled as jest.MockedFunction<
-  typeof useIsFiveRecipesEnabled
->
-
 describe('Given BoxPriceBlock', () => {
   beforeEach(() => {
-    useIsFiveRecipesEnabledMock.mockReturnValue({
-      isFiveRecipesEnabled: false,
-      isFiveRecipesExperimentEnabled: false,
-    })
-
     render(
-      <Provider store={store}>
-        <BoxPriceBlock
-          boxInfo={boxPriceMock}
-          numPersons={2}
-          selectedBox={2}
-          boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
-          trackUTMAndPromoCode={trackUTMAndPromoCode}
-        />
-      </Provider>,
+      <BoxPriceBlock
+        boxInfo={boxPriceMock}
+        numPersons={2}
+        selectedBox={2}
+        boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+        trackUTMAndPromoCode={trackUTMAndPromoCode}
+      />,
     )
   })
 
