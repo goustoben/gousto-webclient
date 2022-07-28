@@ -9,6 +9,11 @@ import { BoxPricesComponent } from './BoxPricesComponent'
 import { boxTypes, BoxType, seo } from './boxPricesConfig'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 
+/**
+ * FYI: this is the temporary solution just for the time we're running a/b test.
+ * After a/b test end, we should refactor selector src/apps/webclient/src/routes/BoxPrices/boxPricesSelectors.js
+ * To support 5 recipes for regular box.
+ */
 const useGetNumPersonsToBoxDescriptorsForFiveRecipes = (numPersonsToBoxDescriptors) => {
   const isFiveRecipesExperimentEnabled = useIsFiveRecipesExperimentEnabled()
   const boxDescriptorsCopy = { ...numPersonsToBoxDescriptors }
