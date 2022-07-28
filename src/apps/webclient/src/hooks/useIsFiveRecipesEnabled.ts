@@ -1,12 +1,6 @@
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { useIsProspect } from 'hooks/useIsProspect'
 import { BoxType, getBoxTypeNameByPortionSize } from 'routes/BoxPrices/boxPricesConfig'
-import { useAuth } from 'routes/Menu/domains/auth'
-
-export const useIsProspect = () => {
-  const { isAuthenticated } = useAuth()
-
-  return !isAuthenticated
-}
 
 /**
  * Both return values required, but for different components.
