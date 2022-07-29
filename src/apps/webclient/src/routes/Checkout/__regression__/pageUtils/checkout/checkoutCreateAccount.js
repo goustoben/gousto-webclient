@@ -6,7 +6,10 @@ export const getAllowEmail = (win) => getFormState(win).account.values.account.a
 
 export const goToCheckout = () => {
   cy.mockDate()
+  cy.intercept('/order/preview*').as('preview')
+  cy.intercept('/menu/v1/menus*').as('menus')
   cy.visit('/check-out/account')
+  cy.wait(['@preview', '@menus'], { timeout: 15000 })
 }
 
 export const clearAndFillAccountForm = ({ email, password }) => {
