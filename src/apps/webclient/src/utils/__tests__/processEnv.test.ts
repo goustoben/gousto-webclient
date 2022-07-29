@@ -14,6 +14,7 @@ const validProcessEnv: ProcessEnv = {
   RECAPTCHA_PVTK: 'mock-recaptcha-private-key',
   RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
   RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
+  APPLE_PAY_MERCHANT_ID: 'merchant.uk.co.gousto.beetroots',
 }
 
 describe('processEnv', () => {
@@ -54,6 +55,7 @@ describe('processEnv', () => {
           RECAPTCHA_PVTK: 'mock-recaptcha-private-key',
           RECAPTCHA_RAF_PUBK: 'mock-recaptcha-raf-public-key',
           RECAPTCHA_RAF_PVTK: 'mock-recaptcha-raf-private-key',
+          APPLE_PAY_MERCHANT_ID: 'merchant.uk.co.gousto.beetroots',
         })
       })
     })

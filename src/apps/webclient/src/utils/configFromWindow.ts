@@ -46,3 +46,4 @@ export const getClientDatadogRumSdkClientToken = () =>
   getConfigFromWindow('DATADOG_RUM_SDK_CLIENT_TOKEN')
 export const getClientDatadogBrowserLogsClientToken = () =>
   getConfigFromWindow('DATADOG_BROWSER_LOGS_CLIENT_TOKEN')
+export const getClientApplePayMerchantId = () => getConfigFromWindow('APPLE_PAY_MERCHANT_ID')

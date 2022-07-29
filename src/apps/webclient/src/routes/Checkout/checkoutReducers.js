@@ -59,6 +59,10 @@ export const checkoutReducers = {
     }
 
     switch (action.type) {
+      case actionTypes.CHECKOUT_LOAD_APPLE_PAY_ENABLED_STATUS: {
+        return state.set('isApplePayEnabled', action.payload)
+      }
+
       case actionTypes.CHECKOUT_ERRORS_CLEAR: {
         return state.set('errors', checkoutInitialState.get('errors'))
       }
