@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
 import { clickClaimDiscountPopup } from 'actions/trackingKeys'
-import { promo } from 'config/home'
+import { promo } from 'routes/Home/homeConfig'
 
 import {
   EnterPromoCodeManuallyPage,

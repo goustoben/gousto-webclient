@@ -4,7 +4,7 @@ import { basketNumPortionChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import { applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
-import { getPromoBannerState } from 'utils/home'
+import { getPromoBannerState } from 'routes/Home/homeUtils'
 
 import { boxPricesBoxSizeSelected } from '../boxPricesActions'
 
@@ -20,7 +20,7 @@ jest.mock('actions/tracking', () => ({
   trackClickBuildMyBox: jest.fn(),
 }))
 
-jest.mock('utils/home', () => ({
+jest.mock('routes/Home/homeUtils', () => ({
   getPromoBannerState: jest.fn(),
 }))
 

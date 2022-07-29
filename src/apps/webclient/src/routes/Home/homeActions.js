@@ -2,7 +2,7 @@ import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
-import { getPromoBannerState } from 'utils/home'
+import { getPromoBannerState } from 'routes/Home/homeUtils'
 import logger from 'utils/logger'
 
 const getIsTestAllocationFactoryEnabled = isOptimizelyFeatureEnabledFactory(

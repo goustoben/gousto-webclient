@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { promo } from 'config/home'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
+import { promo } from 'routes/Home/homeConfig'
+import { getPromoBannerState } from 'routes/Home/homeUtils'
 import { getPromoBannerText } from 'selectors/features'
-import { getPromoBannerState } from 'utils/home'
 
 import { PromoBanner } from './PromoBanner'
 

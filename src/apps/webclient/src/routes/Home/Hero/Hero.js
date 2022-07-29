@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import { Heading } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 
-import { homeConfig } from 'config/home'
 import { HighlightChoiceBanner } from 'routes/Home/HighlightChoice'
+import { homeConfig } from 'routes/Home/homeConfig'
 
 import { Benefits } from '../Benefits'
 import { CTAHomepageContainer } from '../CTA'

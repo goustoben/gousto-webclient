@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import actions from 'actions/auth'
-import { knownVariants, defaultVariant } from 'config/home'
 import { getPricePerServing } from 'routes/BoxPrices/boxPricesSelectors'
+import { knownVariants, defaultVariant } from 'routes/Home/homeConfig'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getIsSignupReductionEnabled } from 'selectors/features'
 

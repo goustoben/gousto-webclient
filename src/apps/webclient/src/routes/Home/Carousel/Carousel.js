@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import PropTypes from 'prop-types'
 
-import { carousel } from 'config/home'
+import { carousel } from 'routes/Home/homeConfig'
 
 import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'

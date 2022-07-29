@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import PropTypes from 'prop-types'
 
-import { getWhyGoustoConfig } from 'config/home'
+import { getWhyGoustoConfig } from 'routes/Home/homeConfig'
 import { formatPrice } from 'utils/format'
 
 import { CTAHomepageContainer } from '../CTA'
