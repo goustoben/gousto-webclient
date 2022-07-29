@@ -1,10 +1,7 @@
-import { getPromoCode } from 'selectors/basket'
-import {
-  getPromoBannerCode,
-  getIsSignupReductionEnabled,
-} from 'selectors/features'
-import { promo } from 'config/home'
 import { actionTypes } from 'actions/actionTypes'
+import { promo } from 'routes/Home/homeConfig'
+import { getPromoCode } from 'selectors/basket'
+import { getPromoBannerCode, getIsSignupReductionEnabled } from 'selectors/features'
 
 export const getPromoBannerState = (state, isTwoMonthPromoCodeEnabled = false) => {
   const isSignupReductionEnabled = getIsSignupReductionEnabled(state)
@@ -19,13 +16,11 @@ export const getPromoBannerState = (state, isTwoMonthPromoCodeEnabled = false) =
   const hasBasketPromo = basketPromo.length > 0
   const hasCurrentPromo = currentPromo.length > 0
 
-  const hasError = !!state.error.get(actionTypes.PROMO_GET) || !!state.error.get(actionTypes.PROMO_APPLY)
+  const hasError =
+    !!state.error.get(actionTypes.PROMO_GET) || !!state.error.get(actionTypes.PROMO_APPLY)
 
-  const hide = isAuthenticated
-    || hasError
-    || hasBasketPromo
-    || hasCurrentPromo
-    || isSignupReductionEnabled
+  const hide =
+    isAuthenticated || hasError || hasBasketPromo || hasCurrentPromo || isSignupReductionEnabled
 
   const canApplyPromo = !hide
 

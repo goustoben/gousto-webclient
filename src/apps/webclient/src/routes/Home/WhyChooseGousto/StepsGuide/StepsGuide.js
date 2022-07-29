@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 
-import { getWhyGoustoConfig } from 'config/home'
+import { getWhyGoustoConfig } from 'routes/Home/homeConfig'
 
 import css from './StepsGuide.css'
 

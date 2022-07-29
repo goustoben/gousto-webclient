@@ -179,20 +179,10 @@
 /src/apps/webclient/src/routes/Signup/                                  @Gousto/squad-beetroots
 /src/apps/webclient/src/routes/Home/                                    @Gousto/squad-beetroots
 /src/apps/webclient/src/routes/Payment/                                 @Gousto/squad-beetroots
-/src/apps/webclient/src/config/home.js                                  @Gousto/squad-beetroots
-/src/apps/webclient/src/actions/promos.js                               @Gousto/squad-beetroots
-/src/apps/webclient/src/utils/schemaMarkup.js                           @Gousto/squad-beetroots
-/src/apps/webclient/src/utils/utm.js                                    @Gousto/squad-beetroots
-/src/apps/webclient/src/utils/__tests__/schemaMarkup.test.js            @Gousto/squad-beetroots
-/src/apps/webclient/src/utils/__tests__/utm.test.js                     @Gousto/squad-beetroots
-/src/apps/webclient/src/utils/__tests__/home.test.js                    @Gousto/squad-beetroots
-/src/apps/webclient/src/utils/home.js                                   @Gousto/squad-beetroots
-/src/apps/webclient/src/selectors/tracking.js                           @Gousto/squad-beetroots
-/src/apps/webclient/src/selectors/__tests__/tracking.test.js            @Gousto/squad-beetroots
+# squad-beetroots tests ownership
 /tests/e2e/pages/signup.js                                              @Gousto/squad-beetroots
 /tests/e2e/pages/home.js                                                @Gousto/squad-beetroots
 /tests/e2e/pages/checkoutV2.js                                          @Gousto/squad-beetroots
 /tests/e2e/tests/systemTests/signupWithPaypal.js                        @Gousto/squad-beetroots
 /tests/regression/fixtures/payments/                                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                                    @Gousto/squad-beetroots
-/src/apps/webclient/src/middlewares/tracking/dataLayerTracker/          @Gousto/squad-beetroots

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 
-import { homeConfig } from 'config/home'
 import routesConfig from 'config/routes'
+import { homeConfig } from 'routes/Home/homeConfig'
 
 import { Carousel } from './Carousel'
 import { EmailForm } from './EmailForm'

@@ -8,7 +8,7 @@ import menuBoxPrices from 'routes/BoxPrices/__tests__/__mocks__/menuBoxPrices.js
 
 import { HomeContainer, getKnownVariant } from '../HomeContainer'
 
-jest.mock('config/home', () => ({
+jest.mock('routes/Home/homeConfig', () => ({
   homeConfig: {
     whyGousto: {
       steps: [],

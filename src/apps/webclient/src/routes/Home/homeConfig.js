@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon } from 'components/Icon'
+
+import { Icon } from 'Icon'
 
 export const hero = {
   header: 'No.1 recipe box for choice',

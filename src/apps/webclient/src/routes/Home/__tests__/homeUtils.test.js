@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
-import { promo } from 'config/home'
-import { getPromoBannerState } from '../home'
+
+import { promo } from 'routes/Home/homeConfig'
+import { getPromoBannerState } from 'routes/Home/homeUtils'
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
@@ -10,20 +11,20 @@ describe('getPromoBannerState', () => {
   const state = {
     features: Immutable.fromJS({
       enableSignupReduction: {
-        value: false
+        value: false,
       },
       promoBanner: Immutable.fromJS({
-        promoBannerCode: null
-      })
+        promoBannerCode: null,
+      }),
     }),
     promoCurrent: null,
     basket: Immutable.fromJS({
-      promoCode: null
+      promoCode: null,
     }),
     auth: Immutable.fromJS({
-      isAuthenticated: false
+      isAuthenticated: false,
     }),
-    error: Immutable.fromJS({})
+    error: Immutable.fromJS({}),
   }
 
   const expectedPromoCode = promo.defaultPromoCode
@@ -44,12 +45,12 @@ describe('getPromoBannerState', () => {
       const result = getPromoBannerState({
         ...state,
         auth: Immutable.fromJS({
-          isAuthenticated: true
-        })
+          isAuthenticated: true,
+        }),
       })
 
       expect(result).toMatchObject({
-        canApplyPromo: false
+        canApplyPromo: false,
       })
     })
   })
@@ -59,8 +60,8 @@ describe('getPromoBannerState', () => {
       const result = getPromoBannerState({
         ...state,
         basket: Immutable.fromJS({
-          promoCode: 'JOEWICKSGOUSTO'
-        })
+          promoCode: 'JOEWICKSGOUSTO',
+        }),
       })
 
       expect(result).toMatchObject({
@@ -73,7 +74,7 @@ describe('getPromoBannerState', () => {
     test('Then the prmoo code should not be applicable', () => {
       const result = getPromoBannerState({
         ...state,
-        promoCurrent: 'JOEWICKSGOUSTO'
+        promoCurrent: 'JOEWICKSGOUSTO',
       })
 
       expect(result).toMatchObject({
@@ -89,9 +90,9 @@ describe('getPromoBannerState', () => {
         features: state.features.set(
           'enableSignupReduction',
           Immutable.Map({
-            value: true
-          })
-        )
+            value: true,
+          }),
+        ),
       })
 
       expect(result).toMatchObject({
@@ -107,13 +108,13 @@ describe('getPromoBannerState', () => {
         features: state.features.set(
           'promoBannerCode',
           Immutable.fromJS({
-            value: 'GAFFIL2035M'
-          })
-        )
+            value: 'GAFFIL2035M',
+          }),
+        ),
       })
 
       expect(result).toMatchObject({
-        promoCode: 'GAFFIL2035M'
+        promoCode: 'GAFFIL2035M',
       })
     })
   })
