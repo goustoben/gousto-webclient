@@ -36,5 +36,6 @@ export const getServerProtocol = () =>
 export const getServerRecaptchaPublicKey = () => getEnvConfig().RECAPTCHA_PUBK
 export const getServerRecaptchaRAFPublicKey = () => getEnvConfig().RECAPTCHA_RAF_PUBK
 export const getServerCheckoutComPublicKey = () => getEnvConfig().CHECKOUT_COM_PUBK
+export const getServerApplePayMerchantId = () => getEnvConfig().APPLE_PAY_MERCHANT_ID
 
 export const isServer = () => !canUseWindow()

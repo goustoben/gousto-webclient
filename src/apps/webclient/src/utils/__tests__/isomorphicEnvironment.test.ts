@@ -4,6 +4,7 @@ import {
   getClientCheckoutComPublicKey,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
+  getClientApplePayMerchantId,
 } from 'utils/configFromWindow'
 import {
   createIsomorphicConfig,
@@ -22,6 +23,7 @@ import {
   getServerCheckoutComPublicKey,
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
+  getServerApplePayMerchantId,
 } from '../../../server/utils/serverEnvironment'
 import { getClientProtocol } from '../browserEnvironment'
 
@@ -278,6 +280,36 @@ describe('isomorphicEnvironment utils', () => {
       mockGetServerCheckoutComPublicKey.mockReturnValue(expected)
 
       expect(getCheckoutComPublicKey()).toEqual(expected)
+    })
+  })
+
+  describe('getApplePayMerchantId', () => {
+    it('should call getClientApplePayMerchantId when running in client', () => {
+      const mockGetClientApplePayMerchantId = getClientApplePayMerchantId as jest.Mock
+      const expected = 'merchant.uk.co.gousto.beetroots'
+
+      windowSpy.mockReturnValue({
+        document: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          createElement: () => null,
+        },
+      })
+      mockGetClientApplePayMerchantId.mockReturnValue(expected)
+
+      expect(getClientApplePayMerchantId()).toEqual(expected)
+    })
+
+    it('should call getServerCheckoutComPublicKey when running in server', () => {
+      const mockGetServerApplePayMerchantId = getServerApplePayMerchantId as jest.Mock
+      const expected = 'server-checkout-com-public-key'
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      windowSpy.mockReturnValue(undefined)
+      mockGetServerApplePayMerchantId.mockReturnValue(expected)
+
+      expect(getServerApplePayMerchantId()).toEqual(expected)
     })
   })
 })
