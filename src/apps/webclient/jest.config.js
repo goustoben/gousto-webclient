@@ -7,8 +7,8 @@ module.exports = {
     'json-summary'
   ],
   testMatch: [
-    '**/__tests__/**/[^.]*.(j|t)s?(x)',
-    '**/?(*.)(test).(j|t)s?(x)'
+    '**/routes/**/__tests__/**/[^.]*.(j|t)s?(x)',
+    '**/routes/**/?(*.)(test).(j|t)s?(x)'
   ],
   moduleNameMapper: {
     'fixtures/(.*)$': '<rootDir>/../../../tests/regression/fixtures/$1',

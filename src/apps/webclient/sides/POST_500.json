@@ -1,0 +1,9 @@
+{
+    "errors": [
+        {
+            "status": "500",
+            "detail": "Internal Server Error"
+        }
+    ],
+    "meta": { "trace_id": "trace_id" }
+}

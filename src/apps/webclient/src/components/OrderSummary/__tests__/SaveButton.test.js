@@ -6,7 +6,8 @@ import { SaveButton, useSaving } from 'OrderSummary/SaveButton'
 
 import { Button } from 'goustouicomponents'
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers();
+jest.spyOn(global, 'setTimeout');
 
 describe('useSaving', () => {
   afterEach(() => {

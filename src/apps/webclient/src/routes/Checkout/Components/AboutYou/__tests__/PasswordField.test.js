@@ -6,7 +6,8 @@ import { act } from 'react-dom/test-utils'
 
 import { PasswordField } from '../PasswordField/PasswordField'
 
-jest.useFakeTimers('legacy')
+jest.useFakeTimers();
+jest.spyOn(global, 'clearTimeout');
 
 describe('Given PasswordField component', () => {
   let wrapper

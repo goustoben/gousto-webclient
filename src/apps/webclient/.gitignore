@@ -12,3 +12,6 @@ libs/goustouicomponents
 
 # Tests
 coverage
+
+reports
+strykerTmp
