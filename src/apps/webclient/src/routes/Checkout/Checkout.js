@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 
+import { Display, Visible } from '@gousto-internal/citrus-react'
 import { Login } from 'Login'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
@@ -306,7 +307,13 @@ class Checkout extends PureComponent {
     const { isCreatingPreviewOrder } = this.state
     const { isGoustoOnDemandEnabled, isCheckoutHighlightOrderExperimentEnabled } = this.props
 
-    if (isCheckoutHighlightOrderExperimentEnabled) return <BoxDetailsHighlight />
+    if (isCheckoutHighlightOrderExperimentEnabled) {
+      return (
+        <Visible display={[Display.None, Display.Block]}>
+          <BoxDetailsHighlight />
+        </Visible>
+      )
+    }
 
     return (
       <Fragment>
@@ -444,7 +451,9 @@ class Checkout extends PureComponent {
           <Div className={css.checkoutContent}>
             {stepName !== 'order-summary' &&
               (isCheckoutHighlightOrderExperimentEnabled ? (
-                <BoxDetailsHighlight />
+                <Visible display={[Display.Block, Display.None]}>
+                  <BoxDetailsHighlight />
+                </Visible>
               ) : (
                 <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
                   <ExpandableBoxSummary
