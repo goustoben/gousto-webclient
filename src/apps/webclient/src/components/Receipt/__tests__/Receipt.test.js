@@ -17,6 +17,8 @@ describe('Receipt', () => {
         recipeDiscountAmount="15.00"
         recipeDiscountPercent="50"
         extrasTotalPrice="2.00"
+        deliveryTotalPrice="1.99"
+        isDeliveryFree={false}
         shippingAddress={Immutable.fromJS({
           line1: '1 Example Street',
           line2: 'Zone 2',
@@ -59,6 +61,12 @@ describe('Receipt', () => {
     expect(receiptLine.prop('children')).toEqual('£2.00')
   })
 
+  test('show delivery price', () => {
+    const receiptLine = wrapper.find(ReceiptLine).at(4)
+    expect(receiptLine.prop('label')).toBe('Delivery')
+    expect(receiptLine.prop('children')).toEqual('£1.99')
+  })
+
   test('should total price of the order', () => {
     const receiptLine = wrapper.find(ReceiptLine).at(5)
     expect(receiptLine.prop('label')).toBe('Total')
@@ -66,6 +74,21 @@ describe('Receipt', () => {
 
   test('should display children', () => {
     expect(wrapper.contains(<div>Child</div>)).toBeTruthy()
+  })
+
+  describe('delivery price label', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        deliveryTotalPrice: '0.00',
+        isDeliveryFree: true,
+      })
+    })
+
+    test('show delivery free', () => {
+      const receiptLine = wrapper.find(ReceiptLine).at(4)
+      expect(receiptLine.prop('label')).toBe('Delivery')
+      expect(receiptLine.prop('children')).toEqual('FREE')
+    })
   })
 
   describe('delivery and order number', () => {
