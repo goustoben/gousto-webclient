@@ -1,29 +1,38 @@
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { useAuth } from 'routes/Menu/domains/auth'
 
 import { useDoubleDeckerNav } from '../useDoubleDeckerNav'
 
-jest.mock('containers/OptimizelyRollouts', () => ({
-  useIsOptimizelyFeatureEnabled: jest.fn(),
+jest.mock('routes/Menu/domains/auth', () => ({
+  useAuth: jest.fn(),
 }))
 
-const mockUseIsOptimizelyFeatureEnabled = useIsOptimizelyFeatureEnabled as jest.MockedFunction<
-  typeof useIsOptimizelyFeatureEnabled
->
+const defaultUseAuthReturn = {
+  isAuthenticated: true,
+  isAdmin: false,
+  accessToken: '',
+  authUserId: '',
+}
 
 describe('useDoubleDeckerNav hook', () => {
   afterEach(() => jest.clearAllMocks())
 
-  describe('when experiment is on', () => {
-    test('should return true', () => {
-      mockUseIsOptimizelyFeatureEnabled.mockReturnValue(true)
-      expect(useDoubleDeckerNav()).toBe(true)
+  describe('when user is authenticated (existing customer)', () => {
+    test('should return false', () => {
+      jest.mocked(useAuth).mockReturnValue({
+        ...defaultUseAuthReturn,
+        isAuthenticated: true,
+      })
+      expect(useDoubleDeckerNav()).toBe(false)
     })
   })
 
-  describe('when experiment is off', () => {
+  describe('when non-authenticated user (prospect customer)', () => {
     test('should return true', () => {
-      mockUseIsOptimizelyFeatureEnabled.mockReturnValue(false)
-      expect(useDoubleDeckerNav()).toBe(false)
+      jest.mocked(useAuth).mockReturnValue({
+        ...defaultUseAuthReturn,
+        isAuthenticated: false,
+      })
+      expect(useDoubleDeckerNav()).toBe(true)
     })
   })
 })
