@@ -525,23 +525,6 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-      - test-regression:
-          name: test-regression-web
-          platform: web
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-
-      - test-regression:
-          name: test-regression-mobile
-          platform: mobile
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-      - test-e2e:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - deploy-infrastructure-and-webclient-image-to-lower-environment
 
   staging-environment:
     when:
