@@ -17,6 +17,7 @@ import { getPreviewOrderErrorName } from 'utils/order'
 
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 import { BoxDetailsContainer } from './Components/BoxDetails'
+import { BoxDetailsHighlight } from './Components/BoxDetailsHighlight'
 import { Breadcrumbs } from './Components/Breadcrumbs'
 import { CheckoutPaymentContainer } from './Components/CheckoutPayment'
 import { CheckoutUrgencyControllerContainer } from './Components/CheckoutUrgency'
@@ -41,6 +42,7 @@ const stepMapping = {
 }
 
 const propTypes = {
+  isCheckoutHighlightOrderExperimentEnabled: PropTypes.bool,
   params: PropTypes.shape({
     stepName: PropTypes.string,
   }),
@@ -74,6 +76,7 @@ const propTypes = {
 }
 
 const defaultProps = {
+  isCheckoutHighlightOrderExperimentEnabled: false,
   params: {},
   redirect: () => {},
   fetchGoustoRef: () => {},
@@ -301,7 +304,9 @@ class Checkout extends PureComponent {
 
   renderSummaryAndYourBox = () => {
     const { isCreatingPreviewOrder } = this.state
-    const { isGoustoOnDemandEnabled } = this.props
+    const { isGoustoOnDemandEnabled, isCheckoutHighlightOrderExperimentEnabled } = this.props
+
+    if (isCheckoutHighlightOrderExperimentEnabled) return <BoxDetailsHighlight />
 
     return (
       <Fragment>
@@ -430,24 +435,28 @@ class Checkout extends PureComponent {
       params: { stepName },
       prices,
       trackUTMAndPromoCode,
+      isCheckoutHighlightOrderExperimentEnabled,
     } = this.props
 
     return (
       <CheckoutUrgencyControllerContainer>
         <Div data-testing="checkoutContainer">
           <Div className={css.checkoutContent}>
-            {stepName !== 'order-summary' && (
-              <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
-                <ExpandableBoxSummary
-                  totalToPay={prices?.total}
-                  totalWithoutDiscount={prices?.recipeTotal}
-                  trackUTMAndPromoCode={trackUTMAndPromoCode}
-                  promoCodeValid={prices?.promoCodeValid}
-                >
-                  {this.renderSummaryAndYourBox()}
-                </ExpandableBoxSummary>
-              </div>
-            )}
+            {stepName !== 'order-summary' &&
+              (isCheckoutHighlightOrderExperimentEnabled ? (
+                <BoxDetailsHighlight />
+              ) : (
+                <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
+                  <ExpandableBoxSummary
+                    totalToPay={prices?.total}
+                    totalWithoutDiscount={prices?.recipeTotal}
+                    trackUTMAndPromoCode={trackUTMAndPromoCode}
+                    promoCodeValid={prices?.promoCodeValid}
+                  >
+                    {this.renderSummaryAndYourBox()}
+                  </ExpandableBoxSummary>
+                </div>
+              ))}
             <CheckoutUrgencyBanner />
             {stepName !== 'order-summary' && this.renderProgressBar(stepName)}
             {this.renderCheckoutSteps()}

@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts'
 import {
   fetchPayPalClientToken,
   trackCheckoutButtonPressed,
@@ -20,6 +21,10 @@ import { CheckoutWrapper } from './CheckoutWrapper'
 
 function mapStateToProps(state, ownProps) {
   return {
+    isCheckoutHighlightOrderExperimentEnabled:
+      (isOptimizelyFeatureEnabledFactory('beetroots_checkout_highlight_offer_web_enabled') ||
+        false) &&
+      !state.auth.get('isAuthenticated'),
     query: ownProps.location.query,
     params: ownProps.params,
     stepsOrder: state.basket.get('stepsOrder'),

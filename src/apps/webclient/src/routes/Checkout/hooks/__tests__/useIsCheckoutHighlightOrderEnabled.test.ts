@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import { useAuth } from 'routes/Menu/domains/auth'
 
-import { useIsCheckoutHighlightOfferEnabled } from '../useIsCheckoutHighlightOfferEnabled'
+import { useIsCheckoutHighlightOrderEnabled } from '../useIsCheckoutHighlightOrderEnabled'
 
 jest.mock('containers/OptimizelyRollouts')
 jest.mock('routes/Menu/domains/auth')
@@ -34,7 +34,7 @@ describe('Given: useIsCheckoutHighlightOfferEnabled() hook', () => {
     })
 
     test('Then: useIsCheckoutHighlightOfferEnabled should return false', () => {
-      const { result } = renderHook(() => useIsCheckoutHighlightOfferEnabled())
+      const { result } = renderHook(() => useIsCheckoutHighlightOrderEnabled())
 
       expect(useAuthMock).toBeCalledTimes(1)
       expect(useIsOptimizelyFeatureEnabledMock).toBeCalledTimes(1)
@@ -52,7 +52,7 @@ describe('Given: useIsCheckoutHighlightOfferEnabled() hook', () => {
     })
 
     test('Then: useIsCheckoutHighlightOfferEnabled should return true', () => {
-      const { result } = renderHook(() => useIsCheckoutHighlightOfferEnabled())
+      const { result } = renderHook(() => useIsCheckoutHighlightOrderEnabled())
 
       expect(useAuthMock).toBeCalledTimes(1)
       expect(useIsOptimizelyFeatureEnabledMock).toBeCalledTimes(1)
@@ -70,7 +70,7 @@ describe('Given: useIsCheckoutHighlightOfferEnabled() hook', () => {
     })
 
     test('Then: useIsCheckoutHighlightOfferEnabled should return false', () => {
-      const { result } = renderHook(() => useIsCheckoutHighlightOfferEnabled())
+      const { result } = renderHook(() => useIsCheckoutHighlightOrderEnabled())
 
       expect(useAuthMock).toBeCalledTimes(1)
       expect(useIsOptimizelyFeatureEnabledMock).toBeCalledTimes(1)
@@ -88,7 +88,7 @@ describe('Given: useIsCheckoutHighlightOfferEnabled() hook', () => {
     })
 
     test('Then: useIsCheckoutHighlightOfferEnabled should return false', () => {
-      const { result } = renderHook(() => useIsCheckoutHighlightOfferEnabled())
+      const { result } = renderHook(() => useIsCheckoutHighlightOrderEnabled())
 
       expect(useAuthMock).toBeCalledTimes(1)
       expect(useIsOptimizelyFeatureEnabledMock).toBeCalledTimes(1)
