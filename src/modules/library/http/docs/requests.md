@@ -9,6 +9,7 @@ Learn about using requests in the [user-guide](user-guide.md).
   - [addPath](#addpath)
   - [setHeader](#setheader)
   - [setHeaders](#setheaders)
+  - [setHost](#sethost)
   - [setMethod](#setmethod)
   - [setQueryParam](#setqueryparam)
   - [setQueryParams](#setqueryparams)
@@ -39,14 +40,21 @@ addPath('also/good')
 Sets the named HTTP header.
 
 The value is passed as a `provider` which may be a string, or a function of type
-`(input: T, ctx: HttpCtx) => string | Promise<string>`
+`(input: T) => string | Promise<string>`
 
 ### setHeaders
 
 Sets multiple HTTP headers as an object (dictionary of strings). This object will be merged into existing values.
 
 The value is passed as a `provider` which may be a dictionary or a function of type
-`(input: T, ctx: HttpCtx) => Dict | Promise<Dict>`
+`(input: T) => Dict | Promise<Dict>`
+
+### setHost
+
+Sets the base host.
+
+The value is passed as a `provider` with may be a string, or a function of type
+`(input: T) => string | Promise<string>`
 
 ### setMethod
 
@@ -57,7 +65,7 @@ Sets the HTTP method with a string.
 Sets the named URL query parameter.
 
 The value is passed as a `provider` which may be a string, or a function of type
-`(input: T, ctx: HttpCtx) => string | Promise<string>`
+`(input: T) => string | Promise<string>`
 
 To set a null parameter, pass an empty string.
 
@@ -67,4 +75,4 @@ Sets multiple URL query parameters as an object (dictionary of strings). This ob
 values.
 
 The value is passed as a `provider` which may be a dictionary or a function of type
-`(input: T, ctx: HttpCtx) => Dict | Promise<Dict>`
+`(input: T) => Dict | Promise<Dict>`
