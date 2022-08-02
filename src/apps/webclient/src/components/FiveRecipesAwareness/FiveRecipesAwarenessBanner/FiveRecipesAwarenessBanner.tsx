@@ -6,8 +6,8 @@ import { use5RecipesAwareness } from '../use5RecipesAwareness'
 
 import css from './FiveRecipesAwarenessBanner.css'
 import Svg from 'Svg'
-import { Button } from '@gousto-internal/citrus-react'
-import { Icon } from '@gousto-internal/citrus-react'
+import { Box, Button } from '@gousto-internal/citrus-react'
+import { Icon, IconVariant, ButtonVariant, ButtonColorVariant} from '@gousto-internal/citrus-react'
 
 
 export const FiveRecipesAwarenessBanner = () => {
@@ -25,22 +25,22 @@ export const FiveRecipesAwarenessBanner = () => {
   return (
     <div className={css.container}>
       <div>
-        <Svg fileName="icon-info-icon" />
+        <Icon name="info" variant={IconVariant.Informative} />
       </div>
-      <div
-        className={css.closeButtonContainer}
-        role="button"
-        aria-label="close banner"
-        tabIndex={0}
-        onClick={() => onBannerClose()}
-        onKeyPress={() => {}}
-      >
-        <Svg fileName="icon-close-banner" />
+      <div className={css.closeButtonContainer}>
+        <Box>
+          <Button
+            title="Close Banner"
+            onClick={() => onBannerClose()}
+            variant={ButtonVariant.None}
+            colorVariant={ButtonColorVariant.Tertiary}
+          >
+            <Icon name="close" />
+          </Button>
+        </Box>
       </div>
 
-      <div>
-        <Icon />
-        <Button />
+      <div className={css.textContainer}>
         <h4 className={css.headerTitle}>5 recipes, here we come!</h4>
         <p className={css.bodyText}>Choose up to 5 recipes each week.</p>
       </div>
