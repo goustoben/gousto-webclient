@@ -99,6 +99,10 @@ Cypress.Commands.add('applyPromoCode', () => {
   cy.get('[data-testing="promoModalButton"]').click()
 })
 
+Cypress.Commands.add('dismissTutorial', () => {
+  cy.get('[data-testing="tutorialStepCta"]').click()
+})
+
 Cypress.Commands.add('dismissPromoModal', () => {
   cy.get('[data-testing="promoModalButton"]').click()
 })
@@ -111,6 +115,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     cy.get("[href='/menu']").first().click()
     cy.wait(['@getPromoCode'])
     cy.dismissPromoModal()
+    cy.dismissTutorial()
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
@@ -121,6 +126,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     cy.get("[href='/menu'] > li").first().click()
     cy.wait(['@getPromoCode'])
     cy.dismissPromoModal()
+    cy.dismissTutorial()
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()

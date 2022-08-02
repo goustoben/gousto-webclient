@@ -193,6 +193,8 @@ async function addRecipe(recipeIndex, addRecipeButtonSelector, nightwatchContext
     [
       '[data-testing="promoModal"] [data-testing="modal-close-button"]',
       '[data-testing="spotlight-overlay"]',
+      '[data-testing="spotlight-overlay"]',
+      '[data-testing="tutorialStepCta"]',
       '[data-testing="tutorialStepCta"]',
       '.ReactModalPortal [data-testing="menuRecipeAdd"]',
     ],

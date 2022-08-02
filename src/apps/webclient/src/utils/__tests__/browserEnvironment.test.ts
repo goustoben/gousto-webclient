@@ -1,5 +1,12 @@
 import * as browserEnv from '../browserEnvironment'
 
+/**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/browserEnvironmentTest.ts                                      *
+ * *************************************************************************************
+ */
+
 let getWindowSpy: jest.SpyInstance
 let canUseWindowSpy: jest.SpyInstance
 

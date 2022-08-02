@@ -1,5 +1,12 @@
 import { getEnvConfig, ParsedProcessEnv } from '../../src/utils/processEnv'
 
+/**
+ * *************************************************************************************
+ * * ⚠️ Parts of this file are being migrated to @library/environment. Sync with:      *
+ * * ↔️️ environment/src/types.ts                                                       *
+ * *************************************************************************************
+ */
+
 export type WindowEnvConfig = Pick<
   ParsedProcessEnv,
   | 'RECAPTCHA_PUBK'
@@ -10,6 +17,7 @@ export type WindowEnvConfig = Pick<
   | 'DATADOG_BROWSER_LOGS_CLIENT_TOKEN'
   | 'ENVIRONMENT'
   | 'DOMAIN'
+  | 'APPLE_PAY_MERCHANT_ID'
 >
 
 /**
@@ -26,6 +34,7 @@ export const createWindowEnvConfig = () => {
     DATADOG_BROWSER_LOGS_CLIENT_TOKEN,
     ENVIRONMENT,
     DOMAIN,
+    APPLE_PAY_MERCHANT_ID,
   } = getEnvConfig()
 
   const windowEnvConfig: WindowEnvConfig = {
@@ -37,6 +46,7 @@ export const createWindowEnvConfig = () => {
     DATADOG_BROWSER_LOGS_CLIENT_TOKEN,
     ENVIRONMENT,
     DOMAIN,
+    APPLE_PAY_MERCHANT_ID,
   }
 
   return JSON.stringify(windowEnvConfig)

@@ -6,7 +6,7 @@ import { P } from 'Page/Elements'
 import { CTA } from 'goustouicomponents'
 
 import { newsletterSubscribe } from 'apis/customers'
-import { homeConfig } from 'config/home'
+import { homeConfig } from 'routes/Home/homeConfig'
 import { validateEmail } from 'utils/auth'
 
 import css from './EmailForm.css'

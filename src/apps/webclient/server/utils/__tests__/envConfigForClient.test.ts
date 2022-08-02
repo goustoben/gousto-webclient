@@ -21,6 +21,7 @@ describe('windowEnvConfig', () => {
         DATADOG_BROWSER_LOGS_CLIENT_TOKEN: 'mock-datadog-browser-logs-client-token',
         ENVIRONMENT: 'mock-environment',
         DOMAIN: 'mock-domain',
+        APPLE_PAY_MERCHANT_ID: 'merchant.uk.co.gousto.beetroots',
       }
 
       const expected = JSON.stringify(mockConfig)

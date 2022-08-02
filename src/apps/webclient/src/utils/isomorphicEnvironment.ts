@@ -5,6 +5,7 @@ import {
   getServerCheckoutComPublicKey,
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
+  getServerApplePayMerchantId,
 } from '../../server/utils/serverEnvironment'
 import { canUseWindow, getClientProtocol } from './browserEnvironment'
 import {
@@ -13,7 +14,15 @@ import {
   getClientCheckoutComPublicKey,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
+  getClientApplePayMerchantId,
 } from './configFromWindow'
+
+/**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/isomorphicEnvironment.ts                                       *
+ * *************************************************************************************
+ */
 
 type CreateIsomorphicConfig<T> = {
   testFn?: () => boolean
@@ -81,4 +90,9 @@ export const getRecaptchaRAFPublicKey = createIsomorphicConfig({
 export const getCheckoutComPublicKey = createIsomorphicConfig({
   browserConfigFn: getClientCheckoutComPublicKey,
   serverConfigFn: getServerCheckoutComPublicKey,
+})
+
+export const getApplePayMerchantId = createIsomorphicConfig({
+  browserConfigFn: getClientApplePayMerchantId,
+  serverConfigFn: getServerApplePayMerchantId,
 })

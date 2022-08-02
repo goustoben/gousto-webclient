@@ -68,8 +68,9 @@ import { getUTMAndPromoCode } from 'selectors/tracking'
 import Cookies from 'utils/GoustoCookies'
 import GoustoException from 'utils/GoustoException'
 import { basketResetPersistent } from 'utils/basket'
+import { canUseWindow } from 'utils/browserEnvironment'
 import { getDeliveryTariffId } from 'utils/deliveries'
-import { getEnvironment } from 'utils/isomorphicEnvironment'
+import { getApplePayMerchantId, getEnvironment } from 'utils/isomorphicEnvironment'
 import logger from 'utils/logger'
 import { isValidPromoCode } from 'utils/order'
 
@@ -249,6 +250,42 @@ export function userSubscribe({ pricing }) {
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))
     }
+  }
+}
+
+/**
+ * Fetches Apple Pay status - if browser supports Apple Pay and application can make payments via Apple Pay services.
+ */
+export const fetchApplePayStatus = (dispatch, _getState) => {
+  if (!canUseWindow()) {
+    dispatch({
+      type: actionTypes.CHECKOUT_LOAD_APPLE_PAY_ENABLED_STATUS,
+      payload: false,
+    })
+  }
+  const { ApplePaySession } = window
+  const APPLE_PAY_MERCHANT_ID = getApplePayMerchantId()
+
+  if (ApplePaySession) {
+    ApplePaySession.canMakePaymentsWithActiveCard(APPLE_PAY_MERCHANT_ID)
+      .then((canMakePayments) => {
+        const isResponseBoolean = typeof canMakePayments === 'boolean'
+        dispatch({
+          type: actionTypes.CHECKOUT_LOAD_APPLE_PAY_ENABLED_STATUS,
+          payload: isResponseBoolean ? canMakePayments : false,
+        })
+      })
+      .catch(() => {
+        dispatch({
+          type: actionTypes.CHECKOUT_LOAD_APPLE_PAY_ENABLED_STATUS,
+          payload: false,
+        })
+      })
+  } else {
+    dispatch({
+      type: actionTypes.CHECKOUT_LOAD_APPLE_PAY_ENABLED_STATUS,
+      payload: false,
+    })
   }
 }
 
