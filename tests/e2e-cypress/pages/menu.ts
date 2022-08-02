@@ -35,8 +35,9 @@ class Menu extends Page {
   }
 
   clickCheckout() {
-    cy.findAllByText(/Checkout/i)
-      .filter(":visible")
+    cy.get('[data-testing="boxSummaryButton"]')
+      .find("button:visible")
+      .should("not.be.disabled")
       .click();
   }
 
