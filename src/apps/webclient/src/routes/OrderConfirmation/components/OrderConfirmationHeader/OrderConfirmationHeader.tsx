@@ -1,9 +1,16 @@
 import React from 'react'
 
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 
 import css from './OrderConfirmationHeader.css'
+
+type Props = {
+  deliveryDate: string
+  deliveryStart: string
+  deliveryEnd: string
+  whenCutoffTime: string
+  whenCutoffDate: string
+}
 
 const OrderConfirmationHeader = ({
   deliveryDate,
@@ -11,7 +18,7 @@ const OrderConfirmationHeader = ({
   deliveryEnd,
   whenCutoffTime,
   whenCutoffDate,
-}) => (
+}: Props) => (
   <div data-testing="orderConfirmationHeader">
     <p className={css.paragraph}>
       Delivery date: {deliveryDate}
@@ -23,13 +30,5 @@ const OrderConfirmationHeader = ({
     </p>
   </div>
 )
-
-OrderConfirmationHeader.propTypes = {
-  deliveryDate: PropTypes.string.isRequired,
-  deliveryStart: PropTypes.string.isRequired,
-  deliveryEnd: PropTypes.string.isRequired,
-  whenCutoffTime: PropTypes.string.isRequired,
-  whenCutoffDate: PropTypes.string.isRequired,
-}
 
 export { OrderConfirmationHeader }
