@@ -22,7 +22,7 @@ class Checkout extends Page {
 
   assertCheckoutConfirmation() {
     cy.findByText(/Congrats on ordering your first box/i, {
-      timeout: 70_000,
+      timeout: 120_000,
     }).should("exist");
   }
 
@@ -67,7 +67,7 @@ class Checkout extends Page {
           url: "**/payments/v1/payments/payment-auth*",
         },
       ],
-      { timeout: 60_000 }
+      { timeout: 120_000 }
     );
   }
 
