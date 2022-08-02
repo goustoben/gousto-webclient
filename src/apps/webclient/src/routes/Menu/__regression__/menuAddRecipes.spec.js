@@ -27,6 +27,7 @@ describe('Given I am a logged out user', () => {
       cy.visit(PAGE_URL)
       cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveryDays'])
       cy.applyPromoCode()
+      cy.dismissTutorial()
       cy.setupMenu({ platform: Cypress.env('platform') === 'mobile' ? 'MOBILE' : 'WEB' })
       cy.wait('@getDeliveryDays')
     })
