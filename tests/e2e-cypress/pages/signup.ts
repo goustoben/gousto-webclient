@@ -14,7 +14,7 @@ class Signup extends Page {
   }
 
   clickConfirmDeliveryDay() {
-    cy.findByText("Confirm").click();
+    cy.findByText(/Select /).click();
   }
 
   // Make this specific to role, not text?
