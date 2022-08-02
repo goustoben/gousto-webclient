@@ -22,7 +22,7 @@ class Checkout extends Page {
 
   assertCheckoutConfirmation() {
     cy.findByText(/Congrats on ordering your first box/i, {
-      timeout: 30 * 1000,
+      timeout: 70_000,
     }).should("exist");
   }
 
@@ -57,23 +57,18 @@ class Checkout extends Page {
   }
 
   clickStartYourSubscription(opts: { type: "card" | "paypal" }) {
-    if (opts.type === "card") {
-      cy.actAndWaitForInterceptors(() => {
+    cy.actAndWaitForInterceptors(
+      () => {
         cy.findByText(/Start your subscription/i).click();
-      }, [
-        { method: "GET", url: "https://fpjscache.checkout.com/" },
-        {
-          method: "POST",
-          url: "**/tokens",
-        },
+      },
+      [
         {
           method: "POST",
           url: "**/payments/v1/payments/payment-auth*",
         },
-      ]);
-    } else {
-      cy.findByText(/Start your subscription/i).click();
-    }
+      ],
+      { timeout: 60_000 }
+    );
   }
 
   clickPayWithPayPal() {

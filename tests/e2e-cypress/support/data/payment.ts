@@ -1,10 +1,10 @@
 export const payment = {
   card: {
-    cardNumber: "4242424242424242",
+    cardNumber: "4543474002249996",
     expiry: {
-      year: "31",
+      year: "25",
     },
-    CVV: "100",
+    CVV: "956",
     "3DSPassword": "Checkout1!",
   },
 };

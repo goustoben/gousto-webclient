@@ -32,7 +32,6 @@ describe("Signup", () => {
     checkout.enterCardExpiry();
     checkout.enterCVV();
     checkout.clickStartYourSubscription({ type: "card" });
-    checkout.enter3DSPassword();
 
     checkout.assertCheckoutConfirmation();
   });
