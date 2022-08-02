@@ -9,7 +9,7 @@ export async function makeRequest<Input, Output>(
   input: Input
 ): Promise<Output> {
   const defaultRequest: RequestConfig = {
-    host: 'defaultVal', // todo fetch from library
+    host: '',
     method: 'GET',
     paths: []
   }

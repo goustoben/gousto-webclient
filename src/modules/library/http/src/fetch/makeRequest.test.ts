@@ -42,7 +42,7 @@ describe('makeRequest', () => {
   describe('reducing the request', () => {
     it('passes a request with default host and method', () => {
       const [defaultRequest] = requestMiddleware.mock.calls[0]
-      expect(defaultRequest.host).toBe('defaultVal')
+      expect(defaultRequest.host).toBe('')
       expect(defaultRequest.method).toBe('GET')
     })
 
