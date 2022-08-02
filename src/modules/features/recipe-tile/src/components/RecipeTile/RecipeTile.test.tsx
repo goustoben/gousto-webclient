@@ -144,12 +144,12 @@ describe("RecipeTile", () => {
       expect(screen.getByText("Add recipe")).toBeInTheDocument();
     });
 
-    test("should not contain Like and Dislike buttons as the feature flag is false", () => {
+    test("should contain Like and Dislike buttons as the feature flag is true", () => {
       renderComponent();
       const likeButton = screen.queryByRole('button', { name: 'thumb-up'});
       const dislikeButton = screen.queryByRole('button', { name: 'thumb-down'});
-      expect(likeButton).not.toBeInTheDocument();
-      expect(dislikeButton).not.toBeInTheDocument();
+      expect(likeButton).toBeInTheDocument();
+      expect(dislikeButton).toBeInTheDocument();
     });
   });
 
