@@ -26,7 +26,7 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
         isEnabled: false,
         hasClosedBanner: false,
       })
-      
+
       render(<FiveRecipesAwarenessBanner />)
       expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     })
