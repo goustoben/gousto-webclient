@@ -1,14 +1,19 @@
 import React from 'react'
 
+import {
+  Box,
+  Button,
+  Icon,
+  IconVariant,
+  ButtonVariant,
+  ButtonColorVariant,
+} from '@gousto-internal/citrus-react'
+
 import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 
 import { use5RecipesAwareness } from '../use5RecipesAwareness'
 
 import css from './FiveRecipesAwarenessBanner.css'
-import Svg from 'Svg'
-import { Box, Button } from '@gousto-internal/citrus-react'
-import { Icon, IconVariant, ButtonVariant, ButtonColorVariant} from '@gousto-internal/citrus-react'
-
 
 export const FiveRecipesAwarenessBanner = () => {
   const { isEnabled, hasClosedBanner, setBannerAsClosed } = use5RecipesAwareness()
