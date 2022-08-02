@@ -22,6 +22,7 @@ describe('Menu-BrowseCTA', () => {
     cy.visit('/menu')
     cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveries'])
     cy.applyPromoCode()
+    cy.dismissTutorial()
   })
 
   after(() => {

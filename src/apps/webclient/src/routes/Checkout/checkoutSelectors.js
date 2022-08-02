@@ -42,3 +42,8 @@ export const getFeLoggingCorrelationData = (state) => ({
 
 export const getSignupE2ETestName = ({ features }) =>
   features && features.getIn(['signupE2ETestName', 'value'], '')
+
+/**
+ * Returns true if Apple Pay is enabled in browser and supported by Apple Pay API
+ */
+export const getIsApplePayEnabled = (state) => state.checkout.get('isApplePayEnabled')

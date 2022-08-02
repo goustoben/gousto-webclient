@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
+import { getPromoBannerState } from 'routes/Home/homeUtils'
 import {
   signupNextStep,
   signupStepsReceive,
@@ -9,7 +10,6 @@ import {
 } from 'routes/Signup/signupActions'
 import { getIsWizardWithoutImagesEnabled } from 'routes/Signup/signupSelectors'
 import { getIsGoustoOnDemandEnabled } from 'selectors/features'
-import { getPromoBannerState } from 'utils/home'
 
 import { Signup } from './Signup'
 

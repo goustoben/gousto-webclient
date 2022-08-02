@@ -1,6 +1,13 @@
 import { WindowLocation } from './types/windowLocation'
 
 /**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/browserEnvironment.ts                                          *
+ * *************************************************************************************
+ */
+
+/**
  * Utility to enable easier testing of these utilities
  */
 export const getWindow = () => window

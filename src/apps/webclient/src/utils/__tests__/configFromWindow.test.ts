@@ -2,6 +2,13 @@ import { $getConfigFromWindow, getConfigFromWindow } from 'utils/configFromWindo
 
 import { WindowEnvConfig } from '../../../server/utils/envConfigForClient'
 
+/**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/configFromWindow.test.ts                                       *
+ * *************************************************************************************
+ */
+
 const windowSpy = jest.spyOn(global, 'window', 'get')
 
 const mockWindowEnvConfig: WindowEnvConfig = {
@@ -13,6 +20,7 @@ const mockWindowEnvConfig: WindowEnvConfig = {
   DATADOG_BROWSER_LOGS_CLIENT_TOKEN: 'mock-datadog-browser-logs-client-token',
   ENVIRONMENT: 'local',
   DOMAIN: 'gousto.local',
+  APPLE_PAY_MERCHANT_ID: 'merchant.uk.co.gousto.beetroots',
 }
 
 describe('windowEnvConfig', () => {

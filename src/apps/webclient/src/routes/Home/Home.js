@@ -7,8 +7,8 @@ import { ReactReduxContext } from 'react-redux'
 
 import { menuLoadBoxPrices } from 'actions/menu'
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
-import { CTA, seo } from 'config/home'
 import routesConfig from 'config/routes'
+import { CTA, seo } from 'routes/Home/homeConfig'
 import menuFetchData from 'routes/Menu/fetchData'
 
 import { HomeSections } from './HomeSections'

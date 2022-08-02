@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { joeWicks } from 'config/home'
+import { joeWicks } from 'routes/Home/homeConfig'
 
 import css from './JoeWicks.css'
 

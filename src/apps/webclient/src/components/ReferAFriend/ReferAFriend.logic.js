@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { homeConfig } from 'config/home'
+import { homeConfig } from 'routes/Home/homeConfig'
 import { validateEmail } from 'utils/auth'
 import { actionTypes } from 'actions/actionTypes'
 import { isSecretPingdomEmail } from 'utils/recaptcha'

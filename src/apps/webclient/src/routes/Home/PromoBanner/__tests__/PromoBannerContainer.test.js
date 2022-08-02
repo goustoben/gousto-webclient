@@ -5,8 +5,8 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import { promo } from 'config/home'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { promo } from 'routes/Home/homeConfig'
 
 import { PromoBannerContainer } from '../PromoBannerContainer'
 

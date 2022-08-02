@@ -9,6 +9,13 @@ import {
   isServer,
 } from '../serverEnvironment'
 
+/**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/serverEnvironment.test.ts                                      *
+ * *************************************************************************************
+ */
+
 jest.mock('../../../src/utils/processEnv')
 
 const mockGetEnvConfig = getEnvConfig as jest.Mock

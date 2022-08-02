@@ -3,8 +3,8 @@ import { redirect } from 'actions/redirect'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import routesConfig from 'config/routes'
 import { applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
+import { getPromoBannerState } from 'routes/Home/homeUtils'
 import { getBasketPostcode } from 'selectors/basket'
-import { getPromoBannerState } from 'utils/home'
 
 export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getState) => {
   const state = getState()

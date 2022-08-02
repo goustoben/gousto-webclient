@@ -1,6 +1,13 @@
 import type { WindowEnvConfig } from '../../server/utils/envConfigForClient'
 
 /**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/configFromWindow.ts                                            *
+ * *************************************************************************************
+ */
+
+/**
  * Memoized fn, returns getter fn to retrieve value from window.__config__ object
  * @example
  * ```ts
@@ -46,3 +53,4 @@ export const getClientDatadogRumSdkClientToken = () =>
   getConfigFromWindow('DATADOG_RUM_SDK_CLIENT_TOKEN')
 export const getClientDatadogBrowserLogsClientToken = () =>
   getConfigFromWindow('DATADOG_BROWSER_LOGS_CLIENT_TOKEN')
+export const getClientApplePayMerchantId = () => getConfigFromWindow('APPLE_PAY_MERCHANT_ID')

@@ -1,3 +1,10 @@
+/**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/processEnv.ts                                                  *
+ * *************************************************************************************
+ */
+
 type ProcessEnvKeys = [
   'ENVIRONMENT',
   'DOMAIN',
@@ -12,6 +19,7 @@ type ProcessEnvKeys = [
   'DATADOG_BROWSER_LOGS_CLIENT_TOKEN',
   'DATADOG_RUM_SDK_CLIENT_TOKEN',
   'DATADOG_RUM_SDK_APP_ID',
+  'APPLE_PAY_MERCHANT_ID',
 ]
 
 /**
@@ -37,6 +45,7 @@ export type ParsedProcessEnv = {
   DATADOG_BROWSER_LOGS_CLIENT_TOKEN: string
   DATADOG_RUM_SDK_CLIENT_TOKEN: string
   DATADOG_RUM_SDK_APP_ID: string
+  APPLE_PAY_MERCHANT_ID: string
 }
 
 const REQUIRED_KEYS: ProcessEnvKeys = [
@@ -53,6 +62,7 @@ const REQUIRED_KEYS: ProcessEnvKeys = [
   'DATADOG_BROWSER_LOGS_CLIENT_TOKEN',
   'DATADOG_RUM_SDK_CLIENT_TOKEN',
   'DATADOG_RUM_SDK_APP_ID',
+  'APPLE_PAY_MERCHANT_ID',
 ]
 
 export const envOrThrow = (obj: Record<string, unknown>, key: keyof ProcessEnv) => {
@@ -114,5 +124,6 @@ export const getEnvConfig = (): ParsedProcessEnv => {
     ),
     DATADOG_RUM_SDK_CLIENT_TOKEN: getFromProcessEnv(processEnv)('DATADOG_RUM_SDK_CLIENT_TOKEN'),
     DATADOG_RUM_SDK_APP_ID: getFromProcessEnv(processEnv)('DATADOG_RUM_SDK_APP_ID'),
+    APPLE_PAY_MERCHANT_ID: getFromProcessEnv(processEnv)('APPLE_PAY_MERCHANT_ID'),
   }
 }

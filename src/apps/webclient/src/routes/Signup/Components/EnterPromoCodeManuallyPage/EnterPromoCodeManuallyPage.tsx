@@ -14,8 +14,8 @@ import { useDebounce, usePrevious } from 'react-use'
 
 import { actionTypes } from 'actions/actionTypes'
 import { clickClaimDiscountPopup, clickEnterPromoCodeManuallyContinue } from 'actions/trackingKeys'
-import { promo } from 'config/home'
 import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { promo } from 'routes/Home/homeConfig'
 import { InformationalPageTemplate } from 'routes/Signup/Components/InformationalPageTemplate'
 import { getPromoStore, createSelectIsPendingByActionType } from 'routes/Signup/signupSelectors'
 

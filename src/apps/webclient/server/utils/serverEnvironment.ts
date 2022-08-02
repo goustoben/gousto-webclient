@@ -6,6 +6,13 @@ import { canUseWindow } from 'utils/browserEnvironment'
 import { getEnvConfig } from 'utils/processEnv'
 
 /**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/serverEnvironment.ts                                           *
+ * *************************************************************************************
+ */
+
+/**
  * Environment config getter for SERVER side environment
  *
  * Intended for use in `createIsomorphicEnvironment`
@@ -36,5 +43,6 @@ export const getServerProtocol = () =>
 export const getServerRecaptchaPublicKey = () => getEnvConfig().RECAPTCHA_PUBK
 export const getServerRecaptchaRAFPublicKey = () => getEnvConfig().RECAPTCHA_RAF_PUBK
 export const getServerCheckoutComPublicKey = () => getEnvConfig().CHECKOUT_COM_PUBK
+export const getServerApplePayMerchantId = () => getEnvConfig().APPLE_PAY_MERCHANT_ID
 
 export const isServer = () => !canUseWindow()

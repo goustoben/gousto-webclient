@@ -235,6 +235,7 @@ class OrderSummary extends PureComponent {
               numPortions={numPortions}
               numRecipes={numRecipes}
               deliveryTotalPrice={prices.get('deliveryTotal')}
+              isDeliveryFree={prices.get('isDeliveryFree')}
               shippingAddress={shippingAddress}
               vatableItems={vatableItemsInOrder}
               surcharges={surcharges ? surcharges.toJS() : undefined}

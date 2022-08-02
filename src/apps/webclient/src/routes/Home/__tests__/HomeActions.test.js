@@ -4,7 +4,7 @@ import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
 import { homeGetStarted, applyPromoCodeAndShowModal } from 'routes/Home/homeActions'
-import { getPromoBannerState } from 'utils/home'
+import { getPromoBannerState } from 'routes/Home/homeUtils'
 
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
@@ -24,7 +24,7 @@ jest.mock('actions/promos', () => ({
   promoToggleModalVisibility: jest.fn(),
 }))
 
-jest.mock('utils/home', () => ({
+jest.mock('routes/Home/homeUtils', () => ({
   getPromoBannerState: jest.fn(),
 }))
 
