@@ -1,0 +1,16 @@
+{
+  "baseUrl": "https://staging-webclient.gousto.info/",
+  "integrationFolder": "./tests",
+  "testFiles": ["./**/*.spec.*"],
+  "screenshotsFolder": "screenshots",
+  "videosFolder": "videos",
+  "fixturesFolder": "fixtures",
+  "supportFile": "support/index.ts",
+  "pluginsFile": false,
+  "video": true,
+  "chromeWebSecurity": false,
+  "defaultCommandTimeout": 15000,
+  "env": {
+    "WAF_ACCESS_TOKEN": "MOCK_TOKEN_VALUE"
+  }
+}
