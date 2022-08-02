@@ -31,7 +31,8 @@ declare namespace Cypress {
      */
     actAndWaitForInterceptors(
       action: () => void,
-      interceptors: Array<Partial<Cypress.RouteOptions>>
+      interceptors: Array<Partial<Cypress.RouteOptions>>,
+      waitOptions?: { timeout: number } // WaitOptions isn't exported by Cypress
     ): void;
 
     /**

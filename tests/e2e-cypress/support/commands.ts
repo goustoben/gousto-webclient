@@ -33,7 +33,8 @@ Cypress.Commands.add(
   "actAndWaitForInterceptors",
   (
     action: () => Cypress.Chainable,
-    interceptors: Array<RouteMatcher | StringMatcher>
+    interceptors: Array<RouteMatcher | StringMatcher>,
+    waitOptions?: { timeout: number } // WaitOptions isn't exported by Cypress
   ) => {
     // Configure interceptors prior to acting
     const interceptorAliases = interceptors.map((route, idx) => {
@@ -45,7 +46,7 @@ Cypress.Commands.add(
     action();
 
     // Wait for interceptors in parallel
-    cy.wait(interceptorAliases, { timeout: 15 * 1000 });
+    cy.wait(interceptorAliases, { timeout: 15 * 1000, ...waitOptions });
   }
 );
 
