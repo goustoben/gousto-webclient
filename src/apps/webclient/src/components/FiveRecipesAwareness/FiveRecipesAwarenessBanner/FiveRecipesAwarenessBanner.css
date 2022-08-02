@@ -51,10 +51,3 @@
   font-size: 15px;
   line-height: 24px;
 }
-
-.infoIcon {
-  composes: fa-basic-class fa-info-circle from 'styles/vendor/font-awesome-module.css';
-  color: #00519F;
-
-  font-size: 18px;
-}

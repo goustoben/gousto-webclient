@@ -5,6 +5,10 @@ import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import { use5RecipesAwareness } from '../use5RecipesAwareness'
 
 import css from './FiveRecipesAwarenessBanner.css'
+import Svg from 'Svg'
+import { Button } from '@gousto-internal/citrus-react'
+import { Icon } from '@gousto-internal/citrus-react'
+
 
 export const FiveRecipesAwarenessBanner = () => {
   const { isEnabled, hasClosedBanner, setBannerAsClosed } = use5RecipesAwareness()
@@ -21,7 +25,7 @@ export const FiveRecipesAwarenessBanner = () => {
   return (
     <div className={css.container}>
       <div>
-        <span className={css.infoIcon} />
+        <Svg fileName="icon-info-icon" />
       </div>
       <div
         className={css.closeButtonContainer}
@@ -31,22 +35,12 @@ export const FiveRecipesAwarenessBanner = () => {
         onClick={() => onBannerClose()}
         onKeyPress={() => {}}
       >
-        <svg
-          focusable="false"
-          preserveAspectRatio="xMidYMid meet"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          width="20"
-          height="20"
-          viewBox="0 0 32 32"
-          aria-hidden="true"
-        >
-          <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z" />
-          <title>Close Banner</title>
-        </svg>
+        <Svg fileName="icon-close-banner" />
       </div>
 
       <div>
+        <Icon />
+        <Button />
         <h4 className={css.headerTitle}>5 recipes, here we come!</h4>
         <p className={css.bodyText}>Choose up to 5 recipes each week.</p>
       </div>
