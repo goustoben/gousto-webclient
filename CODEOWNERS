@@ -29,14 +29,18 @@
 /src/apps/webclient/scripts/                            @Gousto/frontend-foundations
 /src/apps/webclient/server/                             @Gousto/frontend-foundations
 /src/apps/webclient/__tests__/.eslintrc                 @Gousto/frontend-foundations
+/src/apps/webclient/src/config/service-environment      @Gousto/frontend-foundations
 /src/apps/webclient/src/routes/index.js                 @Gousto/frontend-foundations
 /src/apps/webclient/src/_testing/                       @Gousto/frontend-foundations
 /src/apps/webclient/src/store.js                        @Gousto/frontend-foundations
 /tests/regression/cypress.json                          @Gousto/frontend-foundations
+/**/browserEnvironment*.ts                              @Gousto/frontend-foundations
 /**/isomorphicEnvironment*.ts                           @Gousto/frontend-foundations
 /**/serverEnvironment*.ts                               @Gousto/frontend-foundations
 /**/envConfigForClient*.ts                              @Gousto/frontend-foundations
 /**/configFromWindow*.ts                                @Gousto/frontend-foundations
+/**/processEnv*.ts                                      @Gousto/frontend-foundations
+/**/windowLocation*.ts                                  @Gousto/frontend-foundations
 
 # squad-kales ownership
 /src/modules/features/recipe-tile/                                     @Gousto/squad-kales

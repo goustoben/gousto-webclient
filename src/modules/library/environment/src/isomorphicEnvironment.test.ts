@@ -5,7 +5,7 @@ import {
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
   getClientApplePayMerchantId,
-} from 'utils/configFromWindow'
+} from './configFromWindow'
 import {
   createIsomorphicConfig,
   getEnvironment,
@@ -14,8 +14,8 @@ import {
   getRecaptchaPublicKey,
   getRecaptchaRAFPublicKey,
   getCheckoutComPublicKey,
-  getApplePayMerchantId,
-} from 'utils/isomorphicEnvironment'
+  getApplePayMerchantId
+} from './isomorphicEnvironment'
 
 import {
   getServerEnvironment,
@@ -25,23 +25,23 @@ import {
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
   getServerApplePayMerchantId,
-} from '../../../server/utils/serverEnvironment'
-import { getClientProtocol } from '../browserEnvironment'
+} from './serverEnvironment'
+import { getClientProtocol } from './browserEnvironment'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/isomorphicEnvironment.test                                     *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/src/utils/__tests__/isomorphicEnvironment.test.ts                    *
  * *************************************************************************************
  */
 
-jest.mock('../../../server/utils/serverEnvironment')
-jest.mock('../browserEnvironment', () => ({
-  ...jest.requireActual('../browserEnvironment'),
+jest.mock('./serverEnvironment')
+jest.mock('./browserEnvironment', () => ({
+  ...jest.requireActual('./browserEnvironment'),
   getDomain: jest.fn(),
   getClientProtocol: jest.fn(),
 }))
-jest.mock('utils/configFromWindow')
+jest.mock('./configFromWindow')
 
 const mockGetServerEnvironment = getServerEnvironment as jest.Mock
 

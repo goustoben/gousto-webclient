@@ -1,7 +1,7 @@
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/processEnv.ts                                                  *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/src/utils/processEnv.ts                                              *
  * *************************************************************************************
  */
 

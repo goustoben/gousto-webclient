@@ -1,9 +1,9 @@
-import { WindowLocation } from './types/windowLocation'
+import type { WindowLocation } from './types'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/browserEnvironment.ts                                          *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/src/utils/browserEnvironment.ts                                      *
  * *************************************************************************************
  */
 

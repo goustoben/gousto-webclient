@@ -6,7 +6,7 @@ import {
   getServerRecaptchaPublicKey,
   getServerRecaptchaRAFPublicKey,
   getServerApplePayMerchantId,
-} from '../../server/utils/serverEnvironment'
+} from './serverEnvironment'
 import { canUseWindow, getClientProtocol } from './browserEnvironment'
 import {
   getClientEnvironment,
@@ -14,13 +14,13 @@ import {
   getClientCheckoutComPublicKey,
   getClientRecaptchaPublicKey,
   getClientRecaptchaRAFPublicKey,
-  getClientApplePayMerchantId,
+  getClientApplePayMerchantId
 } from './configFromWindow'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/isomorphicEnvironment.ts                                       *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/src/utils/isomorphicEnvironment.test.ts                              *
  * *************************************************************************************
  */
 

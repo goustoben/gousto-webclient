@@ -1,5 +1,12 @@
 import { getEnvConfig, ParsedProcessEnv } from '../../src/utils/processEnv'
 
+/**
+ * *************************************************************************************
+ * * ⚠️ Parts of this file are being migrated to @library/environment. Sync with:      *
+ * * ↔️️ environment/src/types.ts                                                       *
+ * *************************************************************************************
+ */
+
 export type WindowEnvConfig = Pick<
   ParsedProcessEnv,
   | 'RECAPTCHA_PUBK'

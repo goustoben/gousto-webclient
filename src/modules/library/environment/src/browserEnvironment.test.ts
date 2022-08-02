@@ -1,9 +1,9 @@
-import * as browserEnv from '../browserEnvironment'
+import * as browserEnv from './browserEnvironment'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/browserEnvironmentTest.ts                                      *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/src/utils/__tests__/browserEnvironment.test.ts                       *
  * *************************************************************************************
  */
 
@@ -106,7 +106,7 @@ describe('client config', () => {
         document: {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
-          createElement: () => {},
+          createElement: () => { return null },
         },
       })
       expect(browserEnv.canUseWindow()).toBeTruthy()

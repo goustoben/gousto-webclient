@@ -4,6 +4,13 @@ import { Domain } from 'utils/types/windowLocation'
 
 import { Nullable } from '../../types'
 
+/**
+ * *************************************************************************************
+ * * ⚠️ Parts of this file are being migrated to @library/environment. Sync with:      *
+ * * ↔️️ environment/src/types.ts                                                       *
+ * *************************************************************************************
+ */
+
 export type ServiceVersion = {
   version: string
   majorVersion: number

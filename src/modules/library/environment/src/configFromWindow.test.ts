@@ -1,11 +1,11 @@
-import { $getConfigFromWindow, getConfigFromWindow } from 'utils/configFromWindow'
+import { $getConfigFromWindow, getConfigFromWindow } from './configFromWindow'
 
-import { WindowEnvConfig } from '../../../server/utils/envConfigForClient'
+import { WindowEnvConfig } from './types'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/configFromWindow.test.ts                                       *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/src/utils/__tests__/configFromWindow.test.ts                         *
  * *************************************************************************************
  */
 

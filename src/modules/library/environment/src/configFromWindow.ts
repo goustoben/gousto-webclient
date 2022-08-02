@@ -1,9 +1,9 @@
-import type { WindowEnvConfig } from '../../server/utils/envConfigForClient'
+import type { WindowEnvConfig } from './types'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/configFromWindow.ts                                            *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/src/utils/configFromWindow.ts                                        *
  * *************************************************************************************
  */
 

@@ -1,3 +1,10 @@
+/**
+ * *************************************************************************************
+ * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
+ * * ↔️️ environment/src/types.ts                                                       *
+ * *************************************************************************************
+ */
+
 export type Protocol = 'http:' | 'https:'
 
 /**
