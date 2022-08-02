@@ -21,7 +21,7 @@
 /.github/                                               @Gousto/frontend-foundations
 /.gitignore                                             @Gousto/frontend-foundations
 /.git-blame-ignore-revs                                 @Gousto/frontend-foundations
-/src/modules/library                                    @Gousto/frontend-foundations
+/src/modules/library/                                   @Gousto/frontend-foundations
 /src/apps/webclient/.bowerrc                            @Gousto/frontend-foundations
 /src/apps/webclient/.eslintignore                       @Gousto/frontend-foundations
 /src/apps/webclient/.eslintrc                           @Gousto/frontend-foundations
@@ -43,6 +43,7 @@
 /**/windowLocation*.ts                                  @Gousto/frontend-foundations
 
 # squad-kales ownership
+/src/modules/library/menu-service/                                     @Gousto/squad-kales
 /src/modules/features/recipe-tile/                                     @Gousto/squad-kales
 /src/apps/webclient/src/routes/Menu/components/CollectionsNav/         @Gousto/squad-kales
 /src/apps/webclient/src/routes/Menu/domains/brand/                     @Gousto/squad-kales
@@ -69,6 +70,7 @@
 /src/apps/webclient/src/routes/Menu/MenuRecipesPage/                   @Gousto/squad-kales
 
 # squad-radishes ownership
+/src/modules/library/api-webstock/                                     @Gousto/squad-radishes
 /src/apps/webclient/src/components/FiveRecipesPaintedDoorTest          @Gousto/squad-radishes
 /src/apps/webclient/src/routes/Menu/                                   @Gousto/squad-radishes
 /src/apps/webclient/src/config/collections.js                          @Gousto/squad-radishes
