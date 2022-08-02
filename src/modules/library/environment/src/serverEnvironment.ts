@@ -1,14 +1,14 @@
 import {
   ENVIRONMENT_NAMES,
   PROTOCOL_PREFIX,
-} from 'config/service-environment/service-environment.types'
-import { canUseWindow } from 'utils/browserEnvironment'
-import { getEnvConfig } from 'utils/processEnv'
+} from './types'
+import { canUseWindow } from './browserEnvironment'
+import { getEnvConfig } from './processEnv'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/serverEnvironment.ts                                           *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/server/utils/serverEnvironment.ts                                    *
  * *************************************************************************************
  */
 

@@ -1,4 +1,4 @@
-import { getEnvConfig } from '../../../src/utils/processEnv'
+import { getEnvConfig } from './processEnv'
 import {
   getServerEnvironment,
   getServerDomain,
@@ -7,16 +7,16 @@ import {
   getServerRecaptchaRAFPublicKey,
   getServerCheckoutComPublicKey,
   isServer,
-} from '../serverEnvironment'
+} from './serverEnvironment'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment. Sync with:                *
- * * ↔️️ environment/src/serverEnvironment.test.ts                                      *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ webclient/server/utils/__tests__/serverEnvironment.test.ts                     *
  * *************************************************************************************
  */
 
-jest.mock('../../../src/utils/processEnv')
+jest.mock('./processEnv')
 
 const mockGetEnvConfig = getEnvConfig as jest.Mock
 

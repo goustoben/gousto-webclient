@@ -1,9 +1,9 @@
-import { getFromProcessEnv, parseStringToNumber, ProcessEnv } from '../processEnv'
+import { getFromProcessEnv, parseStringToNumber, ProcessEnv } from './processEnv'
 
 /**
  * *************************************************************************************
- * * ⚠️ This file is being migrated to @library/environment:                           *
- * * ↔️️ environment/src/processEnv.test.ts                                             *
+ * * ⚠️ This file is being migrated from webclient. Sync with:                         *
+ * * ↔️️ src/utils/__tests__/processEnv.test.ts                                         *
  * *************************************************************************************
  */
 
@@ -46,7 +46,7 @@ describe('processEnv', () => {
         process.env = validProcessEnv
 
         // eslint-disable-next-line
-        const { getEnvConfig } = require('../processEnv')
+        const { getEnvConfig } = require('./processEnv')
 
         expect(getEnvConfig()).toEqual({
           ENVIRONMENT: 'local',
@@ -105,7 +105,7 @@ describe('processEnv', () => {
         process.env = malformedProcessEnv as ProcessEnv
 
         // eslint-disable-next-line
-        const { validateProcessEnv } = require('../processEnv')
+        const { validateProcessEnv } = require('./processEnv')
 
         expect(() => validateProcessEnv()).toThrow(expectedError)
       })
@@ -114,7 +114,7 @@ describe('processEnv', () => {
         process.env = validProcessEnv
 
         // eslint-disable-next-line
-        const { validateProcessEnv } = require('../processEnv')
+        const { validateProcessEnv } = require('./processEnv')
 
         expect(() => validateProcessEnv()).not.toThrow()
       })
