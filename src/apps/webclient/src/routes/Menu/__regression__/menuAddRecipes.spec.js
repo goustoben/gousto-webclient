@@ -119,7 +119,6 @@ describe('Given I am logged in user', () => {
   beforeEach(() => {
     cy.stubAll3rdParties()
     cy.login()
-    // cy.visit(PAGE_URL)
     cy.server()
     cy.mockDate()
     cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
