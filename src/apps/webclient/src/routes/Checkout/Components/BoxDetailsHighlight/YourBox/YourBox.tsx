@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 
 import {
   AlignItems,
-  BorderStyle,
   Box,
-  Color,
   Display,
   FlexDirection,
   Icon,
@@ -12,14 +10,13 @@ import {
 } from '@gousto-internal/citrus-react'
 
 import { SectionHeading } from '../SharedComponents'
-import { ExpandContainer, ChevronIconContainer, RecipesContainer } from './styled'
+import { RecipeList } from './RecipeList'
+import { ExpandContainer, ChevronIconContainer } from './styled'
 import { useGetYourBoxData } from './yourBoxHooks'
-import { getRecipeTileResponsiveSize } from './yourBoxUtils'
 
 export const YourBox = () => {
   const [expanded, setExpanded] = useState(false)
-  const { numPortions, maxRecipesNum, recipesList } = useGetYourBoxData()
-  const recipeTileResponsiveSize = getRecipeTileResponsiveSize(maxRecipesNum, expanded)
+  const { numPortions } = useGetYourBoxData()
 
   return (
     <>
@@ -35,20 +32,8 @@ export const YourBox = () => {
             <Icon name="chevron_down" />
           </ChevronIconContainer>
         </ExpandContainer>
-        <RecipesContainer expanded={expanded} fiveRecipes={maxRecipesNum === 5}>
-          {recipesList.map((recipeId) => (
-            <Box
-              key={recipeId}
-              width={recipeTileResponsiveSize}
-              height={recipeTileResponsiveSize}
-              borderStyle={!recipeId ? BorderStyle.Dashed : undefined}
-              borderWidth={1}
-              borderColor={Color.ColdGrey_800}
-            >
-              {recipeId ? <div>{recipeId}</div> : null}
-            </Box>
-          ))}
-        </RecipesContainer>
+
+        <RecipeList expanded={expanded} />
       </Box>
     </>
   )
