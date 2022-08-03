@@ -38,21 +38,13 @@ describe('Given I am a logged out user', () => {
     })
 
     describe('And I look for the menu date range on the page', () => {
-      withPlatformTags(WEB).it('Then it should be visible for desktop', () => {
-        cy.get('[data-testing="menuDateRange-desktop"]').should(
-          'have.text',
-          'Menu for May 02 - May 08',
-        )
-
+      withPlatformTags(WEB).it('Then it should not be visible for desktop', () => {
+        cy.get('[data-testing="menuDateRange-desktop"]').should('not.be.visible')
         cy.get('[data-testing="menuDateRange-mobile"]').should('not.be.visible')
       })
 
-      withPlatformTags(MOBILE).it('Then it should be visible for mobile', () => {
-        cy.get('[data-testing="menuDateRange-mobile"]').should(
-          'have.text',
-          'Menu for May 02 - May 08',
-        )
-
+      withPlatformTags(MOBILE).it('Then it should not be visible for mobile', () => {
+        cy.get('[data-testing="menuDateRange-mobile"]').should('not.be.visible')
         cy.get('[data-testing="menuDateRange-desktop"]').should('not.be.visible')
       })
     })
@@ -118,6 +110,62 @@ describe('Given I am a logged out user', () => {
         cy.get('[data-testing="menuRecipeOutOfStock"]')
           .find('[data-testing="menuRecipeAdd"]')
           .should('not.exist')
+      })
+    })
+  })
+})
+
+describe('Given I am logged in user', () => {
+  describe('When I land on the menu', () => {
+    before(() => {
+      cy.stubAll3rdParties()
+      cy.server()
+      cy.mockDate()
+      cy.intercept('GET', '/user/current*', { fixture: 'user/userCurrent.json' })
+      cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
+      cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
+      cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
+      cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as(
+        'getDeliveryDays',
+      )
+      cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
+      cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
+      cy.route(
+        'GET',
+        '/userbucketing/v1/user/experiments',
+        'fixture:userbucketing/userbucketing.json',
+      ).as('getExperiments')
+      cy.route('GET', '/promocode/**', 'fixture:promoCode/promoCodeDetails').as('promoCodeDetails')
+      cy.visit(PAGE_URL)
+      cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveryDays'])
+      cy.applyPromoCode()
+      cy.setupMenu({ platform: Cypress.env('platform') === 'mobile' ? 'MOBILE' : 'WEB' })
+      cy.wait('@getDeliveryDays')
+    })
+
+    after(() => {
+      cy.clock().then((clock) => {
+        clock.restore()
+      })
+    })
+
+    describe('And I look for the menu date range on the page', () => {
+      withPlatformTags(WEB).it('Then it should be visible for desktop', () => {
+        cy.get('[data-testing="menuDateRange-desktop"]').should(
+          'have.text',
+          'Menu for May 02 - May 08',
+        )
+
+        cy.get('[data-testing="menuDateRange-mobile"]').should('not.be.visible')
+      })
+
+      withPlatformTags(MOBILE).it('Then it should be visible for mobile', () => {
+        cy.get('[data-testing="menuDateRange-mobile"]').should(
+          'have.text',
+          'Menu for May 02 - May 08',
+        )
+
+        cy.get('[data-testing="menuDateRange-desktop"]').should('not.be.visible')
       })
     })
   })
