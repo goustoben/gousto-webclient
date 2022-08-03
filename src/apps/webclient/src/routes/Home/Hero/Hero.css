@@ -1,5 +1,5 @@
-@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
-@value FontFamilyAxiformaBook from 'design-language/typography.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge, BreakpointFromXLarge from 'design-language/breakpoints.css';
+@value FontFamilyAxiformaBook, 5XLarge from 'design-language/typography.css';
 @value White from 'styles/colors.css';
 
 .container {
@@ -12,12 +12,12 @@
 
   @media BreakpointFromMedium {
     flex-direction: row;
-    padding: 1rem 2rem;
+    padding: 1rem 0 1rem 2rem;
     margin-bottom: 0;
   }
 
   @media BreakpointFromLarge {
-    padding: 2.5rem 2rem;
+    padding: 2.5rem 0 2.5rem 2rem;
   }
 }
 
@@ -25,33 +25,57 @@
   width: 100%;
   margin-bottom: 1rem;
 
-  min-height: 57vw;
-  height: 57vw;
+  @media BreakpointToMedium {
+    min-height: 57vw;
+    height: 57vw;
+
+    background: center left / cover no-repeat;
+  }
 
   @media BreakpointFromMedium {
-    max-height: 30.75rem;
     max-width: 27rem;
-    min-height: auto;
-    margin-bottom: 0;
+    margin-bottom: 0.7rem;
+
+    background: right top / cover no-repeat;
   }
 
   @media BreakpointFromLarge {
     max-width: 35rem;
+    margin-bottom: 1.4rem;
+
+    background: right top / cover no-repeat;
+  }
+
+  @media BreakpointFromXLarge {
     margin-bottom: 1.5rem;
   }
 }
 
-.heroImage {
+.heroImageControl {
   @media BreakpointToMedium {
-    background: url('routes/Home/Hero/mobile-brand.jpg') center left / cover no-repeat;
+    background-image: url('routes/Home/Hero/images/mobile-brand.jpg');
   }
 
   @media BreakpointFromMedium {
-    background: url('routes/Home/Hero/tablet-brand-dish.jpg') right top / cover no-repeat;
+    background-image: url('routes/Home/Hero/images/tablet-brand-dish.jpg');
   }
 
   @media BreakpointFromLarge {
-    background: url('routes/Home/Hero/desktop-brand-dish.jpg') right top / cover no-repeat;
+    background-image: url('routes/Home/Hero/images/desktop-brand-dish.jpg');
+  }
+}
+
+.heroImageVariation {
+  @media BreakpointToMedium {
+    background-image: url('routes/Home/Hero/images/mobile-brand.png');
+  }
+
+  @media BreakpointFromMedium {
+    background-image: url('routes/Home/Hero/images/tablet-desktop-brand-dish.jpg');
+  }
+
+  @media BreakpointFromLarge {
+    background-image: url('routes/Home/Hero/images/desktop-large-brand-dish.jpg');
   }
 }
 
@@ -88,7 +112,7 @@
 .titleStar {
   vertical-align: super;
   font-family: FontFamilyAxiformaBook !important;
-  font-size: 32px; /* 5XLarge */
+  font-size: 5XLarge;
 }
 
 .subTitle {
@@ -97,15 +121,30 @@
 
 .processImage {
   @media BreakpointFromMedium {
-    width: 200%;
-    height: 11.25rem;
-    background: url('routes/Home/Hero/process-brand.png') left top / contain no-repeat;
-    margin-bottom: 1rem;
+    width: 100%;
+    height: 10.875rem;
+    background: left bottom / contain no-repeat;
   }
 
   @media BreakpointFromLarge {
-    width: 100%;
+    height: 12.875rem;
     margin-bottom: 0;
+  }
+}
+
+.processImageControl {
+  @media BreakpointFromMedium {
+    background-image: url('routes/Home/Hero/images/process-brand.png');
+  }
+}
+
+.processImageVariation {
+  @media BreakpointFromMedium {
+    background-image: url('routes/Home/Hero/images/tablet-desktop-brand-merch.png');
+  }
+
+  @media BreakpointFromLarge {
+    background-image: url('routes/Home/Hero/images/desktop-large-brand-merch.png');
   }
 }
 

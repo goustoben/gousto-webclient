@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store'
 
 import { CTAHomepageContainer } from 'routes/Home/CTA'
 
-import { Hero } from '../Hero'
+import { HeroComponent as Hero } from '../Hero'
 
 describe('Hero', () => {
   let wrapper

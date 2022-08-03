@@ -9,10 +9,11 @@ import { homeConfig } from 'routes/Home/homeConfig'
 
 import { Benefits } from '../Benefits'
 import { CTAHomepageContainer } from '../CTA'
+import { withOptimizelyHOC } from './withOptimizelyHOC'
 
 import css from './Hero.css'
 
-class Hero extends Component {
+class HeroComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -90,7 +91,17 @@ class Hero extends Component {
   }
 
   render() {
-    const { dataTesting } = this.props
+    const { dataTesting, isOptimizelyFeatureEnabled } = this.props
+
+    const heroClasses = classNames(css.heroImage, {
+      [css.heroImageVariation]: isOptimizelyFeatureEnabled,
+      [css.heroImageControl]: !isOptimizelyFeatureEnabled && isOptimizelyFeatureEnabled !== null,
+    })
+
+    const processClasses = classNames(css.processImage, {
+      [css.processImageVariation]: isOptimizelyFeatureEnabled,
+      [css.processImageControl]: !isOptimizelyFeatureEnabled && isOptimizelyFeatureEnabled !== null,
+    })
 
     return (
       <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
@@ -110,25 +121,29 @@ class Hero extends Component {
           <HighlightChoiceBanner />
 
           {this.renderGetStarted(true)}
-          <div role="img" aria-label="cooking image" className={css.processImage} />
+          <div role="img" aria-label="cooking image" className={processClasses} />
         </div>
-        <div role="img" aria-label="cooking image" className={css.heroImage} />
+        <div role="img" aria-label="cooking image" className={heroClasses} />
         {this.renderGetStarted(false)}
       </div>
     )
   }
 }
 
-Hero.propTypes = {
+HeroComponent.propTypes = {
   ctaUri: PropTypes.string.isRequired,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
   isAuthenticated: PropTypes.bool,
+  isOptimizelyFeatureEnabled: PropTypes.bool,
 }
 
-Hero.defaultProps = {
+HeroComponent.defaultProps = {
   dataTesting: 'hero',
   isAuthenticated: false,
+  isOptimizelyFeatureEnabled: null,
 }
 
-export { Hero }
+const Hero = withOptimizelyHOC(HeroComponent, 'beetroots_change_hero_images_web_enabled')
+
+export { Hero, HeroComponent }

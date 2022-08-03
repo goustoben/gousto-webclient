@@ -4,9 +4,16 @@ import { shallow } from 'enzyme'
 
 import { HomeSections } from 'routes/Home/HomeSections'
 
+import { Hero } from '../Hero'
+
 jest.mock('containers/OptimizelyRollouts', () => ({
   isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
   useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
+  withOptimizelyHOC: jest
+    .fn()
+    .mockImplementation((WrappedComponent) => (props) => (
+      <WrappedComponent {...props} isOptimizelyFeatureEnabled={null} />
+    )),
 }))
 
 describe('HomeSections', () => {
@@ -29,7 +36,7 @@ describe('HomeSections', () => {
 
     test('then should render all default modules', () => {
       expect(wrapper.find('section')).toHaveLength(5)
-      expect(wrapper.find('Hero')).toHaveLength(1)
+      expect(wrapper.find(Hero)).toHaveLength(1)
       expect(wrapper.find('TrustPilot')).toHaveLength(1)
       expect(wrapper.find('WhyChooseGousto')).toHaveLength(1)
       expect(wrapper.find('JoeWicks')).toHaveLength(1)
@@ -46,7 +53,7 @@ describe('HomeSections', () => {
 
     test('then should render only specified modules', () => {
       expect(wrapper.find('section')).toHaveLength(2)
-      expect(wrapper.find('Hero')).toHaveLength(1)
+      expect(wrapper.find(Hero)).toHaveLength(1)
       expect(wrapper.find('Connect(Carousel)')).toHaveLength(1)
     })
   })
@@ -60,7 +67,7 @@ describe('HomeSections', () => {
 
     test('then should return only defined sections', () => {
       expect(wrapper.find('section')).toHaveLength(1)
-      expect(wrapper.find('Hero')).toHaveLength(1)
+      expect(wrapper.find(Hero)).toHaveLength(1)
     })
   })
 
