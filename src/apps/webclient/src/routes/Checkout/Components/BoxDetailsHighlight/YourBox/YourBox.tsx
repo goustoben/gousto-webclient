@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import styled from '@emotion/styled'
 import {
   AlignItems,
   BorderStyle,
@@ -8,28 +7,14 @@ import {
   Color,
   Display,
   FlexDirection,
-  JustifyContent,
   Icon,
+  JustifyContent,
 } from '@gousto-internal/citrus-react'
 
 import { SectionHeading } from '../SharedComponents'
+import { ExpandContainer, ChevronIconContainer } from './styled'
 import { useGetYourBoxData } from './yourBoxHooks'
-import { getRecipeTileResponsiveSize, getRecipeTileResponsiveGaps } from './yourBoxUtils'
-
-const ExpandContainer = styled.div(() => ({
-  cursor: 'pointer',
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-}))
-
-type ChevronIconContainerProps = { expanded: boolean }
-const ChevronIconContainer = styled.div(({ expanded }: ChevronIconContainerProps) => ({
-  transition: 'ease-out .3s',
-  transform: `rotateX(${expanded ? '180deg' : '90deg'})`,
-}))
+import { getRecipeTileResponsiveGaps, getRecipeTileResponsiveSize } from './yourBoxUtils'
 
 export const YourBox = () => {
   const [expanded, setExpanded] = useState(false)
@@ -46,16 +31,16 @@ export const YourBox = () => {
         alignItems={AlignItems.FlexStart}
       >
         <ExpandContainer onClick={() => setExpanded(!expanded)}>
-          <SectionHeading text={`Your box (${numPortions} people)`} smallBottomOffset />
+          <SectionHeading text={`Your box (${numPortions} people)`} noBottomOffset />
           <ChevronIconContainer expanded={expanded}>
             <Icon name="chevron_down" />
           </ChevronIconContainer>
         </ExpandContainer>
         <Box
           display={Display.Flex}
-          flexDirection={FlexDirection.Row}
+          flexDirection={expanded ? FlexDirection.Column : FlexDirection.Row}
           justifyContent={JustifyContent.FlexStart}
-          alignItems={AlignItems.Center}
+          alignItems={expanded ? AlignItems.FlexStart : AlignItems.Center}
           gap={recipeTileGapResponsiveSize}
           width="100%"
         >
