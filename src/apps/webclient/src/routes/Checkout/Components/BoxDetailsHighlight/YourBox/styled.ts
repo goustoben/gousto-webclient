@@ -51,17 +51,12 @@ export const ChevronIconContainer = styled.div(({ expanded }: BaseProps) => ({
   } ease-out`,
 }))
 
-type RecipesContainerProps = BaseProps & {
-  fiveRecipes: boolean
-}
-const getRecipesContainerGapBasedOnRecipesNum = (fiveRecipes: boolean) =>
-  fiveRecipes ? '0.25rem' : '1rem'
-export const RecipesContainer = styled.div(({ expanded, fiveRecipes }: RecipesContainerProps) => ({
+export const RecipesContainer = styled.div(({ expanded }: BaseProps) => ({
   transition: `ease-out ${expanded ? '100ms' : '300ms'}`,
   display: 'flex',
   flexDirection: expanded ? 'column' : 'row',
-  justifyContent: 'flex-start',
+  justifyContent: expanded ? 'flex-start' : 'space-between',
   alignItems: expanded ? 'flex-start' : 'center',
   width: '100%',
-  gap: expanded ? '0.5rem' : getRecipesContainerGapBasedOnRecipesNum(fiveRecipes),
+  gap: '0.5rem',
 }))
