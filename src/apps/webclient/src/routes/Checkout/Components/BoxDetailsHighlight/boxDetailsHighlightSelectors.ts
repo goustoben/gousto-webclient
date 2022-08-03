@@ -10,9 +10,10 @@ type StateTypePlaceholder = {
 }
 
 const getBasketRecipes = ({ basket }: StateTypePlaceholder) => basket.get('recipes')
-export const getBasketRecipesSelector = createSelector(getBasketRecipes, (recipes) =>
-  (recipes as Immutable.Map<string, number>).keySeq().toArray(),
-)
+export const getBasketRecipesSelector = createSelector(getBasketRecipes, (recipes) => ({
+  recipes,
+  recipesIds: (recipes as Immutable.Map<string, number>).keySeq().toArray(),
+}))
 
 const getStoreRecipes = ({ menuRecipeStock, menuBoxPrices, recipes }: StateTypePlaceholder) => ({
   menuRecipeStock,
