@@ -11,19 +11,19 @@ import { BoxPricesComponent } from 'routes/BoxPrices/BoxPricesComponent'
 
 import numPersonsToBoxDescriptors from './__mocks__/numPersonsToBoxDescriptors.json'
 
-jest.mock('containers/OptimizelyRollouts', () => ({
-  isOptimizelyFeatureEnabledFactory: jest.fn().mockImplementation(() => async () => false),
-  useIsOptimizelyFeatureEnabled: jest.fn().mockReturnValue(false),
-  OptimizelyFeature: () => null,
-}))
-
 jest.mock('actions/menu', () => ({
   menuLoadBoxPrices: jest.fn(),
 }))
 
-const mockStore = configureMockStore()
-const store = mockStore({
+const store = configureMockStore()({
   auth: Immutable.fromJS({}),
+  basket: Immutable.fromJS({}),
+  menu: Immutable.fromJS({
+    menuLimits: [],
+  }),
+  menuRecipeDetails: Immutable.fromJS({}),
+  tracking: Immutable.fromJS({}),
+  menuCollections: Immutable.fromJS({}),
 })
 
 describe('BoxPrices', () => {

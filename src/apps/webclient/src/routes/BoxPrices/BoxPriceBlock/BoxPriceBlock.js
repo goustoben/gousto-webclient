@@ -19,9 +19,9 @@ const BoxPriceBlock = ({
   selectedBox,
   trackUTMAndPromoCode,
 }) => {
-  const [selectedIndex, setSelectedIndex] = useState(2)
-  const boxTypeConfig = boxTypes[numPersons]
-  const { title, boxSizeTrackingValue } = boxTypeConfig
+  const recipesLeftTrackingIndex = boxInfo.length - 1
+  const [selectedIndex, setSelectedIndex] = useState(recipesLeftTrackingIndex)
+  const { title, boxSizeTrackingValue } = boxTypes[numPersons]
 
   return (
     <div className={numPersons === selectedBox ? css.containerActive : css.container}>
@@ -51,10 +51,10 @@ const BoxPriceBlock = ({
             )
           })}
         </div>
-        {2 - selectedIndex > 0 ? (
+        {recipesLeftTrackingIndex - selectedIndex > 0 ? (
           <div className={css.selectDescription}>
-            {`Select ${2 - selectedIndex} more recipe${
-              selectedIndex === 1 ? '' : 's'
+            {`Select ${recipesLeftTrackingIndex - selectedIndex} more recipe${
+              selectedIndex === recipesLeftTrackingIndex - 1 ? '' : 's'
             } for the best price`}
           </div>
         ) : (
