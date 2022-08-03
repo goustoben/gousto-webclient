@@ -12,15 +12,14 @@ import {
 } from '@gousto-internal/citrus-react'
 
 import { SectionHeading } from '../SharedComponents'
-import { ExpandContainer, ChevronIconContainer } from './styled'
+import { ExpandContainer, ChevronIconContainer, RecipesContainer } from './styled'
 import { useGetYourBoxData } from './yourBoxHooks'
-import { getRecipeTileResponsiveGaps, getRecipeTileResponsiveSize } from './yourBoxUtils'
+import { getRecipeTileResponsiveSize } from './yourBoxUtils'
 
 export const YourBox = () => {
   const [expanded, setExpanded] = useState(false)
   const { numPortions, maxRecipesNum, recipesList } = useGetYourBoxData()
   const recipeTileResponsiveSize = getRecipeTileResponsiveSize(maxRecipesNum, expanded)
-  const recipeTileGapResponsiveSize = getRecipeTileResponsiveGaps(maxRecipesNum, expanded)
 
   return (
     <>
@@ -36,14 +35,7 @@ export const YourBox = () => {
             <Icon name="chevron_down" />
           </ChevronIconContainer>
         </ExpandContainer>
-        <Box
-          display={Display.Flex}
-          flexDirection={expanded ? FlexDirection.Column : FlexDirection.Row}
-          justifyContent={JustifyContent.FlexStart}
-          alignItems={expanded ? AlignItems.FlexStart : AlignItems.Center}
-          gap={recipeTileGapResponsiveSize}
-          width="100%"
-        >
+        <RecipesContainer expanded={expanded} fiveRecipes={maxRecipesNum === 5}>
           {recipesList.map((recipeId) => (
             <Box
               key={recipeId}
@@ -56,7 +48,7 @@ export const YourBox = () => {
               {recipeId ? <div>{recipeId}</div> : null}
             </Box>
           ))}
-        </Box>
+        </RecipesContainer>
       </Box>
     </>
   )
