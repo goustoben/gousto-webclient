@@ -49,6 +49,22 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add(
+  "setGoustoCookie",
+  (
+    name: string,
+    value: Record<string, unknown>,
+    opts?: { version: number }
+  ) => {
+    const version = opts ? opts.version : 1;
+
+    return cy.setCookie(
+      `v${version}_${name}`,
+      encodeURIComponent(JSON.stringify(value))
+    );
+  }
+);
+
 // WIP
 // Cypress.Commands.add(
 //   "clickWhereParentDoesntContain",

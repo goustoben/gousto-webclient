@@ -1,12 +1,10 @@
 beforeEach(() => {
-  // TODO - add this to utility
-  cy.setCookie(
-    "v1_cookie_policy_v2",
-    encodeURIComponent(JSON.stringify({ isAccepted: true }))
-  );
+  // Hide cookie banner
+  cy.setGoustoCookie("cookie_policy_v2", { isAccepted: true });
 
-  cy.setCookie(
-    "v1_tutorial_viewed",
-    encodeURIComponent(JSON.stringify({ justforyou: 1, likedislikerecipes: 1 }))
-  );
+  // Hide tutorial overlays
+  cy.setGoustoCookie("tutorial_viewed", {
+    justforyou: 1,
+    likedislikerecipes: 1,
+  });
 });
