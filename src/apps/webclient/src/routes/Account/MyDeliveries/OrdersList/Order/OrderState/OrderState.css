@@ -80,9 +80,9 @@
 }
 
 .iconConfirmed {
-	composes: green;
+  composes: green;
 	composes: icon;
-	composes: fa-basic-class fa-check-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-arrow-circle-right from 'styles/vendor/font-awesome-module.css';
 }
 
 .iconCancelled {
@@ -99,4 +99,5 @@
 
 .orderStateWrap {
 	composes: paddingSMTop paddingXXSTop from 'sass-loader!styles/spacing.scss';
+  display: flex;
 }

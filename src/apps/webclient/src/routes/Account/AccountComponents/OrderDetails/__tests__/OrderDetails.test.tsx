@@ -27,7 +27,7 @@ describe('<OrderDetails />', () => {
     )
   })
 
-  it(`should display price in a human readble format if price property exists`, async () => {
+  it(`should display price in a human readable format if price property exists`, async () => {
     const price = 1532.57
     const { findByTestId } = render(<OrderDetails deliveryDate={TODAY} price={price} />)
     const { textContent } = await findByTestId('price')
@@ -37,7 +37,6 @@ describe('<OrderDetails />', () => {
 
   it.each([
     ['cancelled' as OrderState, Color.Primary_500],
-    ['confirmed' as OrderState, Color.Success_500],
     ['delivered' as OrderState, Color.Success_500],
     ['dispatched' as OrderState, Color.Success_500],
     ['menu open' as OrderState, Color.Warning_500],
@@ -49,6 +48,14 @@ describe('<OrderDetails />', () => {
 
     expect(element.textContent).toBe(state)
     expect(element).toHaveStyle({ color: colors[color] })
+  })
+
+  it(`then the order status reads "We're preparing your box" with a grey font`, async () => {
+    const { findByTestId } = render(<OrderDetails deliveryDate={TODAY} orderState="confirmed" />)
+    const element = await findByTestId('order-state')
+
+    expect(element.textContent).toBe("We're preparing your box")
+    expect(element).toHaveStyle({ color: colors[Color.ColdGrey_600] })
   })
 
   it(`should render 4 empty placeholder images by default if list is empty`, async () => {

@@ -91,25 +91,6 @@ describe('OrderStatus', () => {
       expect(wrapper.text()).toContain('6 days left to edit this box')
     })
 
-    test('should render a <p> with the correct copy for orderState=confirmed', () => {
-      orderStateSample = 'confirmed'
-
-      wrapper = shallow(
-        <OrderStatus
-          orderState={orderStateSample}
-          whenCutoff={whenCutoff}
-          whenMenuOpen={whenMenuOpen}
-        />,
-      )
-      expect(wrapper.type()).toContain('div')
-      expect(
-        wrapper
-          .find(Content)
-          .first()
-          .props().contentKeys,
-      ).toEqual('myDeliveriesOrderOrderStatusConfirmed')
-    })
-
     test('should render a <p> with the correct copy for orderState=dispatched', () => {
       orderStateSample = 'dispatched'
 
