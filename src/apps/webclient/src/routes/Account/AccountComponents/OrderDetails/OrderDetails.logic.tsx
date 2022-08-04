@@ -18,6 +18,7 @@ import { formatPrice } from 'utils/format'
 import timeFormat from 'utils/timeFormat'
 
 import type { OrderState } from '../../../types'
+import { ORDER_STATE_TO_COLOR_MAPPING } from '../enum/enum'
 
 interface ImageSource {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -40,16 +41,6 @@ interface OrderDetailsProps {
  * Default number of recipe slots rendered in a single row
  */
 const DEFAULT_MAX_RECIPE_NUMBER = 4
-
-const ORDER_STATE_TO_COLOR_MAPPING: Record<OrderState, Color> = {
-  cancelled: Color.Primary_500,
-  confirmed: Color.Success_500,
-  delivered: Color.Success_500,
-  dispatched: Color.Success_500,
-  'menu open': Color.Warning_500,
-  'recipes chosen': Color.Success_500,
-  scheduled: Color.Success_500,
-}
 
 const RecipeImageBox = ({ src, alt }: ImageSource) => (
   <AspectRatio ratio={1}>
@@ -102,7 +93,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = (props: OrderDetailsProps) => 
           color={ORDER_STATE_TO_COLOR_MAPPING[orderState]}
           data-testid="order-state"
         >
-          {orderState}
+          {orderState === 'confirmed' ? "We're preparing your box" : orderState}
         </Text>
       ) : null}
 

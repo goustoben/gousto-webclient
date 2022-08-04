@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Content from 'containers/Content'
+import { Space } from '@gousto-internal/citrus-react'
 import css from './OrderStatus.css'
 
 const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
@@ -33,11 +34,7 @@ const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
       )
       : null}
     {orderState === 'confirmed' ? (
-      <p className={css.orderStatus}>
-        <Content contentKeys="myDeliveriesOrderOrderStatusConfirmed">
-          <span>This box is being prepared</span>
-        </Content>
-      </p>
+      <Space size={2} />
     ) : null}
     {orderState === 'dispatched' ? (
       <p className={css.orderStatus}>
