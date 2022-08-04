@@ -10,6 +10,7 @@ import {
 } from '@gousto-internal/citrus-react'
 
 import { SectionHeading } from '../SharedComponents'
+import { Benefits } from './Benefits'
 import { RecipeList } from './RecipeList'
 import { ExpandContainer, ChevronIconContainer } from './styled'
 import { useGetYourBoxData } from './yourBoxHooks'
@@ -34,6 +35,8 @@ export const YourBox = () => {
         </ExpandContainer>
 
         <RecipeList expanded={expanded} />
+
+        <Benefits />
       </Box>
     </>
   )
