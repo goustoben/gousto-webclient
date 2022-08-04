@@ -1,7 +1,14 @@
-import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
+import { useAuth } from 'routes/Menu/domains/auth'
 
+/**
+ * Indicate if Categories Navigation Bar should be rendered in "Double Decker" style.
+ *
+ * Based on initial experiment product ownership decided to show "Double Decker"
+ * navigation to prospect customers only. Whereas existing customers should be
+ * treated with original UI.
+ */
 export const useDoubleDeckerNav = (): boolean | null => {
-  const featureValue = useIsOptimizelyFeatureEnabled('kales_double_decker_navbar')
+  const { isAuthenticated } = useAuth()
 
-  return featureValue
+  return !isAuthenticated
 }
