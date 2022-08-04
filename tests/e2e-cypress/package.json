@@ -6,6 +6,8 @@
   "scripts": {
     "cypress:open": "cypress open",
     "test": "cypress run --headless"
+    "lint": "yarn run -T eslint .",
+    "type-check": "tsc --noEmit"
   },
   "author": "maxhilliard",
   "license": "ISC",
