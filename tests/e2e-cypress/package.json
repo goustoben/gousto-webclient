@@ -4,8 +4,8 @@
   "description": "Cypress e2e tests",
   "main": "index.js",
   "scripts": {
-    "cypress:open": "cypress open",
-    "test": "cypress run --headless"
+    "cypress:open": "cypress open --browser electron --e2e",
+    "test": "cypress run",
     "lint": "yarn run -T eslint .",
     "type-check": "tsc --noEmit"
   },
