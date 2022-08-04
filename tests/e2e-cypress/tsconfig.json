@@ -4,7 +4,8 @@
     "lib": ["es5", "dom"],
     "types": ["cypress", "@testing-library/cypress", "jest", "node"],
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "./types/cypress.d.ts"]
 }

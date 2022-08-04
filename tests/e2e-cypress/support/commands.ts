@@ -1,16 +1,6 @@
 import "@testing-library/cypress/add-commands";
 import "cypress-wait-until";
-
-import { RouteMatcher, StringMatcher } from "cypress/types/net-stubbing";
-
-Cypress.Commands.add("getInputByLabel", (label: string) =>
-  cy
-    .contains("label", label)
-    .invoke("attr", "for")
-    .then((id) => {
-      cy.get(`#${id}`);
-    })
-);
+import type { RouteMatcher, WaitOptions } from "cypress/types/net-stubbing";
 
 Cypress.Commands.add(
   "selectNthOption",
@@ -32,9 +22,9 @@ Cypress.Commands.add("getIframeBody", (iframeSelector: string) => {
 Cypress.Commands.add(
   "actAndWaitForInterceptors",
   (
-    action: () => Cypress.Chainable,
-    interceptors: Array<RouteMatcher | StringMatcher>,
-    waitOptions?: { timeout: number } // WaitOptions isn't exported by Cypress
+    action: () => void,
+    interceptors: Array<RouteMatcher>,
+    waitOptions?: Partial<WaitOptions>
   ) => {
     // Configure interceptors prior to acting
     const interceptorAliases = interceptors.map((route, idx) => {
