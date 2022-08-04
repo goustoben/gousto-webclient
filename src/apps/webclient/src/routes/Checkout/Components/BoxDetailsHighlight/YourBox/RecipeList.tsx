@@ -58,9 +58,9 @@ export const RecipeList = ({ expanded }: Props) => {
       {recipesIdsList.map((recipeId) => (
         <Box
           key={recipeId}
-          width={recipeTileResponsiveSize}
+          width={expanded ? '100%' : recipeTileResponsiveSize}
           height={recipeTileResponsiveSize}
-          borderStyle={!recipeId ? BorderStyle.Dashed : undefined}
+          borderStyle={expanded ? undefined : !recipeId ? BorderStyle.Dashed : undefined}
           borderWidth={1}
           borderColor={Color.ColdGrey_800}
         >
