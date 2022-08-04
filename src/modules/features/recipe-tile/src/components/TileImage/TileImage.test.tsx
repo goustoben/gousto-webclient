@@ -5,6 +5,9 @@ import { render, screen, cleanup } from "@testing-library/react";
 import { RecipeTileDependencies } from "../../model/context";
 import { Image } from "../../model/recipe";
 import { TileImage } from "./TileImage";
+import Immutable from 'immutable'
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store'
 
 const images: Image[] = [
   {
@@ -41,11 +44,30 @@ const defaultGetAlternativeOptionsForRecipe = jest
     },
   ]);
 
+const createMockStore = () => {
+  const state = {
+    auth: Immutable.fromJS({
+      accessToken: '',
+      isAdmin: false,
+      id: undefined,
+    })
+  }
+
+  const mockStore = configureMockStore()
+
+  const store = mockStore(state)
+
+  store.dispatch = jest.fn().mockReturnValue(Promise.resolve())
+
+  return store
+}
+
 const renderComponent = ({
   isRecipeOutOfStock = false,
   cookingTime = 0,
 }: { isRecipeOutOfStock?: boolean; cookingTime?: number } = {}) =>
   render(
+    <Provider store={createMockStore()}>
     <RecipeTileDependencies
       recipe={{
         id: "111",
@@ -90,6 +112,7 @@ const renderComponent = ({
     >
       <TileImage categoryId="abcde" />
     </RecipeTileDependencies>
+    </Provider>
   );
 
 describe("<TileImage />", () => {
