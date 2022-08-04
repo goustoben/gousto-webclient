@@ -3,6 +3,27 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import { RecipeTileDependencies } from "../../model/context";
 import { RecipeTile } from ".";
+import Immutable from 'immutable'
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store'
+
+const createMockStore = (userId: string | undefined = undefined) => {
+  const state = {
+    auth: Immutable.fromJS({
+      accessToken: '',
+      isAdmin: false,
+      id: userId,
+    })
+  }
+
+  const mockStore = configureMockStore()
+
+  const store = mockStore(state)
+
+  store.dispatch = jest.fn().mockReturnValue(Promise.resolve())
+
+  return store
+}
 
 const defaultGetAlternativeOptionsForRecipe = jest
   .fn()
@@ -37,70 +58,74 @@ const renderComponent = ({
   isRecipeOutOfStock = false,
   surcharge = 0,
   getAlternativeOptionsForRecipe = defaultGetAlternativeOptionsForRecipe,
+  userId,
 }: {
   isRecipeOutOfStock?: boolean;
   surcharge?: number;
   getAlternativeOptionsForRecipe?: typeof defaultGetAlternativeOptionsForRecipe;
+  userId?: string
 } = {}) =>
   render(
-    <RecipeTileDependencies
-      recipe={{
-        id: "some_recipe_one",
-        title: "cool test recipe title",
-        isFineDineIn: false,
-        tagline: "new-eme",
-      }}
-      useGetAlternativeOptionsForRecipe={() => getAlternativeOptionsForRecipe}
-      useStock={() => ({
-        isRecipeOutOfStock: () => isRecipeOutOfStock,
-      })}
-      useBasket={() => ({
-        canAddRecipes: true,
-        addRecipe: jest.fn(),
-        removeRecipe: jest.fn(),
-        reachedLimit: true,
-        isRecipeInBasket: () => false,
-      })}
-      useSetBrowserCTAVisibility={() => ({
-        setBrowserCTAVisible: () => false,
-      })}
-      useTracking={() => ({
-        useTrackVariantListDisplay: () => false,
-        useTrackingSwapAlternativeOptions: () => ({
-          trackRecipeAlternativeOptionsMenuOpen: () => false,
-          trackRecipeAlternativeOptionsMenuSwapRecipes: () => false,
-        }),
-        track: () => {},
-      })}
-      useGetSurchargeForRecipeId={() => surcharge}
-      useRecipeBrand={() => ({
-        useRecipeBrandAvailabilityTag: () => ({
-          slug: "slug",
-          text: "cool tag",
-          theme: {
-            name: "boom",
-            color: "red",
-            borderColor: "red",
-          },
-        }),
-        useRecipeBrandTag: () => ({
-          slug: "slug",
-          text: "NEW",
-          theme: {
-            name: "boom",
-            color: "red",
-            borderColor: "red",
-          },
-        }),
-      })}
-      useGetRecipeTileLinkData={() => ({
-        isRecipeTileLinkVisible: true,
-        dispatchTrackClickMoreRecipeDetails: jest.fn(),
-      })}
-      useMakeOnCheckRecipe={() => () => () => {}}
-    >
-      <RecipeTile {...defaultProps} />
-    </RecipeTileDependencies>
+    <Provider store={createMockStore(userId)}>
+      <RecipeTileDependencies
+        recipe={{
+          id: "some_recipe_one",
+          title: "cool test recipe title",
+          isFineDineIn: false,
+          tagline: "new-eme",
+        }}
+        useGetAlternativeOptionsForRecipe={() => getAlternativeOptionsForRecipe}
+        useStock={() => ({
+          isRecipeOutOfStock: () => isRecipeOutOfStock,
+        })}
+        useBasket={() => ({
+          canAddRecipes: true,
+          addRecipe: jest.fn(),
+          removeRecipe: jest.fn(),
+          reachedLimit: true,
+          isRecipeInBasket: () => false,
+        })}
+        useSetBrowserCTAVisibility={() => ({
+          setBrowserCTAVisible: () => false,
+        })}
+        useTracking={() => ({
+          useTrackVariantListDisplay: () => false,
+          useTrackingSwapAlternativeOptions: () => ({
+            trackRecipeAlternativeOptionsMenuOpen: () => false,
+            trackRecipeAlternativeOptionsMenuSwapRecipes: () => false,
+          }),
+          track: () => {},
+        })}
+        useGetSurchargeForRecipeId={() => surcharge}
+        useRecipeBrand={() => ({
+          useRecipeBrandAvailabilityTag: () => ({
+            slug: "slug",
+            text: "cool tag",
+            theme: {
+              name: "boom",
+              color: "red",
+              borderColor: "red",
+            },
+          }),
+          useRecipeBrandTag: () => ({
+            slug: "slug",
+            text: "NEW",
+            theme: {
+              name: "boom",
+              color: "red",
+              borderColor: "red",
+            },
+          }),
+        })}
+        useGetRecipeTileLinkData={() => ({
+          isRecipeTileLinkVisible: true,
+          dispatchTrackClickMoreRecipeDetails: jest.fn(),
+        })}
+        useMakeOnCheckRecipe={() => () => () => {}}
+      >
+        <RecipeTile {...defaultProps} />
+      </RecipeTileDependencies>
+    </Provider>
   );
 
 describe("RecipeTile", () => {
@@ -144,12 +169,20 @@ describe("RecipeTile", () => {
       expect(screen.getByText("Add recipe")).toBeInTheDocument();
     });
 
-    test("should contain Like and Dislike buttons as the feature flag is true", () => {
-      renderComponent();
+    test("should contain Like and Dislike buttons if authUserId is present", () => {
+      renderComponent({ userId: 'user-is-logged-in'});
       const likeButton = screen.queryByRole('button', { name: 'thumb-up'});
       const dislikeButton = screen.queryByRole('button', { name: 'thumb-down'});
       expect(likeButton).toBeInTheDocument();
       expect(dislikeButton).toBeInTheDocument();
+    });
+
+    test("should not contain Like and Dislike buttons if authUserId is not present", () => {
+      renderComponent();
+      const likeButton = screen.queryByRole('button', { name: 'thumb-up'});
+      const dislikeButton = screen.queryByRole('button', { name: 'thumb-down'});
+      expect(likeButton).not.toBeInTheDocument();
+      expect(dislikeButton).not.toBeInTheDocument();
     });
   });
 

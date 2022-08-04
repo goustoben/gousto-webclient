@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import { isLikeDislikeFeatureEnabled } from './isLikeDislikeFeatureEnabled'
 import { useRecipe } from '../../model/context'
 import { useTrackingHook } from '../../model/context/useTracking'
+import { useAuth } from '../../utils/auth'
 
 import { cssLikeDislikeButtons, cssLikeButton, cssDislikeButton, cssThumb } from './styles'
 
@@ -46,6 +47,7 @@ export const LikeDislikeButtons = () => {
   const useTracking = useTrackingHook()
   const { track } = useTracking()
   const { id: recipeId } = useRecipe()
+  const { authUserId } = useAuth()
 
   const handleOnClickLike = useCallback(
     (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
@@ -74,6 +76,10 @@ export const LikeDislikeButtons = () => {
   )
 
   if (!isLikeDislikeFeatureEnabled()) {
+    return null
+  }
+
+  if (!authUserId) { // feature available for logged in users only
     return null
   }
 
