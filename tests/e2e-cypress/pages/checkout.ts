@@ -57,18 +57,18 @@ class Checkout extends Page {
   }
 
   clickStartYourSubscription(opts: { type: "card" | "paypal" }) {
-    cy.actAndWaitForInterceptors(
-      () => {
-        cy.findByText(/Start your subscription/i).click();
-      },
-      [
-        {
-          method: "POST",
-          url: "**/payments/v1/payments/payment-auth*",
-        },
-      ],
-      { timeout: 120_000 }
-    );
+    if (opts.type === "card") {
+      cy.actAndWaitForInterceptors(
+        () => cy.findByText(/Start your subscription/i).click(),
+        [
+          {
+            method: "POST",
+            url: "**/payments/v1/payments/payment-auth*",
+          },
+        ],
+        { timeout: 120_000 }
+      );
+    }
   }
 
   clickPayWithPayPal() {

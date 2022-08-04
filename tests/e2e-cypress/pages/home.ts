@@ -6,7 +6,8 @@ class Home extends Page {
   }
 
   clickGetStarted() {
-    cy.get('[data-testing="homepageHeroCTA"]').click()
+    cy.waitUntilDOMAttachmentStable('[data-testing="homepageHeroCTA"]');
+    cy.get('[data-testing="homepageHeroCTA"]').click();
   }
 }
 

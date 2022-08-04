@@ -17,7 +17,6 @@ class Signup extends Page {
     cy.findByText(/Select /).click();
   }
 
-  // Make this specific to role, not text?
   clickSeeThisWeeksMenu() {
     cy.findByText(/See this week’s menu/i).click();
   }
