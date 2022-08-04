@@ -28,6 +28,9 @@ export function useTracking() {
     ({ menuService }) =>
       menuService.meta.recommendations && menuService.meta.recommendations.version,
   )
+  const recommendationId = useSelector(
+    ({ menuService }) => menuService.meta.recommendations && menuService.meta.recommendations.id,
+  )
 
   return useCallback(
     (collectionId, displayedOrder) => {
@@ -56,6 +59,7 @@ export function useTracking() {
           orderId,
           browseMode,
           recommenderVersion,
+          recommendationId,
           currentMenuId,
           transactionType,
           severedVariantExperimentBucket,
@@ -75,6 +79,7 @@ export function useTracking() {
       orderId,
       browseMode,
       recommenderVersion,
+      recommendationId,
     ],
   )
 }
