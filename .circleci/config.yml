@@ -392,19 +392,8 @@ jobs:
   test-regression:
     parameters:
       platform:
-        type: string
-      test_command:
-        type: string
-        default: ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/apps/webclient/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
-      test_directory:
-        type: string
-        default: tests/regression
-      application_base_url:
-        type: string
-        default: http://frontend.gousto.local:80
-      test_node_options:
-        type: string
-        default: --max-http-header-size=1000000
+        type: enum
+        enum: ["web", "mobile"]
     executor: circleci_node_browsers_image
     resource_class: large
     working_directory: /mnt/ramdisk
@@ -415,10 +404,6 @@ jobs:
       - run:
           name: Set env file
           command: mv src/apps/webclient/server/.env.regression src/apps/webclient/server/.env
-      - run:
-          name: Build local application
-          working_directory: src/apps/webclient
-          command: npm run build
       - run:
           name: Update local DNS configuration
           command: echo '127.0.0.1 frontend.gousto.local' >> /etc/hosts
@@ -431,36 +416,19 @@ jobs:
           name: Wait for application to be ready
           working_directory: scripts
           command: ./waitForHttpPath.sh 80 / 10
-      - when:
-          condition:
-            equal: [web, << parameters.platform >>]
-          steps:
-            - run:
-                name: Run regression tests
-                working_directory: << parameters.test_directory >>
-                command: << parameters.test_command >>
-                environment:
-                  CYPRESS_baseUrl: << parameters.application_base_url >>
-                  CYPRESS_platform: << parameters.platform >>
-                  NODE_OPTIONS: << parameters.test_node_options >>
-      - when:
-          condition:
-            equal: [mobile, << parameters.platform >>]
-          steps:
-            - run:
-                name: Run regression tests
-                working_directory: << parameters.test_directory >>
-                command: << parameters.test_command >>
-                environment:
-                  CYPRESS_baseUrl: << parameters.application_base_url >>
-                  CYPRESS_viewportWidth: 375
-                  CYPRESS_viewportHeight: 667
-                  CYPRESS_platform: << parameters.platform >>
-                  NODE_OPTIONS: << parameters.test_node_options >>
+      - run:
+          name: Run regression tests
+          working_directory: tests/regression
+          command: |
+            TESTS=$(circleci tests glob "../../src/apps/webclient/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)
+            yarn test:<< parameters.platform >> --spec $TESTS --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
+          environment:
+            CYPRESS_baseUrl: http://frontend.gousto.local:80
+            NODE_OPTIONS: --max-http-header-size=1000000
       - run:
           name: Create reports
           when: on_fail
-          working_directory: << parameters.test_directory >>
+          working_directory: tests/regression
           command: yarn report
       - store_test_results:
           path: /mnt/ramdisk/tests/regression/test_results/cypress
@@ -517,19 +485,24 @@ workflows:
           requires:
             - setup-ci-variables-scripts
 
+      - build-webclient:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
       - test-regression:
           name: test-regression-web
           platform: web
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
+            - build-webclient
 
       - test-regression:
           name: test-regression-mobile
           platform: mobile
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
+            - build-webclient
 
   e2e-daily:
     when:
@@ -638,14 +611,14 @@ workflows:
           platform: web
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
+            - build-webclient
 
       - test-regression:
           name: test-regression-mobile
           platform: mobile
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
+            - build-webclient
 
       - publish-code-health:
           context: gousto-beta-aws-app-circleci
