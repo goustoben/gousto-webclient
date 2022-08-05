@@ -5,6 +5,8 @@ into higher level middleware.
 
 Learn about using requests in the [user-guide](user-guide.md).
 
+- [High level middleware](#high-level-middleware)
+  - [auth](#auth)
 - [Low level middleware](#low-level-middleware)
   - [addPath](#addpath)
   - [setHeader](#setheader)
@@ -13,6 +15,12 @@ Learn about using requests in the [user-guide](user-guide.md).
   - [setMethod](#setmethod)
   - [setQueryParam](#setqueryparam)
   - [setQueryParams](#setqueryparams)
+
+## High level middleware
+
+### auth
+
+When the request is made, sets the `Authorization` HTTP header to `Bearer ${token}` using `@library/auth`.
 
 ## Low level middleware
 
