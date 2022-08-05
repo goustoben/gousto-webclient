@@ -29,6 +29,7 @@ type StoryArgs = {
   };
   variantsCheckedIndex: number;
   isRecipeTileLinkVisible: boolean;
+  loggedIn: boolean;
 };
 
 type RecipeTileStory = (args: StoryArgs) => ReturnType<typeof RecipeTile>;
@@ -50,6 +51,7 @@ export default {
     (Story, { args }) => {
       const {
         recipe,
+        useAuth,
         useStock,
         useGetAlternativeOptionsForRecipe,
         useBasket,
@@ -89,12 +91,14 @@ export default {
         brandTagText: args.brandTag,
         brandTagColor: args.brandTagColor,
         isRecipeTileLinkVisible: args.isRecipeTileLinkVisible,
+        loggedIn: args.loggedIn,
       });
 
       return (
         <RecipeTileDependencies
           recipe={recipe}
           useGetAlternativeOptionsForRecipe={useGetAlternativeOptionsForRecipe}
+          useAuth={useAuth}
           useStock={useStock}
           useBasket={useBasket}
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
@@ -236,5 +240,10 @@ export default {
       control: "boolean",
       defaultValue: false,
     },
+    loggedIn: {
+      name: "Is user logged in",
+      control: "boolean",
+      defaultValue: false,
+    }
   },
 } as ComponentMeta<RecipeTileStory>;

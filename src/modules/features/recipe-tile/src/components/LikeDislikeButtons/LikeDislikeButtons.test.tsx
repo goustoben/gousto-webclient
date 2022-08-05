@@ -5,33 +5,18 @@ import { LikeDislikeButtons } from "./LikeDislikeButtons";
 import { isLikeDislikeFeatureEnabled } from './isLikeDislikeFeatureEnabled'
 import { RecipeContextProvider } from "../../model/context";
 import { UseTrackingContextProvider } from "../../model/context/useTracking";
-import Immutable from 'immutable'
-import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store'
+import { UseAuthContextProvider } from "../../model/context/useAuth";
 
 jest.mock('./isLikeDislikeFeatureEnabled');
 
-const createMockStore = (userId: string | undefined) => {
-  const state = {
-    auth: Immutable.fromJS({
-      accessToken: '',
-      isAdmin: false,
-      id: userId,
-    })
-  }
-
-  const mockStore = configureMockStore()
-
-  const store = mockStore(state)
-
-  store.dispatch = jest.fn().mockReturnValue(Promise.resolve())
-
-  return store
-}
-
 const renderComponent = (userId: string | undefined = undefined) =>
   render(
-    <Provider store={createMockStore(userId)}>
+    <UseAuthContextProvider value={() => ({
+      authUserId: userId,
+      accessToken: '',
+      isAdmin: false,
+      isAuthenticated: !!userId
+    })}>
       <RecipeContextProvider value={{ id: 'some_id', title: 'Test recipe title' }}>
         <UseTrackingContextProvider
           value={() => ({
@@ -43,14 +28,14 @@ const renderComponent = (userId: string | undefined = undefined) =>
           <LikeDislikeButtons />
         </UseTrackingContextProvider>
       </RecipeContextProvider>
-    </Provider>,
+    </UseAuthContextProvider>
   )
 
 describe("LikeDislikeButtons", () => {
   beforeEach(() => {
     (isLikeDislikeFeatureEnabled as jest.Mock).mockReturnValue(true);
   })
-  
+
   afterEach(() => {
     cleanup();
     jest.clearAllMocks();
@@ -62,13 +47,13 @@ describe("LikeDislikeButtons", () => {
         renderComponent('user-is-logged-in');
         expect(screen.getByLabelText('thumb-up-unfilled')).toBeInTheDocument()
       });
-  
+
       test("dislike icon should be unfilled", () => {
         renderComponent('user-is-logged-in');
         expect(screen.getByLabelText('thumb-down-unfilled')).toBeInTheDocument()
       });
     });
-  
+
     describe("when unfilled icon is clicked", () => {
       test("unfilled like icon should become filled", () => {
         const { getByLabelText } = renderComponent('user-is-logged-in');
@@ -81,7 +66,7 @@ describe("LikeDislikeButtons", () => {
         expect(getByLabelText('thumb-down-filled')).toBeInTheDocument()
       });
     });
-  
+
     describe("when unfilled icon is clicked twice", () => {
       test("like icon should be unfilled", () => {
         const { getByLabelText } = renderComponent('user-is-logged-in');
@@ -90,7 +75,7 @@ describe("LikeDislikeButtons", () => {
         expect(getByLabelText('thumb-up-unfilled')).toBeInTheDocument()
         expect(getByLabelText('thumb-down-unfilled')).toBeInTheDocument()
       });
-  
+
       test("dislike icon should be unfilled", () => {
         const { getByLabelText } = renderComponent('user-is-logged-in');
         fireEvent.click(screen.getByLabelText('thumb-down-unfilled'))
@@ -98,9 +83,9 @@ describe("LikeDislikeButtons", () => {
         expect(getByLabelText('thumb-up-unfilled')).toBeInTheDocument()
         expect(getByLabelText('thumb-down-unfilled')).toBeInTheDocument()
       });
-  
+
     });
-  
+
     describe("when like is clicked, then dislike is clicked", () => {
       test("like should be unfilled and dislike filled", () => {
         const { getByLabelText } = renderComponent('user-is-logged-in');

@@ -25,6 +25,7 @@ export const getMocks = ({
   brandTagColor,
   isRecipeTileLinkVisible = false,
   onTrack = () => { },
+  loggedIn = false,
 }: {
   alternativeCheckedIndex?: number;
   alternativeOutOfStockFlags?: boolean[];
@@ -44,7 +45,8 @@ export const getMocks = ({
   brandTagText?: string
   brandTagColor?: string
   isRecipeTileLinkVisible?: boolean
-  onTrack?: () => void
+  onTrack?: () => void,
+  loggedIn?: boolean,
 } = {}) => {
   const recipe: Recipe = {
     id: "12345",
@@ -74,6 +76,13 @@ export const getMocks = ({
     },
     tagline: 'new-eme',
   };
+
+  const useAuth = () => ({
+    accessToken: loggedIn ? 'accessToken' : undefined,
+    authUserId:  loggedIn ? 'authUserId' : undefined,
+    isAdmin: false,
+    isAuthenticated: !!loggedIn,
+  })
 
   const useStock = () => ({
     isRecipeOutOfStock: () => isRecipeOutOfStock,
@@ -143,6 +152,7 @@ export const getMocks = ({
 
   return {
     recipe,
+    useAuth,
     useStock,
     useGetAlternativeOptionsForRecipe,
     useBasket,
