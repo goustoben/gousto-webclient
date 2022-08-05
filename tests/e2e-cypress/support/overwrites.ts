@@ -1,4 +1,4 @@
-import { datadogRum } from '@datadog/browser-rum'
+import { datadogRum } from "@datadog/browser-rum";
 
 // TODO LIST
 // Fix types for cypress overwrite
@@ -8,33 +8,34 @@ import { datadogRum } from '@datadog/browser-rum'
 // Enable DD based on the above 👆🏻
 // Create DD utils? i.e. getIsDDInitialized etc.
 
-Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
+Cypress.Commands.overwrite("visit", (originalFn, url, options?) => {
   // First, visit the page so DD_RUM is on the window
-  const chainableVisit = originalFn(url, options)
+  // @ts-ignore Cypress type issue: https://github.com/cypress-io/cypress/issues/19564
+  originalFn(url, options);
+
+  cy.window()
+    .its("DD_RUM")
+    .then((DD_RUM: typeof datadogRum) => {
+      if (DD_RUM.getInternalContext()?.session_id) return;
+
+      DD_RUM.init({
+        applicationId: "7eaa558f-a187-40c5-b743-9fd52d7aff3a",
+        clientToken: "pub7210de2a9d84977c7611bb974aa9f74f",
+        site: "datadoghq.eu",
+        service: "gousto-webclient-e2e-staging---test",
+        sampleRate: 100,
+        trackInteractions: true,
+      });
+
+      DD_RUM.setRumGlobalContext({
+        testName: Cypress.currentTest.titlePath.join(" "),
+        build: process.env.CIRCLE_BUILD_NUM,
+        testRunner: "cypress",
+      });
+
+      DD_RUM.startSessionReplayRecording();
+    });
 
   // cy.initDDRUM()
   // cy.getDDRUM().startSessionReplayRecording()
-
-  cy.window().its('DD_RUM').then((DD_RUM: typeof datadogRum) => {
-    if (DD_RUM.getInternalContext()?.session_id) return
-
-    DD_RUM.init({
-      applicationId: "7eaa558f-a187-40c5-b743-9fd52d7aff3a",
-      clientToken: "pub7210de2a9d84977c7611bb974aa9f74f",
-      site: 'datadoghq.eu',
-      service:'gousto-webclient-e2e-staging---test',
-      sampleRate: 100,
-      trackInteractions: true
-    })
-
-    DD_RUM.setRumGlobalContext({
-      testName: Cypress.currentTest.titlePath.join(' '),
-      build: process.env.CIRCLE_BUILD_NUM,
-      testRunner: 'cypress'
-    })
-
-    DD_RUM.startSessionReplayRecording();
-  })
-
-  return chainableVisit
-})
+});
