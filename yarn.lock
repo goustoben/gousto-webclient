@@ -3114,11 +3114,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@library/http@workspace:src/modules/library/http"
   dependencies:
+    "@library/auth": "workspace:*"
     "@library/dev-babel": "workspace:*"
     "@types/isomorphic-fetch": 0.0.36
     isomorphic-fetch: 3.0.0
     qs: 6.5.2
   peerDependencies:
+    "@library/auth": "workspace:*"
     isomorphic-fetch: 3.3.0
     qs: 6.5.2
   languageName: unknown

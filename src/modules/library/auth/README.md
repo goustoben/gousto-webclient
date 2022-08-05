@@ -24,10 +24,10 @@ Add the following peer dependency ([why?](../../../../docs/modules.md#production
 > In feature modules, you can use the @library/http **auth middleware**.
 
 ```typescript
-import { getToken, AuthToken } from '@library/auth'
+import { getAuthToken, AuthToken } from '@library/auth'
 
 function reader() {
-  const token: AuthToken | null = getToken()
+  const token: AuthToken = getAuthToken()
 }
 ```
 
