@@ -6,9 +6,9 @@
   "scripts": {
     "test:debug:web": "cypress open --env platform=web",
     "test:debug:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress open --env platform=mobile",
-    "test:web": "cypress run --env platform=web",
+    "test:web": "CYPRESS_platform=web cypress run",
     "test:web:single": "cypress run --spec",
-    "test:mobile": "cypress run --env platform=mobile",
+    "test:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 CYPRESS_platform=mobile cypress run",
     "report": "run-s report:*",
     "report:merge": "mochawesome-merge results/json/*.json > results/mochawesome-bundle.json",
     "report:generate": "marge results/mochawesome-bundle.json -o reports/html",
