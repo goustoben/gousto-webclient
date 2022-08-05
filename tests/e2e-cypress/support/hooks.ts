@@ -1,3 +1,5 @@
+import { datadogRum } from '@datadog/browser-rum'
+
 beforeEach(() => {
   // Hide cookie banner
   cy.setGoustoCookie("cookie_policy_v2", { isAccepted: true });

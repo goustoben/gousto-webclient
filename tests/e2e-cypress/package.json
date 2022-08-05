@@ -6,12 +6,14 @@
   "scripts": {
     "cypress:open": "cypress open --browser electron --e2e",
     "test": "cypress run",
+    "test:ci": "our command that uses CI config and enables DD",
     "lint": "yarn run -T eslint .",
     "type-check": "tsc --noEmit"
   },
   "author": "maxhilliard",
   "license": "ISC",
   "devDependencies": {
+    "@datadog/browser-rum": "^3.8.0",
     "@testing-library/cypress": "^8.0.3",
     "@types/faker": "^5.5.9",
     "@types/jest": "^27.5.2",
