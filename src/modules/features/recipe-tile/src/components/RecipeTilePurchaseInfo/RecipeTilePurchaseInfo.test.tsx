@@ -49,6 +49,12 @@ const renderComponent = ({
       useStock={() => ({
         isRecipeOutOfStock: () => isRecipeOutOfStock,
       })}
+      useAuth={() => ({
+        authUserId: undefined,
+        accessToken: undefined,
+        isAdmin: false,
+        isAuthenticated: false,
+      })}
       useBasket={() => ({
         canAddRecipes: true,
         addRecipe: jest.fn(),

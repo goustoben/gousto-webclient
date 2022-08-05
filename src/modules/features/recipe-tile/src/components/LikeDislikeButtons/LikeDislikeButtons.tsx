@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { isLikeDislikeFeatureEnabled } from './isLikeDislikeFeatureEnabled'
 import { useRecipe } from '../../model/context'
 import { useTrackingHook } from '../../model/context/useTracking'
-import { useAuth } from '../../utils/auth'
+import { useAuthHook } from '../../model/context/useAuth'
 
 import { cssLikeDislikeButtons, cssLikeButton, cssDislikeButton, cssThumb } from './styles'
 
@@ -47,6 +47,7 @@ export const LikeDislikeButtons = () => {
   const useTracking = useTrackingHook()
   const { track } = useTracking()
   const { id: recipeId } = useRecipe()
+  const useAuth = useAuthHook();
   const { authUserId } = useAuth()
 
   const handleOnClickLike = useCallback(

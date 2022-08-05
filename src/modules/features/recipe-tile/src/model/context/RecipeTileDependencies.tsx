@@ -1,6 +1,7 @@
 import React, { Provider, ReactElement } from "react";
 import { RecipeContextProvider } from "./recipe";
 import { UseBasketContextProvider } from "./useBasket";
+import { UseAuthContextProvider } from "./useAuth";
 import { UseGetAlternativeOptionsForRecipeContextProvider } from "./useGetAlternativeOptionsForRecipe";
 import { UseGetRecipeTileLinkDataContextProvider } from "./useGetRecipeTileLinkData";
 import { UseGetSurchargeForRecipeIdContextProvider } from "./useGetSurchargeForRecipeId";
@@ -17,6 +18,7 @@ type ExtractValueTypeFromContextProvider<T> = T extends Provider<infer U>
 
 type RecipeTileDependenciesArgs = {
   children: ReactElement;
+  useAuth: ExtractValueTypeFromContextProvider<typeof UseAuthContextProvider>;
   useStock: ExtractValueTypeFromContextProvider<typeof UseStockContextProvider>;
   useGetAlternativeOptionsForRecipe: ExtractValueTypeFromContextProvider<
     typeof UseGetAlternativeOptionsForRecipeContextProvider
@@ -44,6 +46,7 @@ type RecipeTileDependenciesArgs = {
  */
 export const RecipeTileDependencies = ({
   children,
+  useAuth,
   useStock,
   useGetAlternativeOptionsForRecipe,
   useBasket,
@@ -57,31 +60,33 @@ export const RecipeTileDependencies = ({
   useMakeOnCheckRecipe,
 }: RecipeTileDependenciesArgs) => (
   // Each logical item uses its own provider to minimize re-renderings
-  <UseStockContextProvider value={useStock}>
-    <UseGetAlternativeOptionsForRecipeContextProvider
-      value={useGetAlternativeOptionsForRecipe}
-    >
-      <UseBasketContextProvider value={useBasket}>
-        <UseSetBrowserCTAVisibilityContextProvider
-          value={useSetBrowserCTAVisibility}
-        >
-          <RecipeContextProvider value={recipe}>
-            <UseTrackingContextProvider value={useTracking}>
-              <UseGetSurchargeForRecipeIdContextProvider value={useGetSurchargeForRecipeId}>
-                <RecipeReferenceProvider value={recipeReference}>
-                  <UseRecipeBrandContextProvider value={useRecipeBrand}>
-                    <UseGetRecipeTileLinkDataContextProvider value={useGetRecipeTileLinkData}>
-                      <UseMakeOnCheckRecipeContextProvider value={useMakeOnCheckRecipe}>
-                        {children}
-                      </UseMakeOnCheckRecipeContextProvider>
-                    </UseGetRecipeTileLinkDataContextProvider>
-                  </UseRecipeBrandContextProvider>
-                </RecipeReferenceProvider>
-              </UseGetSurchargeForRecipeIdContextProvider>
-            </UseTrackingContextProvider>
-          </RecipeContextProvider>
-        </UseSetBrowserCTAVisibilityContextProvider>
-      </UseBasketContextProvider>
-    </UseGetAlternativeOptionsForRecipeContextProvider>
-  </UseStockContextProvider>
+  <UseAuthContextProvider value={useAuth}>
+    <UseStockContextProvider value={useStock}>
+      <UseGetAlternativeOptionsForRecipeContextProvider
+        value={useGetAlternativeOptionsForRecipe}
+      >
+        <UseBasketContextProvider value={useBasket}>
+          <UseSetBrowserCTAVisibilityContextProvider
+            value={useSetBrowserCTAVisibility}
+          >
+            <RecipeContextProvider value={recipe}>
+              <UseTrackingContextProvider value={useTracking}>
+                <UseGetSurchargeForRecipeIdContextProvider value={useGetSurchargeForRecipeId}>
+                  <RecipeReferenceProvider value={recipeReference}>
+                    <UseRecipeBrandContextProvider value={useRecipeBrand}>
+                      <UseGetRecipeTileLinkDataContextProvider value={useGetRecipeTileLinkData}>
+                        <UseMakeOnCheckRecipeContextProvider value={useMakeOnCheckRecipe}>
+                          {children}
+                        </UseMakeOnCheckRecipeContextProvider>
+                      </UseGetRecipeTileLinkDataContextProvider>
+                    </UseRecipeBrandContextProvider>
+                  </RecipeReferenceProvider>
+                </UseGetSurchargeForRecipeIdContextProvider>
+              </UseTrackingContextProvider>
+            </RecipeContextProvider>
+          </UseSetBrowserCTAVisibilityContextProvider>
+        </UseBasketContextProvider>
+      </UseGetAlternativeOptionsForRecipeContextProvider>
+    </UseStockContextProvider>
+  </UseAuthContextProvider>
 );

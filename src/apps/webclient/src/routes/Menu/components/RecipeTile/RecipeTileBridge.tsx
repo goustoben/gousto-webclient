@@ -17,6 +17,7 @@ import {
   useRecipeBrandTag,
   RecipeContextProvider,
 } from 'routes/Menu/context/recipeContext'
+import { useAuth } from 'routes/Menu/domains/auth'
 import { useBasket, useStock } from 'routes/Menu/domains/basket'
 import {
   useSetBrowserCTAVisibility,
@@ -102,6 +103,7 @@ export const RecipeTileBridge = ({
         <RecipeTileDependencies
           recipe={recipe.toJS()}
           useGetAlternativeOptionsForRecipe={useGetAlternativeOptionsForRecipe}
+          useAuth={useAuth}
           useStock={useStock}
           useBasket={useBasket}
           useSetBrowserCTAVisibility={useSetBrowserCTAVisibility}
