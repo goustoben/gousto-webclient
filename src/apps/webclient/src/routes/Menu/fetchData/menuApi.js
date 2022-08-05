@@ -53,7 +53,15 @@ export function fetchMenus(accessToken, query) {
 
   // requestQueryParams.forceSwapsExperimentUserAllocationGroup = 'variant-b'
 
-  return fetchRaw(`${endpoint('menu')}/menus`, requestQueryParams, fetchOptions)
+  let url = `${endpoint('menu')}/menus`
+
+  if (adminLinkData) {
+    url = url.replace('v1', 'v2')
+  }
+
+  console.log(`>>>>>> URL: ${url}`)
+
+  return fetchRaw(url, requestQueryParams, fetchOptions)
 }
 
 export function fetchMenusWithUserId(accessToken, query, userId) {
