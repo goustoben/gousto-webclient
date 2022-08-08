@@ -109,6 +109,9 @@ export const Checkout = ({ params: { stepName } }: CheckoutProps) => {
    * First render.
    */
   useEffect(() => {
+    // make sure on reload we get to 1st step (Account)
+    setCurrentStepId(CheckoutStepIds.ACCOUNT)
+
     loadCheckoutScript()
     loadPayPalScripts()
 
