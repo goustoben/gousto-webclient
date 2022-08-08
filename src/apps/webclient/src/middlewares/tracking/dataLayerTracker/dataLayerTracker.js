@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 // eslint-disable-next-line import/no-unresolved
-import { checkoutSteps } from 'routes/Checkout/checkoutConfig'
+import { CHECKOUT_STEPS } from 'routes/Checkout/checkoutConfig'
 import { getCurrentPaymentMethod } from 'routes/Checkout/checkoutPaymentSelectors'
 import { getBasketRecipes } from 'selectors/basket'
 import { canUseWindow } from 'utils/browserEnvironment'
@@ -158,7 +158,7 @@ export const locationChange = ({ payload }, state) => {
     return
   }
   const stepName = match[1]
-  const stepIndex = checkoutSteps.findIndex((checkoutStep) => checkoutStep === stepName)
+  const stepIndex = CHECKOUT_STEPS.findIndex((checkoutStep) => checkoutStep.id === stepName)
   if (stepIndex === -1) {
     return
   }

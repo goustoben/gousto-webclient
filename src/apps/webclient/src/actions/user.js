@@ -400,7 +400,7 @@ function userPromoApplyCode(promoCode) {
   }
 }
 
-function userProspect() {
+export function userProspect() {
   return async (dispatch, getState) => {
     const state = getState()
     const { routing } = state
