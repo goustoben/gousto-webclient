@@ -18,6 +18,28 @@
     background-color: Blueberry;
     border-color: Blueberry;
   }
+
+  &.applePay {
+    background-color: black;
+    border-color: black;
+    margin-top: 0.5rem;
+    &:hover:not([disabled]),
+    &:focus:not([disabled]) {
+      background-color: black;
+      border-color: black;
+    }
+  }
+
+  &.isDisabled, &.applePay.isDisabled {
+    background: Oyster;
+    border-color: Oyster;
+    color: White;
+    cursor: not-allowed;
+
+    &:hover {
+      color: White;
+    }
+  }
 }
 
 .secondary {

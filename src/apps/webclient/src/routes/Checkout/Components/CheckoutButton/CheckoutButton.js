@@ -15,12 +15,14 @@ const CheckoutButton = ({
   children,
   variant,
   noHorizontalPadding,
+  isApplePay,
 }) => {
   const className = classNames(css.cta, {
     [css.isDisabled]: isDisabled,
     [css.isFullWidth]: isFullWidth,
     [css.secondary]: variant === 'secondary',
     [css.noHorizontalPadding]: noHorizontalPadding,
+    [css.applePay]: isApplePay,
   })
 
   return (
@@ -52,6 +54,7 @@ CheckoutButton.propTypes = {
   variant: PropTypes.oneOf(['primary', 'secondary']),
   children: PropTypes.node.isRequired,
   noHorizontalPadding: PropTypes.bool,
+  isApplePay: PropTypes.bool,
 }
 
 CheckoutButton.defaultProps = {
@@ -62,6 +65,7 @@ CheckoutButton.defaultProps = {
   isLoading: false,
   variant: 'primary',
   noHorizontalPadding: false,
+  isApplePay: false,
 }
 
 export { CheckoutButton }
