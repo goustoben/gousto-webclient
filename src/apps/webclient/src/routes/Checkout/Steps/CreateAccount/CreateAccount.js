@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { RibbonTriggerContainer } from 'components/RibbonTrigger'
+import { useIsApplePayEnabled } from 'routes/Checkout/hooks/useIsApplePayEnabled'
 
 import { AboutYouContainer, addInitialValues } from '../../Components/AboutYou'
 import { formContainer } from '../../Components/formContainer'
@@ -18,19 +19,26 @@ export const CreateAccountStep = ({
   checkoutValid,
   trackUTMAndPromoCode,
   onLoginClick,
-}) => (
-  <>
-    <AboutYouSection
-      receiveRef={receiveRef}
-      submit={submit}
-      userProspect={userProspect}
-      checkoutValid={checkoutValid}
-      trackUTMAndPromoCode={trackUTMAndPromoCode}
-      onLoginClick={onLoginClick}
-    />
-    <RibbonTriggerContainer name="checkout-account" />
-  </>
-)
+  change,
+}) => {
+  const isApplePayEnabled = useIsApplePayEnabled()
+
+  return (
+    <>
+      <AboutYouSection
+        receiveRef={receiveRef}
+        submit={submit}
+        userProspect={userProspect}
+        checkoutValid={checkoutValid}
+        trackUTMAndPromoCode={trackUTMAndPromoCode}
+        onLoginClick={onLoginClick}
+        change={change}
+        isApplePayEnabled={isApplePayEnabled}
+      />
+      <RibbonTriggerContainer name="checkout-account" />
+    </>
+  )
+}
 
 CreateAccountStep.propTypes = {
   submit: PropTypes.func.isRequired,
@@ -39,6 +47,7 @@ CreateAccountStep.propTypes = {
   checkoutValid: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
   onLoginClick: PropTypes.func,
+  change: PropTypes.func.isRequired,
 }
 
 CreateAccountStep.defaultProps = {

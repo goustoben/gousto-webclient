@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Router, applyRouterMiddleware } from 'react-router'
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { useScroll } from 'react-router-scroll'
 import { SWRConfig } from 'swr'
 import { shouldScroll } from 'routes/shouldScroll'
@@ -13,10 +13,19 @@ import { SetupOptimizelyOverride } from 'containers/OptimizelyRollouts'
 import { ThemeProvider } from '@gousto-internal/citrus-react'
 import { canUseWindow } from 'utils/browserEnvironment'
 import { RibbonIsAuthenticatedAttributeReporter } from 'components/RibbonTrigger'
+import { fetchApplePayStatus } from 'routes/Checkout/checkoutActions'
+
+const ApplePayEnabledFetch = () => {
+  const dispatch = useDispatch()
+  dispatch(fetchApplePayStatus)
+
+  return null
+}
 
 export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
     <SetupOptimizelyOverride />
+    <ApplePayEnabledFetch />
     <SWRConfig
       value={{
         revalidateOnFocus: false,
