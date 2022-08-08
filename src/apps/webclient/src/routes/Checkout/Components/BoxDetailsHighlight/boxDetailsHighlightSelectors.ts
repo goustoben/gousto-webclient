@@ -7,6 +7,10 @@ type StateTypePlaceholder = {
   menuRecipesStore: Immutable.Map<string, unknown>
   menuRecipeStock: Immutable.Map<string, unknown>
   menuBoxPrices: Immutable.Map<string, unknown>
+  boxSummaryDeliveryDays: Immutable.Map<string, unknown>
+  deliveryDate: Immutable.Map<string, unknown>
+  slotId: Immutable.Map<string, unknown>
+  features: Immutable.Map<string, unknown>
 }
 
 const getBasketRecipes = ({ basket }: StateTypePlaceholder) => basket.get('recipes')
@@ -26,5 +30,15 @@ export const getStoreRecipesSelector = createSelector(
     menuRecipeStock,
     menuBoxPrices,
     menuRecipesStore,
+  }),
+)
+
+const getSummaryData = ({ features }: StateTypePlaceholder) => ({
+  isGoustoOnDemandEnabled: features && features.getIn(['isGoustoOnDemandEnabled', 'value'], false),
+})
+export const getSummaryDataSelector = createSelector(
+  getSummaryData,
+  ({ isGoustoOnDemandEnabled }) => ({
+    isGoustoOnDemandEnabled,
   }),
 )

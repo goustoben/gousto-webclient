@@ -31,6 +31,7 @@ export const BenefitItem = ({ accentText, infoText }: BenefitItemProps) => (
     <Text fontFamily={FontFamily.SemiBold} size={2}>
       {accentText}
     </Text>
+    &nbsp;
     <Text fontFamily={FontFamily.UI} size={2}>
       {infoText}
     </Text>
@@ -49,11 +50,11 @@ export const Benefits = () => {
       paddingV={3}
       paddingBottom={0.5}
     >
-      <BenefitItem accentText="No lock in: " infoText="pause or cancel for free anytime" />
+      <BenefitItem accentText="No lock in:" infoText="pause or cancel for free anytime" />
       <Space size={2} />
       {isDiscountEnabled && discountTip ? (
         <BenefitItem
-          accentText={`${discountTip}: `}
+          accentText={`${discountTip}:`}
           infoText={`that’s £${pricePerPortionDiscounted} per serving`}
         />
       ) : null}

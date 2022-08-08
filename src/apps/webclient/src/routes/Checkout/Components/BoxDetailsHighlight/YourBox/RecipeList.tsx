@@ -12,17 +12,15 @@ import {
   JustifyContent,
   Space,
   Text,
+  Image,
 } from '@gousto-internal/citrus-react'
-import GoustoImage from 'Image'
 import Immutable from 'immutable'
 import { useDispatch } from 'react-redux'
 
 import recipesActions from 'actions/recipes'
-import css from 'routes/Checkout/Components/RecipeSummary/OrderedRecipe/OrderedRecipe.css'
 
-import { RecipesContainer } from './styled'
+import { getRecipeTileResponsiveSize, RecipesContainer } from './styled'
 import { useGetYourBoxData } from './yourBoxHooks'
-import { getRecipeTileResponsiveSize } from './yourBoxUtils'
 
 type Props = { expanded: boolean }
 
@@ -54,12 +52,16 @@ export const RecipeList = ({ expanded }: Props) => {
   const getTitle = (recipeId: string) => menuRecipesStore.getIn([recipeId, 'title'], '')
 
   return (
-    <RecipesContainer expanded={expanded}>
+    <RecipesContainer
+      expanded={expanded}
+      recipeTileResponsiveSize={recipeTileResponsiveSize as string[]}
+      recipesNum={recipesIdsList.filter(Boolean).length}
+    >
       {recipesIdsList.map((recipeId) => (
         <Box
           key={recipeId}
           width={expanded ? '100%' : recipeTileResponsiveSize}
-          height={recipeTileResponsiveSize}
+          height={expanded && !recipeId ? '0px' : recipeTileResponsiveSize}
           borderStyle={expanded ? undefined : !recipeId ? BorderStyle.Dashed : undefined}
           borderWidth={1}
           borderColor={Color.ColdGrey_800}
@@ -68,14 +70,10 @@ export const RecipeList = ({ expanded }: Props) => {
             <Box
               display={Display.Flex}
               flexDirection={FlexDirection.Row}
-              justifyContent={JustifyContent.Center}
+              justifyContent={expanded ? JustifyContent.FlexStart : JustifyContent.Center}
               alignItems={AlignItems.Center}
             >
-              <GoustoImage
-                media={getMedia(recipeId)}
-                title={getTitle(recipeId)}
-                className={css.image}
-              />
+              <Image src={getMedia(recipeId)} alt={getTitle(recipeId)} />
               {expanded ? (
                 <>
                   <Space size={4} direction="horizontal" />

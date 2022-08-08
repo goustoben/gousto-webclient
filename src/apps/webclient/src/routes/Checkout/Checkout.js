@@ -310,7 +310,7 @@ class Checkout extends PureComponent {
     if (isCheckoutHighlightOrderExperimentEnabled) {
       return (
         <Visible display={[Display.None, Display.Block]}>
-          <BoxDetailsHighlight />
+          <BoxDetailsHighlight isLoading={isCreatingPreviewOrder} />
         </Visible>
       )
     }
