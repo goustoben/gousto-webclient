@@ -1,9 +1,9 @@
-import actions from 'actions'
 import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta } from 'redux-form'
 
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
+import { checkoutClearErrors } from 'routes/Checkout/checkoutActions'
 import { deliveryFormName } from 'routes/Checkout/checkoutSelectors'
 
 import { Delivery } from './Delivery'
@@ -35,7 +35,7 @@ export function mapStateToProps(sectionName) {
 const connectComponent = (sectionName) =>
   connect(mapStateToProps(sectionName), {
     manualSubmit: submit,
-    clearErrors: actions.checkoutClearErrors,
+    clearErrors: checkoutClearErrors,
     trackUTMAndPromoCode,
   })(Delivery)
 

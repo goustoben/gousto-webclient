@@ -41,7 +41,7 @@ export const formContainer = (
         let response
 
         if (!props.isLastStep) {
-          props.onStepChange()
+          props.onStepChange(values.nextStepId)
           response = Promise.resolve()
         } else {
           response = new Promise((resolve, reject) => {

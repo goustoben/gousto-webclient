@@ -12,12 +12,13 @@ const sectionName = 'delivery'
 
 const DeliverySection = DeliveryContainer(sectionName)
 
-export const DeliveryStep = ({ submit, receiveRef, scrollToFirstMatchingRef }) => (
+export const DeliveryStep = ({ submit, receiveRef, scrollToFirstMatchingRef, change }) => (
   <>
     <DeliverySection
       receiveRef={receiveRef}
       scrollToFirstMatchingRef={scrollToFirstMatchingRef}
       submit={submit}
+      change={change}
     />
     <RibbonTriggerContainer name="checkout-delivery" />
   </>
@@ -25,6 +26,7 @@ export const DeliveryStep = ({ submit, receiveRef, scrollToFirstMatchingRef }) =
 
 DeliveryStep.propTypes = {
   submit: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
 }

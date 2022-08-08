@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
 import { fetchDeliveryDays } from 'apis/deliveries'
+import { CheckoutStepIds } from 'routes/Checkout/checkoutConfig'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import * as deliveryUtils from 'utils/deliveries'
 import { dottify } from 'utils/dottify'
@@ -20,7 +21,9 @@ const propTypes = {
   formName: PropTypes.string,
   sectionName: PropTypes.string,
   formErrors: PropTypes.shape({}),
-  formValues: PropTypes.shape({}),
+  formValues: PropTypes.shape({
+    nextStepId: PropTypes.string,
+  }),
   change: PropTypes.func,
   touch: PropTypes.func,
   untouch: PropTypes.func,
@@ -73,7 +76,7 @@ const defaultProps = {
 export class Address extends React.PureComponent {
   componentDidMount() {
     const { initialPostcode, sectionName, formName, change, touch, registerField } = this.props
-
+    change(formName, 'nextStepId', CheckoutStepIds.PAYMENT)
     const addresses = this.getFormValue('allAddresses') || []
     // use initial postcode
     if (initialPostcode && addresses.length === 0) {
@@ -198,8 +201,8 @@ export class Address extends React.PureComponent {
   forceReValidation = () => {
     const { formName, sectionName, change } = this.props
 
-    let submitCount = this.getFormValue('submitCount') || 1
-    change(formName, `${sectionName}.submitCount`, (submitCount += 1))
+    const submitCount = this.getFormValue('submitCount') || 1
+    change(formName, `${sectionName}.submitCount`, submitCount + 1)
   }
 
   getAddresses = async (postcode) => {

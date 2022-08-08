@@ -1,4 +1,3 @@
-import actions from 'actions'
 import { Map } from 'immutable'
 import { connect } from 'react-redux'
 import {
@@ -11,8 +10,10 @@ import {
   untouch,
 } from 'redux-form'
 
+import { basketPostcodeChange } from 'actions/basket'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { trackCheckoutButtonPressed } from 'routes/Checkout/checkoutActions'
+import { userProspect } from 'actions/user'
+import { checkoutAddressLookup, trackCheckoutButtonPressed } from 'routes/Checkout/checkoutActions'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 
@@ -22,7 +23,7 @@ function getCutoffDate(state) {
   const date = state.basket.get('date')
   const slotId = state.basket.get('slotId')
   const slots = state.boxSummaryDeliveryDays.getIn([date, 'slots'])
-  const deliverySlot = slots.find((slot) => slot.get('id') === slotId) || Map()
+  const deliverySlot = slots?.find((slot) => slot.get('id') === slotId) || Map()
 
   return deliverySlot.get('whenCutoff', '')
 }
@@ -48,13 +49,13 @@ function mapStateToProps(state, ownProps) {
 }
 
 export const DeliveryAddressContainer = connect(mapStateToProps, {
-  checkoutAddressLookup: actions.checkoutAddressLookup,
-  onAddressConfirm: actions.basketPostcodeChange,
+  checkoutAddressLookup,
+  onAddressConfirm: basketPostcodeChange,
   change,
   untouch,
   touch,
   registerField,
   trackCheckoutButtonPressed,
   trackUTMAndPromoCode,
-  userProspect: actions.userProspect,
+  userProspect,
 })(Address)

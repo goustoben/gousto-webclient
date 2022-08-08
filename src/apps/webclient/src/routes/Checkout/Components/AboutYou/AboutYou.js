@@ -6,7 +6,12 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import { Field, FormSection } from 'redux-form'
 
-import { checkoutClickContinueToDelivery, checkoutClickPrivacyPolicy } from 'actions/trackingKeys'
+import {
+  checkoutClickContinueToApplePay,
+  checkoutClickContinueToDelivery,
+  checkoutClickPrivacyPolicy,
+} from 'actions/trackingKeys'
+import { CheckoutStepIds } from 'routes/Checkout/checkoutConfig'
 import { onEnter } from 'utils/accessibility'
 
 import { CheckoutButton } from '../CheckoutButton'
@@ -34,12 +39,28 @@ class AboutYou extends PureComponent {
   }
 
   handleSubmit = () => {
-    const { submit, trackUTMAndPromoCode, checkoutValid, userProspect } = this.props
+    const { submit, trackUTMAndPromoCode, checkoutValid, userProspect, change } = this.props
     if (checkoutValid) {
       trackUTMAndPromoCode(checkoutClickContinueToDelivery)
     }
     userProspect()
-    submit()
+    change('nextStepId', CheckoutStepIds.DELIVERY)
+    setTimeout(submit, 0)
+  }
+
+  handleApplePaySubmit = () => {
+    const { submit, trackUTMAndPromoCode, checkoutValid, userProspect, change } = this.props
+    if (checkoutValid) {
+      trackUTMAndPromoCode(checkoutClickContinueToApplePay)
+    }
+    userProspect()
+    change('nextStepId', CheckoutStepIds.APPLE_PAY)
+    /**
+     * setTimeout is required to make `change -> submit` functions sequence work as expected.
+     * Without timeout `submit` will run before `change`
+     * and `onSubmit` callback would not have necessary info -- nextStepId.
+     */
+    setTimeout(submit, 0)
   }
 
   renderLoginButton = () => {
@@ -178,6 +199,7 @@ class AboutYou extends PureComponent {
       passwordValue,
       passwordErrors,
       isGoustoOnDemandEnabled,
+      isApplePayEnabled,
     } = this.props
     const disableCTA =
       !passwordValue || !checkoutValid || (passwordErrors.length !== 0 && passwordValue)
@@ -197,6 +219,16 @@ class AboutYou extends PureComponent {
           >
             Continue to Delivery
           </CheckoutButton>
+          {isApplePayEnabled && (
+            <CheckoutButton
+              onClick={this.handleApplePaySubmit}
+              submitting={submitting}
+              isDisabled={disableCTA}
+              isApplePay
+            >
+              Checkout with Apple Pay
+            </CheckoutButton>
+          )}
         </div>
         <ErrorMessage />
       </FormSection>
@@ -208,7 +240,16 @@ AboutYou.propTypes = {
   sectionName: PropTypes.string,
   clearErrors: PropTypes.func,
   receiveRef: PropTypes.func,
+  /**
+   * Submits page form by doing following:
+   * - Validates all fields.
+   * - Navigates to next step if current is not last or submits whole checkout order.
+   */
   submit: PropTypes.func,
+  /**
+   * Updates form field. Used to configure nextStepId when "Proceed" button is clicked.
+   */
+  change: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
   onLoginClick: PropTypes.func,
@@ -222,6 +263,7 @@ AboutYou.propTypes = {
   validatePassword: PropTypes.func,
   isGoustoOnDemandEnabled: PropTypes.bool,
   userProspect: PropTypes.func,
+  isApplePayEnabled: PropTypes.bool.isRequired,
 }
 
 AboutYou.defaultProps = {
