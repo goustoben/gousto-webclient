@@ -51,7 +51,9 @@ export const AppContainer = ({ history, routes, store }) => (
 )
 
 AppContainer.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   history: PropTypes.object.isRequired,
   routes: PropTypes.node.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   store: PropTypes.object.isRequired,
 }

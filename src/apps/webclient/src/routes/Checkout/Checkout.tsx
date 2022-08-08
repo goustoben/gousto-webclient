@@ -121,6 +121,7 @@ export const Checkout = ({ params: { stepName } }: CheckoutProps) => {
     return () => {
       dispatch(clearPayPalClientToken())
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /**
@@ -133,6 +134,7 @@ export const Checkout = ({ params: { stepName } }: CheckoutProps) => {
     if (stepName && currentStepId !== stepName) {
       setCurrentStepId(stepName)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepName])
 
   /**
@@ -148,6 +150,7 @@ export const Checkout = ({ params: { stepName } }: CheckoutProps) => {
     if (currentStepId === CheckoutStepIds.ACCOUNT && !stepName) {
       dispatch(redirect(routesConfig.client.menu))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStepId, stepName])
 
   /**
@@ -161,6 +164,7 @@ export const Checkout = ({ params: { stepName } }: CheckoutProps) => {
     const nextStepId = currentStepInfo.id
     dispatch(trackSignupPageChange(nextStepId))
     dispatch(redirect(`${routesConfig.client['check-out']}/${nextStepId}`)) // ID serves as route
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStepId])
 
   /**
@@ -172,6 +176,7 @@ export const Checkout = ({ params: { stepName } }: CheckoutProps) => {
       ...breadcrumbsToStepsMapping,
       [currentStepInfo.breadcrumb]: currentStepInfo.id,
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentStepId])
 
   if (!currentStepInfo) return null // should not happen, but theoretically can

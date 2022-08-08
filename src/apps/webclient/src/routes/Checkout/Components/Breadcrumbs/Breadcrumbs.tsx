@@ -53,6 +53,7 @@ const Breadcrumbs = ({ currentBreadcrumb, breadcrumbsToStepsMapping }: Breadcrum
     if (furthestBreadcrumbIndex < currentBreadcrumbIndex) {
       setFurthestBreadcrumbIndex(currentBreadcrumbIndex)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBreadcrumb])
 
   const renderBreadcrumb = (breadcrumb: BreadcrumbsEnum, index: number) => {
