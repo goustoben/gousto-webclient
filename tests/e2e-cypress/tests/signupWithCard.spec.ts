@@ -17,7 +17,6 @@ describe('Signup', () => {
     menu.addNRecipes()
     menu.clickCheckout()
 
-    checkout.waitForOrderSummary()
     checkout.enterSignupEmail()
     checkout.enterSignupPassword()
     checkout.clickContinueToDelivery()

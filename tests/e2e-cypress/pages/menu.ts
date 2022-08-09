@@ -31,10 +31,20 @@ class Menu extends Page {
   }
 
   clickCheckout() {
-    cy.get('[data-testing="boxSummaryButton"]')
-      .find('button:visible')
-      .should('not.be.disabled')
-      .click()
+    cy.actAndWaitForInterceptors(
+      () =>
+        cy
+          .get('[data-testing="boxSummaryButton"]')
+          .find('button:visible')
+          .should('not.be.disabled')
+          .click(),
+      [
+        {
+          method: 'POST',
+          url: '**/order/preview',
+        },
+      ],
+    )
   }
 
   waitForMenuLoaded() {
