@@ -102,7 +102,7 @@ export const Checkout = ({ params: { stepName } }: CheckoutProps) => {
         dispatch(firePayPalError(error))
       })
 
-    fetchPayPalClientToken()
+    dispatch(fetchPayPalClientToken())
   }
 
   /**

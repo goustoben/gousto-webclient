@@ -78,7 +78,6 @@ export const CheckoutStepContainer = ({
           prerender={!isCurrentStepIsPaymentStep}
           isLastStep={isCurrentStepIsLastStep}
           onStepChange={onStepChange}
-          // nextStepName={this.getNextStepName(steps, currentStep)}
           onLoginClick={openLoginModal}
           submitOrder={submitOrder}
         />
