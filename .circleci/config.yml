@@ -331,6 +331,16 @@ jobs:
     resource_class: medium
     working_directory: /mnt/ramdisk
     parameters:
+      test-directory:
+        type: string
+        default: tests/e2e
+      test-artifacts-directory:
+        type: string
+        default: reports
+      test-runner:
+        type: enum
+        enum: ["cypress", "nightwatch"]
+        default: nightwatch
       notify:
         type: boolean
         default: false
@@ -355,13 +365,26 @@ jobs:
       - run:
           name: Find Datadog RUM sessions for E2E tests here ⬇️
           command: echo "https://datadoghq.eu/rum/explorer?query=%40application.id%3A7eaa558f-a187-40c5-b743-9fd52d7aff3a&tab=session&from_ts=1640000000000&to_ts=1740000000000&live=true"
-      - run:
-          name: Run E2E tests
-          working_directory: tests/e2e
-          command: chromedriver start & yarn test:staging
+      - when:
+          condition:
+            equal: ['nightwatch', << parameters.test-runner >>]
+          steps:
+            - run:
+                name: Run E2E tests
+                working_directory: << parameters.test-directory >>
+                command: chromedriver start & yarn test:staging
+      - when:
+          condition:
+            equal: ['cypress', << parameters.test-runner >>]
+          steps:
+            - run:
+                name: Run Cypress E2E tests
+                working_directory: << parameters.test-directory >>
+                # FEF-586 - prevent Cypress e2e suite blocking merging during investigatory phase
+                command: yarn test:ci --reporter junit --reporter-options "mochaFile=reports/e2e-cypress.xml" || true
       - run:
           name: Upload reports to DataDog
-          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" yarn datadog:upload-report:e2e
+          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" TEST_RUNNER="<< parameters.test-runner >>" yarn datadog:upload-report:e2e ../../../<< parameters.test-directory >>/reports
           when: always
       - when:
           condition: << parameters.notify >>
@@ -381,9 +404,9 @@ jobs:
                 channel: C52LRFWBY # guild-frontend
                 template: PASS_TEMPLATE
       - store_test_results:
-          path: tests/e2e/reports
+          path: /mnt/ramdisk/<< parameters.test-directory >>/reports
       - store_artifacts:
-          path: tests/e2e/reports
+          path: /mnt/ramdisk/<< parameters.test-directory >>/<< parameters.test-artifacts-directory >>
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
@@ -643,6 +666,15 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - deploy-infrastructure-and-webclient-image-to-staging
+
+      - test-e2e:
+          name: test-e2e-cypress
+          test-directory: tests/e2e-cypress
+          test-artifacts-directory: screenshots
+          test-runner: cypress
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-e2e
 
   production-environment:
     when:
