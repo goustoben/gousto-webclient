@@ -584,7 +584,11 @@ workflows:
 
   staging-environment:
     when:
-      equal: [develop, << pipeline.git.branch >>]
+      condition:
+        - and:
+          - equal: [develop, << pipeline.git.branch >>]
+          - not:
+            - equal: [scheduled_pipeline, << pipeline.trigger_source >>]
     jobs:
       - setup-ci-variables-scripts:
           context: gousto-beta-aws-app-circleci
