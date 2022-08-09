@@ -16,14 +16,14 @@ import { deliveryPriceConfig } from 'config/deliveryPrice'
 import { getSurchargeItems } from 'utils/pricing'
 
 import { PromoCode } from '../../PromoCode'
-import { useGetSummaryData } from './summaryHooks'
+import { useGetOrderTotalData } from './orderTotalHooks'
 
 type Props = {
   isLoading: boolean
 }
 
-export const Summary = ({ isLoading }: Props) => {
-  const { isGoustoOnDemandEnabled, prices, numRecipes } = useGetSummaryData()
+export const OrderTotal = ({ isLoading }: Props) => {
+  const { isGoustoOnDemandEnabled, prices, numRecipes } = useGetOrderTotalData()
 
   if (isLoading) {
     return (

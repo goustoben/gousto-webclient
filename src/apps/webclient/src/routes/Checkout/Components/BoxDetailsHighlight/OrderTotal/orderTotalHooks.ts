@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux'
 import { useBasket } from 'routes/Menu/domains/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
 
-import { getSummaryDataSelector } from '../boxDetailsHighlightSelectors'
+import { getOrderTotalDataSelector } from '../boxDetailsHighlightSelectors'
 
-export const useGetSummaryData = () => {
+export const useGetOrderTotalData = () => {
   const { numPortions } = useBasket()
   const { pricing } = usePricing()
-  const { isGoustoOnDemandEnabled } = useSelector(getSummaryDataSelector)
+  const { isGoustoOnDemandEnabled } = useSelector(getOrderTotalDataSelector)
 
   return {
     isGoustoOnDemandEnabled,

@@ -4,8 +4,8 @@ import { Box, Link } from '@gousto-internal/citrus-react'
 
 import routesConfig from 'config/routes'
 
+import { OrderTotal } from './OrderTotal'
 import { SectionHeading, Divider } from './SharedComponents'
-import { Summary } from './Summary'
 import { YourBox } from './YourBox'
 
 type Props = {
@@ -20,7 +20,7 @@ export const BoxDetailsHighlight = ({ isLoading }: Props) => (
     <SectionHeading text="Order Total">
       <Link href={routesConfig.client.menu}>Edit order</Link>
     </SectionHeading>
-    <Summary isLoading={isLoading} />
+    <OrderTotal isLoading={isLoading} />
     <Divider />
 
     <SectionHeading text="Delivery Date" />
