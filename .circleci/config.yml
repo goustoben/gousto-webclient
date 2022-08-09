@@ -334,15 +334,12 @@ jobs:
       test-command:
         type: string
         default: chromedriver start & yarn test:staging
-      working-dir:
+      test-directory:
         type: string
         default: tests/e2e
-      test-report-path:
+      test-artifacts-directory:
         type: string
-        default: "../../../tests/e2e/reports"
-      test-artifacts-path:
-        type: string
-        default: "../../../tests/e2e/reports"
+        default: reports
       test-runner:
         type: string
         default: nightwatch
@@ -372,11 +369,11 @@ jobs:
           command: echo "https://datadoghq.eu/rum/explorer?query=%40application.id%3A7eaa558f-a187-40c5-b743-9fd52d7aff3a&tab=session&from_ts=1640000000000&to_ts=1740000000000&live=true"
       - run:
           name: Run E2E tests
-          working_directory: << parameters.working-dir >>
+          working_directory: << parameters.test-directory >>
           command: << parameters.test-command >>
       - run:
           name: Upload reports to DataDog
-          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" TEST_RUNNER="<< parameters.test-runner >>" yarn datadog:upload-report:e2e << parameters.test-report-path >>
+          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" TEST_RUNNER="<< parameters.test-runner >>" yarn datadog:upload-report:e2e ../../../<< parameters.test-directory >>/reports
           when: always
       - when:
           condition: << parameters.notify >>
@@ -396,9 +393,9 @@ jobs:
                 channel: C52LRFWBY # guild-frontend
                 template: PASS_TEMPLATE
       - store_test_results:
-          path: << parameters.test-report-path >>
+          path: /mnt/ramdisk/<< parameters.test-directory >>/reports
       - store_artifacts:
-          path: << parameters.test-artifacts-path >>
+          path: /mnt/ramdisk/<< parameters.test-directory >>/<< parameters.test-artifacts-directory >>
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
@@ -485,10 +482,9 @@ workflows:
 
       - test-e2e:
           name: test-e2e-cypress
-          working-dir: tests/e2e-cypress
+          test-directory: tests/e2e-cypress
           test-command: yarn test:ci --reporter junit --reporter-options "mochaFile=reports/e2e-cypress.xml"
-          test-report-path: ../../../tests/e2e-cypress/reports
-          test-artifacts-path: ../../../tests/e2e-cypress/screenshots
+          test-artifacts-directory: screenshots
           test-runner: cypress
           context: gousto-beta-aws-app-circleci
           requires:
