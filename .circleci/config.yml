@@ -331,6 +331,21 @@ jobs:
     resource_class: medium
     working_directory: /mnt/ramdisk
     parameters:
+      test-command:
+        type: string
+        default: chromedriver start & yarn test:staging
+      working-dir:
+        type: string
+        default: tests/e2e
+      test-report-path:
+        type: string
+        default: "../../../tests/e2e/reports"
+      test-artifacts-path:
+        type: string
+        default: "../../../tests/e2e/reports"
+      test-runner:
+        type: string
+        default: nightwatch
       notify:
         type: boolean
         default: false
@@ -357,11 +372,11 @@ jobs:
           command: echo "https://datadoghq.eu/rum/explorer?query=%40application.id%3A7eaa558f-a187-40c5-b743-9fd52d7aff3a&tab=session&from_ts=1640000000000&to_ts=1740000000000&live=true"
       - run:
           name: Run E2E tests
-          working_directory: tests/e2e
-          command: chromedriver start & yarn test:staging
+          working_directory: << parameters.working-dir >>
+          command: << parameters.test-command >>
       - run:
           name: Upload reports to DataDog
-          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" yarn datadog:upload-report:e2e
+          command: DATADOG_API_KEY="${DATADOG_SOURCE_MAPS_TOKEN}" DATADOG_SITE="datadoghq.eu" TEST_RUNNER="<< parameters.test-runner >>" yarn datadog:upload-report:e2e << parameters.test-report-path >>
           when: always
       - when:
           condition: << parameters.notify >>
@@ -381,9 +396,9 @@ jobs:
                 channel: C52LRFWBY # guild-frontend
                 template: PASS_TEMPLATE
       - store_test_results:
-          path: tests/e2e/reports
+          path: << parameters.test-report-path >>
       - store_artifacts:
-          path: tests/e2e/reports
+          path: << parameters.test-artifacts-path >>
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
@@ -456,6 +471,29 @@ jobs:
           command: python ./ci_scripts/deploy_service.py --service webclient
 
 workflows:
+  cypress-manual:
+    when:
+      equal: [FEF-586-pipeline-for-cypress-e2e, << pipeline.git.branch >>]
+    jobs:
+      - setup-ci-variables-scripts:
+          context: gousto-beta-aws-app-circleci
+
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts
+
+      - test-e2e:
+          name: test-e2e-cypress
+          working-dir: tests/e2e-cypress
+          test-command: yarn test:ci --reporter junit --reporter-options "mochaFile=reports/e2e-cypress.xml"
+          test-report-path: ../../../tests/e2e-cypress/reports
+          test-artifacts-path: ../../../tests/e2e-cypress/screenshots
+          test-runner: cypress
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+
   e2e-manual:
     when:
       equal: [e2e-manual, << pipeline.git.branch >>]
