@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { trackUTMAndPromoCode } from 'actions/tracking'
 import css from 'routes/Checkout/Checkout.css'
 import { ExpandableBoxSummary } from 'routes/Checkout/Components/ExpandableBoxSummary'
 import { OrderSummaryAndBoxDetails } from 'routes/Checkout/Components/OrderSummaryAndBoxDetails'
@@ -27,7 +26,6 @@ export const BoxSummaryDrawer = ({
       <ExpandableBoxSummary
         totalToPay={pricing?.total}
         totalWithoutDiscount={pricing?.recipeTotal}
-        trackUTMAndPromoCode={trackUTMAndPromoCode}
         promoCodeValid={pricing?.promoCodeValid}
       >
         <OrderSummaryAndBoxDetails

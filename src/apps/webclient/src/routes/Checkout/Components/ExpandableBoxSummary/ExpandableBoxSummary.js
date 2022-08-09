@@ -2,7 +2,9 @@ import React from 'react'
 
 import { ExpandableSection } from 'goustouicomponents'
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
 
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import { checkoutClickHideOrderSummary, checkoutClickShowOrderSummary } from 'actions/trackingKeys'
 
 import { HeaderContent } from './HeaderContent/HeaderContent'
@@ -13,11 +15,15 @@ export const ExpandableBoxSummary = ({
   children,
   totalToPay,
   totalWithoutDiscount,
-  trackUTMAndPromoCode,
   promoCodeValid,
 }) => {
+  const dispatch = useDispatch()
   const sendSnowplowEvent = (isExpanded) => {
-    trackUTMAndPromoCode(isExpanded ? checkoutClickHideOrderSummary : checkoutClickShowOrderSummary)
+    dispatch(
+      trackUTMAndPromoCode(
+        isExpanded ? checkoutClickHideOrderSummary : checkoutClickShowOrderSummary,
+      ),
+    )
   }
 
   const renderSectionToggle = (isExpanded, handleClick) => {
@@ -54,13 +60,11 @@ ExpandableBoxSummary.propTypes = {
   children: PropTypes.node.isRequired,
   totalToPay: PropTypes.string,
   totalWithoutDiscount: PropTypes.string,
-  trackUTMAndPromoCode: PropTypes.func,
   promoCodeValid: PropTypes.bool,
 }
 
 ExpandableBoxSummary.defaultProps = {
   totalToPay: '',
   totalWithoutDiscount: '',
-  trackUTMAndPromoCode: () => {},
   promoCodeValid: false,
 }
