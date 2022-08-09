@@ -42,3 +42,21 @@ export const getOrderTotalDataSelector = createSelector(
     isGoustoOnDemandEnabled,
   }),
 )
+
+type DeliveryDateData = {
+  deliveryDays: unknown
+  slotId: string
+  date: string
+}
+const getDeliveryDateData = ({
+  boxSummaryDeliveryDays,
+  basket,
+}: StateTypePlaceholder): DeliveryDateData => ({
+  deliveryDays: boxSummaryDeliveryDays,
+  slotId: basket.get('slotId') as string,
+  date: basket.get('date') as string,
+})
+export const getDeliveryDateDataSelector = createSelector(
+  getDeliveryDateData,
+  ({ deliveryDays, slotId, date }) => ({ deliveryDays, slotId, date }),
+)

@@ -4,6 +4,7 @@ import { Box, Link } from '@gousto-internal/citrus-react'
 
 import routesConfig from 'config/routes'
 
+import { DeliveryDate } from './DeliveryDate'
 import { OrderTotal } from './OrderTotal'
 import { SectionHeading, Divider } from './SharedComponents'
 import { YourBox } from './YourBox'
@@ -24,5 +25,6 @@ export const BoxDetailsHighlight = ({ isLoading }: Props) => (
     <Divider />
 
     <SectionHeading text="Delivery Date" />
+    <DeliveryDate />
   </Box>
 )
