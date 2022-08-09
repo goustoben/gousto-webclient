@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
 import { Map } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-
+import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
 import status from 'reducers/status'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import contentReducer from 'reducers/content'
@@ -23,16 +23,14 @@ jest.mock('actions/getHelp', () => ({
 describe('<GetHelpContainer />', () => {
   let wrapper
   let store
-
+  const initialState = {
+    auth: authDefaultState(),
+    getHelp: getHelpInitialState,
+    user: userDefaultState,
+    error: Map({}),
+    pending: Map({}),
+  }
   beforeEach(() => {
-    const initialState = {
-      auth: authDefaultState(),
-      getHelp: getHelpInitialState,
-      user: userDefaultState,
-      error: Map({}),
-      pending: Map({}),
-    }
-
     store = createStore(
       combineReducers({
         getHelp,
@@ -64,7 +62,6 @@ describe('<GetHelpContainer />', () => {
       button1: 'Contact Us'
     })
     expect(GetHelp.prop('didRequestError')).toBe(false)
-    expect(GetHelp.prop('isRequestPending')).toBe(false)
     expect(GetHelp.prop('orderId')).toEqual('788')
     expect(GetHelp.prop('location')).toEqual({
       pathname: 'get-help',
@@ -104,6 +101,43 @@ describe('<GetHelpContainer />', () => {
         const GetHelp = wrapper.find('GetHelp')
         expect(GetHelp.prop('orderId')).toEqual('')
       })
+    })
+  })
+
+  test('when state.pending is empty, isRequestPending should be true', () => {
+    const GetHelp = wrapper.find('GetHelp')
+    expect(GetHelp.prop('isRequestPending')).toBe(true)
+  })
+
+  describe('when state.pending has been populated', () => {
+    beforeEach(() => {
+      store = createStore(
+        combineReducers({
+          getHelp,
+          ...contentReducer,
+          ...authReducer,
+          ...userReducer,
+          ...status,
+        }),
+        {...initialState, pending: Map({[actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS]: false}),
+        },
+        compose(applyMiddleware(thunk))
+      )
+
+      wrapper = mount(
+        <GetHelpContainer
+          location={{ query: { orderId: '788' }, pathname: 'get-help' }}
+          store={store}
+          params={{ userId: '123', orderId: '456' }}
+        >
+          <div>Required Child</div>
+        </GetHelpContainer>
+      )
+    })
+
+    test.only('isRequestPending should be false', () => {
+      const GetHelp = wrapper.find('GetHelp')
+      expect(GetHelp.prop('isRequestPending')).toBe(false)
     })
   })
 })

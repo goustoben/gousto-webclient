@@ -66,7 +66,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const isRequestPending = (!orderId || skipErrorPage)
     ? false
-    : state.pending.get(actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS, false)
+    : state.pending.get(actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS, true)
 
   return {
     didRequestError,
