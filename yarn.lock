@@ -11802,13 +11802,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "e2e-cypress@workspace:tests/e2e-cypress"
   dependencies:
+    "@datadog/browser-rum": ^3.8.0
     "@testing-library/cypress": ^8.0.3
     "@types/faker": ^5.5.9
     "@types/jest": ^27.5.2
     "@types/node": ^17.0.45
     cypress: ^10.4.0
     cypress-wait-until: ^1.7.2
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.0.0
     faker: ^5.5.3
+    ts-deepmerge: ^2.0.4
     typescript: ^4.7.4
   languageName: unknown
   linkType: soft
@@ -12384,6 +12388,17 @@ __metadata:
     eslint-plugin-react: ^7.28.0
     eslint-plugin-react-hooks: ^4.3.0
   checksum: 253178689c3c80eef2567e3aaf0612e18973bc9cf51d9be36074b5dd58210e8b6942200a424bcccbb81ac884e41303479ab09f251a2a97addc2de61efdc9576c
+  languageName: node
+  linkType: hard
+
+"eslint-config-prettier@npm:^8.5.0":
+  version: 8.5.0
+  resolution: "eslint-config-prettier@npm:8.5.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
   languageName: node
   linkType: hard
 
@@ -27701,6 +27716,13 @@ __metadata:
   version: 2.2.0
   resolution: "ts-dedent@npm:2.2.0"
   checksum: 93ed8f7878b6d5ed3c08d99b740010eede6bccfe64bce61c5a4da06a2c17d6ddbb80a8c49c2d15251de7594a4f93ffa21dd10e7be75ef66a4dc9951b4a94e2af
+  languageName: node
+  linkType: hard
+
+"ts-deepmerge@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "ts-deepmerge@npm:2.0.4"
+  checksum: fe220f270cab4d4d3560f41e7bad7d5ecd083ed60e8aaa679776c1fda7e5dd5bbea664875c5bfe7d0e08893083fae82ca16943d407f72915576216bd10311c29
   languageName: node
   linkType: hard
 

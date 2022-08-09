@@ -49,6 +49,51 @@ Cypress.Commands.add(
   },
 )
 
+Cypress.Commands.add('getDDRUM', () => cy.window().its('DD_RUM'))
+
+Cypress.Commands.add('startDDSessionRecording', () =>
+  cy.getDDRUM().then((DD_RUM) => {
+    const DDCtx = DD_RUM.getInternalContext()
+    const isInitialised = DDCtx && DDCtx.session_id
+
+    if (isInitialised) return
+
+    DD_RUM.init({
+      applicationId: Cypress.env('DD_APPLICATION_ID'),
+      clientToken: Cypress.env('DD_CLIENT_TOKEN'),
+      site: 'datadoghq.eu',
+      service: Cypress.env('DD_SERVICE'),
+      sampleRate: 100,
+      trackInteractions: true,
+    })
+
+    DD_RUM.setRumGlobalContext({
+      testName: Cypress.currentTest.titlePath.join(' '),
+      build: process.env.CIRCLE_BUILD_NUM,
+      testRunner: 'cypress',
+    })
+
+    DD_RUM.startSessionReplayRecording()
+  }),
+)
+
+Cypress.Commands.add('stopDDSessionRecording', () => {
+  cy.getDDRUM().then((DD_RUM) => {
+    const DDCtx = DD_RUM.getInternalContext()
+    const isInitialised = DDCtx && DDCtx.session_id
+
+    if (isInitialised) return
+
+    DD_RUM.stopSessionReplayRecording()
+  })
+})
+
+Cypress.Commands.add('addDDContext', (contextKey, contextValue) =>
+  cy.getDDRUM().then((DD_RUM) => {
+    DD_RUM.addRumGlobalContext(contextKey, contextValue)
+  }),
+)
+
 // WIP
 // Cypress.Commands.add(
 //   "clickWhereParentDoesntContain",

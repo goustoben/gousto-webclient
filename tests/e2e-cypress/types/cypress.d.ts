@@ -1,4 +1,5 @@
 import type { RouteMatcher, WaitOptions } from 'cypress/types/net-stubbing'
+import { datadogRum } from '@datadog/browser-rum'
 
 declare global {
   namespace Cypress {
@@ -44,6 +45,38 @@ declare global {
         value: Record<string, unknown>,
         opts?: { version: number },
       ): Chainable<Cypress.Cookie>
+
+      /**
+       * Gets DataDog RUM from Cypress window
+       * Used to instrument e2e tests
+       * or check whether instrumentation is already initialised
+       */
+      getDDRUM(): Chainable<typeof datadogRum>
+
+      /**
+       * Start DataDog session recording if it is not already
+       * initialised.
+       * This must be invoked AFTER the page is loaded, as DD_RUM
+       * is added to the window by the client bundle
+       *
+       * Note: this has been added to cy.visit
+       */
+      startDDSessionRecording(): Chainable<typeof datadogRum>
+
+      /**
+       * Stops DataDog session recording
+       * Intended for use after a test suite
+       */
+      stopDDSessionRecording(): Chainable<typeof datadogRum>
+
+      /**
+       * Append values to the DataDog global context
+       * @example
+       * ```ts
+       * addDDContext(isLoggedIn, true)
+       * ```
+       */
+      addDDContext(contextKey: string, contextValue: unknown): Chainable<typeof datadogRum>
     }
   }
 }
