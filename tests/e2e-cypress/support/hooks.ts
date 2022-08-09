@@ -8,3 +8,7 @@ beforeEach(() => {
     likedislikerecipes: 1,
   })
 })
+
+afterEach(() => {
+  cy.stopDDSessionRecording()
+})
