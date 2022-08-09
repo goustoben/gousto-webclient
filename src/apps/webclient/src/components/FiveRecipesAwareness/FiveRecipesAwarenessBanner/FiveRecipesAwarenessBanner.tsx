@@ -2,18 +2,18 @@ import React from 'react'
 
 import {
   Box,
-  Button,
   Icon,
   IconVariant,
-  ButtonVariant,
-  ButtonColorVariant,
+  Heading5,
+  Paragraph,
+  FlexDirection,
+  Color,
+  BorderStyle,
 } from '@gousto-internal/citrus-react'
 
 import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 
 import { use5RecipesAwareness } from '../use5RecipesAwareness'
-
-import css from './FiveRecipesAwarenessBanner.css'
 
 export const FiveRecipesAwarenessBanner = () => {
   const { isEnabled, hasClosedBanner, setBannerAsClosed } = use5RecipesAwareness()
@@ -28,27 +28,38 @@ export const FiveRecipesAwarenessBanner = () => {
   }
 
   return (
-    <div className={css.container}>
-      <div>
-        <Icon name="info" variant={IconVariant.Informative} />
-      </div>
-      <div className={css.closeButtonContainer}>
-        <Box>
-          <Button
-            title="Close Banner"
-            onClick={() => onBannerClose()}
-            variant={ButtonVariant.None}
-            colorVariant={ButtonColorVariant.Tertiary}
-          >
-            <Icon name="close" />
-          </Button>
+    <Box width="80%" paddingH={3}>
+      <Box
+        bg={Color.Informative_50}
+        borderColor={Color.Informative_200}
+        display="flex"
+        flexDirection={FlexDirection.Row}
+        paddingH={5}
+        paddingV={5}
+        borderRadius={1.5}
+        borderWidth={0.5}
+        borderStyle={BorderStyle.Solid}
+      >
+        <Icon name="info" title="info" variant={IconVariant.Informative} />
+        <Box
+          flexGrow={3}
+          display="flex"
+          flexDirection={FlexDirection.Column}
+          gap="10px"
+          paddingH={3}
+        >
+          <Heading5 size={2}>5 recipes, here we come!</Heading5>
+          <Paragraph>Choose up to 5 recipes each week.</Paragraph>
         </Box>
-      </div>
-
-      <div className={css.textContainer}>
-        <h4 className={css.headerTitle}>5 recipes, here we come!</h4>
-        <p className={css.bodyText}>Choose up to 5 recipes each week.</p>
-      </div>
-    </div>
+        <Icon
+          name="close"
+          title="Close Banner"
+          role="button"
+          onClick={() => onBannerClose()}
+          size={5}
+          tabIndex={0}
+        />
+      </Box>
+    </Box>
   )
 }

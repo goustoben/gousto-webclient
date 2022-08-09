@@ -28,7 +28,7 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
       })
 
       render(<FiveRecipesAwarenessBanner />)
-      expect(screen.queryByRole('heading')).not.toBeInTheDocument()
+      expect(screen.queryByText(/5 recipes, here we come!/)).not.toBeInTheDocument()
     })
   })
 
@@ -47,7 +47,7 @@ describe('<FiveRecipesAwarenessBanner /> ', () => {
       })
 
       it('should render the banner', () => {
-        expect(screen.queryByRole('heading')).toHaveTextContent(/5 recipes, here we come!/)
+        expect(screen.queryByRole('heading')).toHaveTextContent('5 recipes, here we come!')
       })
 
       it('can close the banner by clicking the close icon', () => {
