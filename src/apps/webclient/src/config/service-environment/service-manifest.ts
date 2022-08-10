@@ -97,6 +97,11 @@ export const serviceManifest: ServiceManifest = {
       version: 'v1',
       basePath: '/menu/v1',
     },
+    {
+      majorVersion: 2,
+      version: 'v2',
+      basePath: '/menu/v2',
+    },
   ],
   order: [
     {

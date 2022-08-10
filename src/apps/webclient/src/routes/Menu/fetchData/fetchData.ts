@@ -55,71 +55,71 @@ const handleQueryError = (error: any) => async (dispatch: Dispatch<any>) => {
 
 const loadOrderAuthenticated =
   (orderId: string, addRecipe: AddRecipeFn) =>
-  async (dispatch: Dispatch<any>, getState: GetState) => {
-    const { auth, user } = getState()
+    async (dispatch: Dispatch<any>, getState: GetState) => {
+      const { auth, user } = getState()
 
-    if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
-      await dispatch(actions.userLoadData())
-    }
-    const prevBasketRecipes = getState().basket.get('recipes')
+      if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
+        await dispatch(actions.userLoadData())
+      }
+      const prevBasketRecipes = getState().basket.get('recipes')
 
-    await dispatch(actions.menuLoadOrderDetails(orderId, addRecipe))
+      await dispatch(actions.menuLoadOrderDetails(orderId, addRecipe))
 
-    const noOfOrderRecipes = getState().basket.get('recipes').size
+      const noOfOrderRecipes = getState().basket.get('recipes').size
 
-    if (noOfOrderRecipes === 0) {
-      // eslint-disable-next-line no-restricted-syntax, no-unused-vars
-      for (const [recipeId, qty] of prevBasketRecipes) {
-        for (let i = 0; i < qty; i++) {
-          // fall back to the defaults for these 3 params
-          const view = undefined
-          const recipeInfo = undefined
-          const maxRecipesNum = undefined
+      if (noOfOrderRecipes === 0) {
+        // eslint-disable-next-line no-restricted-syntax, no-unused-vars
+        for (const [recipeId, qty] of prevBasketRecipes) {
+          for (let i = 0; i < qty; i++) {
+            // fall back to the defaults for these 3 params
+            const view = undefined
+            const recipeInfo = undefined
+            const maxRecipesNum = undefined
 
-          addRecipe(recipeId, view, recipeInfo, maxRecipesNum, orderId)
+            addRecipe(recipeId, view, recipeInfo, maxRecipesNum, orderId)
+          }
         }
       }
-    }
 
-    await dispatch(actions.menuLoadMenu())
-    dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
-    dispatch(actions.menuLoadStock(true))
-    sendClientMetric('menu-edit-initiated', 1, 'Count')
-  }
+      await dispatch(actions.menuLoadMenu())
+      dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
+      dispatch(actions.menuLoadStock(true))
+      sendClientMetric('menu-edit-initiated', 1, 'Count')
+    }
 
 const loadOrder =
   (orderId: string, addRecipe: AddRecipeFn) =>
-  async (dispatch: Dispatch<any>, getState: GetState) => {
-    const isAuthenticated = getIsAuthenticated(getState())
+    async (dispatch: Dispatch<any>, getState: GetState) => {
+      const isAuthenticated = getIsAuthenticated(getState())
 
-    if (isAuthenticated) {
-      await loadOrderAuthenticated(orderId, addRecipe)(dispatch, getState)
+      if (isAuthenticated) {
+        await loadOrderAuthenticated(orderId, addRecipe)(dispatch, getState)
 
-      return
-    }
-
-    if (isServer()) {
-      if (!isFacebookUserAgent(getState().request.get('userAgent'))) {
-        ;(logger as any).notice({ message: `Unauthenticated user trying to edit: ${orderId}` })
+        return
       }
 
-      await dispatch(
-        actions.redirect(
-          `/menu?target=${encodeURIComponent(
-            `${getProtocol()}//${getDomain()}/menu/${orderId}`,
-          )}#login`,
-          true,
-        ),
-      )
+      if (isServer()) {
+        if (!isFacebookUserAgent(getState().request.get('userAgent'))) {
+          ; (logger as any).notice({ message: `Unauthenticated user trying to edit: ${orderId}` })
+        }
+
+        await dispatch(
+          actions.redirect(
+            `/menu?target=${encodeURIComponent(
+              `${getProtocol()}//${getDomain()}/menu/${orderId}`,
+            )}#login`,
+            true,
+          ),
+        )
+      }
     }
-  }
 
 type Query =
   | {
-      day_id?: string
-      slot_id?: string
-      num_portions?: unknown
-    }
+    day_id?: string
+    slot_id?: string
+    num_portions?: unknown
+  }
   | any
 
 const loadWithoutOrder =
@@ -147,7 +147,7 @@ const loadWithoutOrder =
         await dispatch(boxSummaryDeliveryDaysLoad())
         dispatch(setSlotFromIds(query.slot_id, query.day_id))
       } catch (err: any) {
-        ;(logger as any).error({ message: `Debug fetchData: ${err.message}`, errors: [err] })
+        ; (logger as any).error({ message: `Debug fetchData: ${err.message}`, errors: [err] })
       }
     } else if (!getState().basket.get('date')) {
       await chooseFirstDate()(dispatch, getState)
@@ -212,7 +212,7 @@ export default function fetchData(
   force: boolean,
   background: any,
   userMenuVariant: string,
-  { addRecipe }: { addRecipe: AddRecipeFn },
+  { addRecipe, date }: { addRecipe: AddRecipeFn; date?: string },
 ) {
   return async (dispatch: Dispatch<any>, getState: GetState) => {
     const accessToken = getAccessToken(getState())
@@ -240,7 +240,7 @@ export default function fetchData(
       // A/B test on signup page
       fetchMenuPromise = fetchMenusWithUserId(accessToken, query, userMenuVariant)
     } else {
-      fetchMenuPromise = fetchMenus(accessToken, query)
+      fetchMenuPromise = fetchMenus(accessToken, query, { date })
     }
 
     const menuResponse = await fetchMenuPromise

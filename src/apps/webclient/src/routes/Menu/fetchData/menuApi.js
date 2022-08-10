@@ -19,7 +19,7 @@ const getTasteProfileIdFromQuery = (query) => {
   return null
 }
 
-export function fetchMenus(accessToken, query) {
+export function fetchMenus(accessToken, query, { date = '2022-08-12' } = {}) {
   const fetchOptions = {
     ...options,
     accessToken,
@@ -52,8 +52,9 @@ export function fetchMenus(accessToken, query) {
   }
 
   // requestQueryParams.forceSwapsExperimentUserAllocationGroup = 'variant-b'
+  requestQueryParams.date = date
 
-  return fetchRaw(`${endpoint('menu')}/menus`, requestQueryParams, fetchOptions)
+  return fetchRaw(`${endpoint('menu', 2)}/menus`, requestQueryParams, fetchOptions)
 }
 
 export function fetchMenusWithUserId(accessToken, query, userId) {

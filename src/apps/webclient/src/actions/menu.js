@@ -1,26 +1,22 @@
 import Immutable from 'immutable'
 
+import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import * as boxPricesApi from 'apis/boxPrices'
 import { fetchRecipeStock } from 'apis/recipes'
-import { getCutoffDateTime } from 'utils/deliveries'
+import menuConfig from 'config/menu'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
+import { getPromoCode, getBasketOrderId, getBasketTariffId } from 'selectors/basket'
+import Cookies from 'utils/GoustoCookies'
+import GoustoException from 'utils/GoustoException'
 import { limitReached } from 'utils/basket'
+import { canUseWindow } from 'utils/browserEnvironment'
+import { set, unset, get } from 'utils/cookieHelper2'
+import { getCutoffDateTime } from 'utils/deliveries'
 import logger from 'utils/logger'
 import { isFacebookUserAgent } from 'utils/request'
-import GoustoException from 'utils/GoustoException'
-import menuConfig from 'config/menu'
-import Cookies from 'utils/GoustoCookies'
-import { set, unset, get } from 'utils/cookieHelper2'
-import { canUseWindow } from 'utils/browserEnvironment'
-import * as orderV2 from 'routes/Menu/apis/orderV2'
-import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
-import { getPromoCode, getBasketOrderId, getBasketTariffId } from 'selectors/basket'
-import { isServer } from '../../server/utils/serverEnvironment'
-import statusActions from './status'
-import { redirect } from './redirect'
-import {productsLoadProductsById, productsLoadStock, productsLoadCategories} from './products'
-import { getStockAvailability, loadMenuCollectionsWithMenuService } from './menuActionHelper'
-import { menuServiceLoadDays } from './menuServiceLoadDays'
 
+import { isServer } from '../../server/utils/serverEnvironment'
+import { actionTypes } from './actionTypes'
 import {
   basketReset,
   basketDateChange,
@@ -32,8 +28,12 @@ import {
   basketSlotChange,
   basketChosenAddressChange,
 } from './basket'
+import { getStockAvailability, loadMenuCollectionsWithMenuService } from './menuActionHelper'
+import { menuServiceLoadDays } from './menuServiceLoadDays'
+import { productsLoadProductsById, productsLoadStock, productsLoadCategories } from './products'
+import { redirect } from './redirect'
+import statusActions from './status'
 import tempActions from './temp'
-import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
 
 function handleReloadMenuError({ dispatch }) {
@@ -51,7 +51,10 @@ function reloadPageWhenInvalidDeliveryDate({ dispatch, getState }) {
 
   try {
     const firstAvailableDate = Object.keys(getState().boxSummaryDeliveryDays.toJS()).sort().shift()
-    const slotId = getState().boxSummaryDeliveryDays.getIn([firstAvailableDate, 'slots']).toJS().shift().id
+    const slotId = getState()
+      .boxSummaryDeliveryDays.getIn([firstAvailableDate, 'slots'])
+      .toJS()
+      .shift().id
 
     set(Cookies, 'reload_invalid_delivery_date', '1', 1)
     dispatch(boxSummaryDeliverySlotChosen({ date: firstAvailableDate, slotId }))
@@ -69,38 +72,38 @@ export function menuLoadingError(message) {
 }
 
 export function menuReceiveBoxPrices(prices, tariffId) {
-  return ({
+  return {
     type: actionTypes.MENU_BOX_PRICES_RECEIVE,
     prices,
     tariffId,
-  })
+  }
 }
 
 export function menuChangeRecipeStock(stock) {
-  return ({
+  return {
     type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
     stock,
-  })
+  }
 }
 
 export function menuReplaceRecipeStock(stock) {
-  return ({
+  return {
     type: actionTypes.MENU_RECIPE_STOCK_REPLACE,
     stock,
-  })
+  }
 }
 
 export function menuReceiveMenuPending(pending) {
-  return ({
+  return {
     type: actionTypes.MENU_RECIPES_RECEIVE_PENDING,
     pending,
-  })
+  }
 }
 
 export function findSlot(deliveryDays, coreSlotId) {
   let slotId
-  deliveryDays.some(deliveryDay => {
-    const matchedSlot = deliveryDay.get('slots').find(slot => {
+  deliveryDays.some((deliveryDay) => {
+    const matchedSlot = deliveryDay.get('slots').find((slot) => {
       if (String(slot.get('coreSlotId')) === String(coreSlotId)) {
         return true
       }
@@ -153,6 +156,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
       await loadMenuCollectionsWithMenuService(dispatch, getState, date, background)
 
       logger.notice(`recipes fetch took ${new Date() - startTime}ms`)
+      console.log(`>>>>>> boom! ${date}`)
 
       dispatch(menuActions.menuReceiveMenuPending(false))
 
@@ -206,14 +210,22 @@ export function menuLoadBoxPrices() {
       dispatch(statusActions.error(actionTypes.MENU_BOX_PRICES_RECEIVE, false))
 
       try {
-        const { data: recipePrices } = await boxPricesApi.fetchBoxPrices(getState().auth.get('accessToken'), reqData)
+        const { data: recipePrices } = await boxPricesApi.fetchBoxPrices(
+          getState().auth.get('accessToken'),
+          reqData,
+        )
         dispatch(menuActions.menuReceiveBoxPrices(recipePrices, tariffId))
       } catch (err) {
         dispatch(menuActions.menuReceiveBoxPrices({}))
 
-        throw new GoustoException(`Could not load menu box prices: fetch failed${tariffId ? ` for tariff_id "${tariffId}"` : ''}, ${err}`, {
-          error: 'fetch-failed',
-        })
+        throw new GoustoException(
+          `Could not load menu box prices: fetch failed${
+            tariffId ? ` for tariff_id "${tariffId}"` : ''
+          }, ${err}`,
+          {
+            error: 'fetch-failed',
+          },
+        )
       }
     } catch (err) {
       const errMessage = err.message || err
@@ -230,23 +242,30 @@ export function menuLoadOrderDetails(orderId, addRecipe) {
     try {
       await dispatch(statusActions.pending(actionTypes.LOADING_ORDER, true))
 
-      const { data: order } = await orderV2.fetchOrder(dispatch, getState, orderId, 'shipping_address')
+      const { data: order } = await orderV2.fetchOrder(
+        dispatch,
+        getState,
+        orderId,
+        'shipping_address',
+      )
       dispatch(basketReset())
       dispatch(menuActions.menuCutoffUntilReceive(order.shouldCutoffAt))
 
       dispatch(basketDateChange(order.deliveryDate))
       dispatch(basketNumPortionChange(order.box.numPortions, orderId))
 
-      order.recipeItems.forEach(recipe => {
+      order.recipeItems.forEach((recipe) => {
         const qty = Math.round(parseInt(recipe.quantity, 10) / parseInt(order.box.numPortions, 10))
 
         const adjustedQty = menuConfig.stockThreshold + qty
-        dispatch(menuActions.menuChangeRecipeStock({
-          [recipe.recipeId]: { [order.box.numPortions]: adjustedQty },
-        }))
+        dispatch(
+          menuActions.menuChangeRecipeStock({
+            [recipe.recipeId]: { [order.box.numPortions]: adjustedQty },
+          }),
+        )
 
         for (let i = 1; i <= qty; i++) {
-        // fall back to the defaults for these 3 params
+          // fall back to the defaults for these 3 params
           const view = undefined
           const recipeInfo = undefined
           const maxRecipesNum = undefined
@@ -257,7 +276,7 @@ export function menuLoadOrderDetails(orderId, addRecipe) {
 
       const productItems = order.productItems || []
       if (productItems.length) {
-        const productItemIds = productItems.map(productItem => productItem.itemableId)
+        const productItemIds = productItems.map((productItem) => productItem.itemableId)
         await dispatch(productsLoadProductsById(productItemIds))
         await dispatch(productsLoadStock())
         await dispatch(productsLoadCategories())
@@ -345,24 +364,24 @@ export const forceMenuLoad = (forceLoad) => ({
 export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   type: actionTypes.MENU_LOAD_COMPLETE,
   timeToLoadMs,
-  useMenuService
+  useMenuService,
 })
 
 export const clearSelectedRecipeVariants = () => ({
-  type: actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS
+  type: actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS,
 })
 
 export const trackVariantListDisplay = (view) => ({
   type: actionTypes.TRACK_VARIANT_RECIPE_LIST_DISPLAY,
   trackingData: {
     actionType: trackingKeys.recipeVariantActionSheet,
-    view
-  }
+    view,
+  },
 })
 
 export const sideEventScreens = {
   orderSidesScreen: 'order_sides_screen',
-  orderSidesAllergensScreen: 'order_sides_allergens_screen'
+  orderSidesAllergensScreen: 'order_sides_allergens_screen',
 }
 
 export const sideEventTypes = {
@@ -380,56 +399,52 @@ export const trackSidesContinueClicked = (sidesIds, sidesTotalSurcharge, totalNu
     event_type: sideEventTypes.primaryAction,
     sides_ids: sidesIds,
     sides_total_surcharge: sidesTotalSurcharge,
-    sides_counts: totalNumberOfSides
-  }
+    sides_counts: totalNumberOfSides,
+  },
 })
 
-export const trackViewSidesModal = () =>
-  ({
-    type: actionTypes.TRACK_VIEW_ORDER_SIDES_SCREEN,
-    trackingData: {
-      event_name: trackingKeys.sideModalViewOrderSidesScreen,
-      event_screen: sideEventScreens.orderSidesScreen,
-      event_type: sideEventTypes.screenView,
-    }}
-  )
+export const trackViewSidesModal = () => ({
+  type: actionTypes.TRACK_VIEW_ORDER_SIDES_SCREEN,
+  trackingData: {
+    event_name: trackingKeys.sideModalViewOrderSidesScreen,
+    event_screen: sideEventScreens.orderSidesScreen,
+    event_type: sideEventTypes.screenView,
+  },
+})
 
-export const trackCancelSide = () =>
-  ({
-    type: actionTypes.TRACK_ORDER_SIDES_CANCEL,
-    trackingData: {
-      event_name: trackingKeys.sideModalOrderSidesCancel,
-      event_type: sideEventTypes.closeScreen
-    }
-  })
+export const trackCancelSide = () => ({
+  type: actionTypes.TRACK_ORDER_SIDES_CANCEL,
+  trackingData: {
+    event_name: trackingKeys.sideModalOrderSidesCancel,
+    event_type: sideEventTypes.closeScreen,
+  },
+})
 
-export const trackAddSide = (sideId, orderId) =>
-  ({
-    type: actionTypes.TRACK_ADD_SIDE,
-    trackingData: {
-      event_name: trackingKeys.sideModalAddSide,
-      side_id: sideId,
-      order_id: orderId,
-    }
-  })
+export const trackAddSide = (sideId, orderId) => ({
+  type: actionTypes.TRACK_ADD_SIDE,
+  trackingData: {
+    event_name: trackingKeys.sideModalAddSide,
+    side_id: sideId,
+    order_id: orderId,
+  },
+})
 
-export const trackViewSidesAllergens = () =>
-  ({
-    type: actionTypes.TRACK_VIEW_ORDER_SIDES_ALLERGENS_SCREEN,
-    trackingData: {
-      event_name: trackingKeys.sideModalViewOrderSidesAllergensScreen,
-      event_screen: sideEventScreens.orderSidesScreen,
-      event_type: sideEventTypes.tertiaryAction
-    }
-  })
+export const trackViewSidesAllergens = () => ({
+  type: actionTypes.TRACK_VIEW_ORDER_SIDES_ALLERGENS_SCREEN,
+  trackingData: {
+    event_name: trackingKeys.sideModalViewOrderSidesAllergensScreen,
+    event_screen: sideEventScreens.orderSidesScreen,
+    event_type: sideEventTypes.tertiaryAction,
+  },
+})
 
 export const trackCloseSidesAllergens = () => ({
   type: actionTypes.TRACK_CLOSE_ORDER_SIDES_ALLERGENS_SCREEN,
   trackingData: {
     event_name: trackingKeys.sideModalClose,
     event_screen: sideEventScreens.orderSidesAllergensScreen,
-    event_type: sideEventTypes.closeScreen
-  }
+    event_type: sideEventTypes.closeScreen,
+  },
 })
 
 /**
