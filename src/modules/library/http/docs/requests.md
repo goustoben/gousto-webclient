@@ -22,6 +22,11 @@ Learn about using requests in the [user-guide](user-guide.md).
 
 When the request is made, sets the `Authorization` HTTP header to `Bearer ${token}` using `@library/auth`.
 
+### setServiceUrl
+
+This is a stub for a middleware that will ultimately inject endpoint URLs, based on service name and version. For the
+moment it is hardcoded to point to the staging user endpoint (Core).
+
 ## Low level middleware
 
 ### addPath
