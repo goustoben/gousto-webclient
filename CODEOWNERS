@@ -153,6 +153,7 @@
 /src/apps/webclient/src/routes/Ratings/                                 @Gousto/squad-turnips
 
 # squad-rockets ownership
+/src/modules/features/account-details/                                  @Gousto/squad-rockets-frontend
 /src/apps/webclient/src/routes/Account/                                 @Gousto/squad-rockets-frontend
 /src/apps/webclient/src/routes/Welcome/                                 @Gousto/squad-rockets-frontend
 /src/apps/webclient/src/routes/Join/                                    @Gousto/squad-rockets-frontend
