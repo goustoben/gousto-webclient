@@ -8,6 +8,7 @@ export const cssLikeDislikeButtons: CSSObject = {
   width: '5em',
   height: '2.25em',
   padding: '0em',
+  zIndex: '12',
   [`@media ${screen.screenSMMin}`]: {
     width: '5.5em',
     height: '2.5em',
