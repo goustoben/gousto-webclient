@@ -660,7 +660,9 @@ describe('onScreenRecovery', () => {
           }),
           onScreenRecovery: Immutable.Map({
             modalType: 'subscription',
-            offer: null
+            offer: {
+              promoCode: 'OSR-PROMO-CODE',
+            },
           }),
           user: Immutable.Map({
             id: '12345',
@@ -688,8 +690,10 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
-            hasPendingPromo: null,
-            hasPendingPromoWithSubCondition: null,
+            promoCode: 'OSR-PROMO-CODE',
+            discountOffered: undefined,
+            hasPendingPromo: true,
+            hasPendingPromoWithSubCondition: undefined,
           })
         }))
       })
@@ -725,7 +729,8 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
-            hasPendingPromo: null,
+            discountOffered: null,
+            hasPendingPromo: false,
             hasPendingPromoWithSubCondition: null,
           })
         }))
@@ -775,7 +780,8 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
-            hasPendingPromo: '1%',
+            discountOffered: '1%',
+            hasPendingPromo: true,
             hasPendingPromoWithSubCondition: true,
           })
         }))
@@ -814,7 +820,7 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
-            osrDiscount: 'OSR-PROMO-CODE',
+            promoCode: 'OSR-PROMO-CODE',
           })
         }))
       })
