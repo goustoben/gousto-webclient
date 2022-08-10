@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { getSlotTimes } from 'utils/deliveries'
 
-import { getDeliveryDateDataSelector } from '../boxDetailsHighlightSelectors'
+import { getDeliveryDateDataSelector } from './deliveryDateSelectors'
 
 export const useGetDeliveryData = () => {
   const { deliveryDays, slotId, date } = useSelector(getDeliveryDateDataSelector)

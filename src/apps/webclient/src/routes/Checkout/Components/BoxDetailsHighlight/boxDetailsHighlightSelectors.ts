@@ -1,17 +1,7 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 
-type StateTypePlaceholder = {
-  basket: Immutable.Map<string, unknown>
-  recipes: Immutable.Map<string, unknown>
-  menuRecipesStore: Immutable.Map<string, unknown>
-  menuRecipeStock: Immutable.Map<string, unknown>
-  menuBoxPrices: Immutable.Map<string, unknown>
-  boxSummaryDeliveryDays: Immutable.Map<string, unknown>
-  deliveryDate: Immutable.Map<string, unknown>
-  slotId: Immutable.Map<string, unknown>
-  features: Immutable.Map<string, unknown>
-}
+import { StateTypePlaceholder } from './types'
 
 const getBasketRecipes = ({ basket }: StateTypePlaceholder) => basket.get('recipes')
 export const getBasketRecipesSelector = createSelector(getBasketRecipes, (recipes) => ({
@@ -41,22 +31,4 @@ export const getOrderTotalDataSelector = createSelector(
   ({ isGoustoOnDemandEnabled }) => ({
     isGoustoOnDemandEnabled,
   }),
-)
-
-type DeliveryDateData = {
-  deliveryDays: unknown
-  slotId: string
-  date: string
-}
-const getDeliveryDateData = ({
-  boxSummaryDeliveryDays,
-  basket,
-}: StateTypePlaceholder): DeliveryDateData => ({
-  deliveryDays: boxSummaryDeliveryDays,
-  slotId: basket.get('slotId') as string,
-  date: basket.get('date') as string,
-})
-export const getDeliveryDateDataSelector = createSelector(
-  getDeliveryDateData,
-  ({ deliveryDays, slotId, date }) => ({ deliveryDays, slotId, date }),
 )
