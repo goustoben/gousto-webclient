@@ -10,13 +10,19 @@ export async function parseResponseToJSON (resp: Response): Promise<unknown> {
   }
 }
 
-export class ResponseError extends Error {
+/**
+ * Represents a bad HTTP response
+ */
+class ResponseError extends Error {
   constructor(resp: Response) {
     super(`@library/http ResponseError: bad response, status="${resp.status}"`)
   }
 }
 
-export class ParseJSONError extends Error {
+/**
+ * Represents a bad JSON decode
+ */
+class ParseJSONError extends Error {
   // This is an inbuilt as of newer browsers and Node>=16.9, but the server app uses Node14
   public cause: Error
 

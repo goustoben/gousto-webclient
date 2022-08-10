@@ -1,4 +1,3 @@
 export {
-  extractCoreData,
-  ParseCoreDataError
+  extractCoreData
 } from './src/parsers'

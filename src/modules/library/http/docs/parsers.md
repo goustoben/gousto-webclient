@@ -4,7 +4,11 @@
 
 ### extractCoreData
 
-This parser extracts the `result.data` value from a successful Core PHP service response.
+Given a successful API response from Core, extracts the `data` as `<T>`
+
+Type:
+
+`function extractCoreData <T> (): ResponseMiddleware<Response, T>`
 
 Usage:
 
@@ -12,14 +16,15 @@ Usage:
 import { composeFetch } from '@library/http'
 import { extractCoreData } from '@library/http/parsers'
 
-// Return type of fetchUser = Promise<User>
-const fetchUser = composeFetch(
+type FetchUser = () => Promise<User>
+
+const fetchUser: FetchUser = composeFetch(
   userRequest,
   extractCoreData<User>()
 )
 ```
 
-Possible exceptions:
+Exceptions include:
 ```
 ResponseError      - bad HTTP response
 ParseJSONError     - bad JSON string
