@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router'
 
 import config from 'config/routes'
 import MyDeliveries from './MyDeliveries'
+import { AccountDetails } from './AccountDetails'
 import { MyGousto } from './MyGousto'
 import SubscriptionSettings from './Subscription'
 import { Referral } from './Referral'
@@ -12,6 +13,7 @@ import { checkValidSession } from '../../utils/routes'
 
 export const accountRoutes = store => (
   <Route component={Account} onEnter={checkValidSession(store, config.client.home, true)}>
+    {AccountDetails}
     {MyGousto}
     {MyDeliveries}
     {SubscriptionSettings}

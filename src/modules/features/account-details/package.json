@@ -8,8 +8,14 @@
     "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
     "typecheck": "yarn run --top-level tsc --noEmit"
   },
+  "peerDependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
   "devDependencies": {
     "@library/dev-babel": "workspace:*",
-    "@library/nonjs-imports": "workspace:*"
+    "@library/nonjs-imports": "workspace:*",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   }
 }
