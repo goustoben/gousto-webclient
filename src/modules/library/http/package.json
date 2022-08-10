@@ -8,14 +8,18 @@
     "typecheck": "yarn run --top-level tsc --noEmit --project tsconfig.json"
   },
   "devDependencies": {
+    "@datadog/browser-logs": "^3.8.0",
     "@library/auth": "workspace:*",
     "@library/dev-babel": "workspace:*",
+    "@library/environment": "workspace:*",
     "@types/isomorphic-fetch": "0.0.36",
     "isomorphic-fetch": "3.0.0",
     "qs": "6.5.2"
   },
   "peerDependencies": {
+    "@datadog/browser-logs": "^3.8.0",
     "@library/auth": "workspace:*",
+    "@library/environment": "workspace:*",
     "isomorphic-fetch": "3.3.0",
     "qs": "6.5.2"
   }

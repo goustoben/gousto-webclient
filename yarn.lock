@@ -3111,7 +3111,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@library/environment@workspace:src/modules/library/environment":
+"@library/environment@workspace:*, @library/environment@workspace:src/modules/library/environment":
   version: 0.0.0-use.local
   resolution: "@library/environment@workspace:src/modules/library/environment"
   dependencies:
@@ -3129,13 +3129,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@library/http@workspace:src/modules/library/http"
   dependencies:
+    "@datadog/browser-logs": ^3.8.0
     "@library/auth": "workspace:*"
     "@library/dev-babel": "workspace:*"
+    "@library/environment": "workspace:*"
     "@types/isomorphic-fetch": 0.0.36
     isomorphic-fetch: 3.0.0
     qs: 6.5.2
   peerDependencies:
+    "@datadog/browser-logs": ^3.8.0
     "@library/auth": "workspace:*"
+    "@library/environment": "workspace:*"
     isomorphic-fetch: 3.3.0
     qs: 6.5.2
   languageName: unknown
