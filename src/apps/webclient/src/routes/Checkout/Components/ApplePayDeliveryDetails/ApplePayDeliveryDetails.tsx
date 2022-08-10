@@ -20,6 +20,11 @@ import { getSlotTimes } from 'utils/deliveries'
 import css from './ApplePayDeliveryDetails.css'
 
 /**
+ * TODO during productionizing -- fix ts-ignored errors and re-write styling using `@emotion/styled`.
+ * TODO Also update DeliveryEducationBanner (whole component), Delivery (renderDeliveryDay method) for consistency.
+ */
+
+/**
  * Info block about order: what is delivery day, delivery time and other misc static information.
  */
 const DeliveryDetailsInfo = () => {
@@ -153,8 +158,8 @@ export const ApplePayDeliveryDetails = ({
         disabled={isCtaDisabled}
         className={css.applePayButton}
       >
-        <span className={css.ApplePayButtonText}>Pay with</span>
-        <span className={css.ApplePayButtonLogo} />
+        <span className={css.applePayButtonText}>Pay with</span>
+        <span className={css.applePayButtonLogo} />
       </button>
     </>
   )

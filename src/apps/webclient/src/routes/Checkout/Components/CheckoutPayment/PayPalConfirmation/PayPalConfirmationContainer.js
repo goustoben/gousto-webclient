@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  resetPaymentMethod: setCurrentPaymentMethod.bind(null, PaymentMethod.Card),
+  resetPaymentMethod: () => setCurrentPaymentMethod(PaymentMethod.Card),
 }
 
 export const PayPalConfirmationContainer = connect(

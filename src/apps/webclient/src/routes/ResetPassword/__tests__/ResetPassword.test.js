@@ -7,7 +7,8 @@ import Input from 'Form/Input'
 import InputError from 'Form/InputError'
 
 jest.mock('utils/isomorphicEnvironment', () => ({
-  getRecaptchaPublicKey: () => 'mock-recaptcha-token'
+  getRecaptchaPublicKey: () => 'mock-recaptcha-token',
+  getProtocol: () => 'https',
 }))
 
 const IS_RECAPTCHA_ENABLED = false

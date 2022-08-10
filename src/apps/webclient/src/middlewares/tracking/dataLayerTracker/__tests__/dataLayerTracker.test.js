@@ -8,6 +8,7 @@ jest.mock('utils/browserEnvironment')
 
 jest.mock('utils/isomorphicEnvironment', () => ({
   getEnvironment: () => 'local',
+  getProtocol: () => 'https',
 }))
 
 describe('given dataLayerTracker middleware is invoked', () => {

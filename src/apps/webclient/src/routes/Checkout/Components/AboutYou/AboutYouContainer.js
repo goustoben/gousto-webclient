@@ -3,7 +3,7 @@ import { isValid } from 'redux-form'
 
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import userActions from 'actions/user'
+import { userProspect } from 'actions/user'
 import {
   checkoutClearErrors,
   trackCheckoutButtonPressed,
@@ -33,8 +33,7 @@ function connectComponent(sectionName) {
     trackCheckoutButtonPressed,
     trackUTMAndPromoCode,
     validatePassword,
-    // eslint-disable-next-line import/no-named-as-default-member
-    userProspect: userActions.userProspect,
+    userProspect,
   })(AboutYou)
 }
 
