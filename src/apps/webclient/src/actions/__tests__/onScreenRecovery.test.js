@@ -781,7 +781,7 @@ describe('onScreenRecovery', () => {
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
             discountOffered: '1%',
-            hasPendingPromo: true,
+            hasPendingPromo: false,
             hasPendingPromoWithSubCondition: true,
           })
         }))

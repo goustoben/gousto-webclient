@@ -70,6 +70,7 @@ module.exports = {
     logout: '/logout',
     menu: '/menu',
 
+    accountDetails: '/account-details',
     myGousto: '/my-gousto',
     myDeliveries: '/my-deliveries',
     myDetails: '/my-details',

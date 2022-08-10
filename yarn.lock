@@ -2444,6 +2444,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@features/account-details@workspace:*, @features/account-details@workspace:src/modules/features/account-details":
+  version: 0.0.0-use.local
+  resolution: "@features/account-details@workspace:src/modules/features/account-details"
+  dependencies:
+    "@library/dev-babel": "workspace:*"
+    "@library/nonjs-imports": "workspace:*"
+    "@testing-library/jest-dom": ^5.16.4
+    "@testing-library/react": 12.1.2
+    react: 17.0.2
+    react-dom: 17.0.2
+  peerDependencies:
+    react: 17.0.2
+    react-dom: 17.0.2
+  languageName: unknown
+  linkType: soft
+
 "@features/recipe-tile@workspace:*, @features/recipe-tile@workspace:src/modules/features/recipe-tile":
   version: 0.0.0-use.local
   resolution: "@features/recipe-tile@workspace:src/modules/features/recipe-tile"
@@ -28857,6 +28873,7 @@ __metadata:
     "@emotion/babel-plugin": ^11.9.2
     "@emotion/react": ^11.7.0
     "@emotion/styled": ^11.9.3
+    "@features/account-details": "workspace:*"
     "@features/recipe-tile": "workspace:*"
     "@gousto-internal/citrus-react": ^0.22.6
     "@library/auth": "workspace:*"

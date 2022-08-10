@@ -253,7 +253,7 @@ export const getPauseRecoveryContent = (enableOffer = true) => (
         const offer = getState().onScreenRecovery.get('offer')
         const promoCode = offer ? offer.promoCode : null
         const discountOffered = offer === null ? null : offer.formattedValue
-        const hasPendingPromo = !!offer
+        const hasPendingPromo = !!promoCode
         const hasPendingPromoWithSubCondition = offer === null ? null : offer.requireActiveSubscription
         dispatch({
           type: actionTypes.TRACKING,
