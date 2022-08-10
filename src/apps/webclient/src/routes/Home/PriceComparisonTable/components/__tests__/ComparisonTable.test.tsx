@@ -38,7 +38,7 @@ describe('PriceComparisonTable: Table', () => {
 
   test('Table footer should be presented', () => {
     expect(screen.getByTestId('ComparisonTable_Footer')).toHaveTextContent(
-      `${comparisonTableTexts.tableFooter} ${comparisonTableTexts.tableFooterImportant}`,
+      `${comparisonTableTexts.tableFooter} ${comparisonTableTexts.tableFooterLink.text}`,
     )
   })
 })

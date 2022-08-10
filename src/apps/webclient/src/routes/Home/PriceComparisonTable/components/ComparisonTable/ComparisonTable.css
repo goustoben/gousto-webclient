@@ -1,4 +1,4 @@
-@value BreakpointToMedium from 'design-language/breakpoints.module.css';
+@value BreakpointFromXLarge, BreakpointFromLarge, BreakpointFromMedium from 'design-language/breakpoints.module.css';
 @value BreakpointToSmall from '../../values.module.css';
 
 .tableSection {
@@ -8,7 +8,17 @@
 }
 
 .tableSection .tableContent {
-  @media BreakpointToMedium {
+  gap: 0.5rem;
+
+  @media BreakpointFromMedium {
+    gap: 1rem;
+  }
+
+  @media BreakpointFromLarge {
     gap: 0.5rem;
+  }
+
+  @media BreakpointFromXLarge {
+    gap: 1.5rem;
   }
 }
