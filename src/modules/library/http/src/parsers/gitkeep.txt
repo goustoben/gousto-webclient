@@ -1,1 +1,0 @@
-This is a folder where we'll keep common HTTP parsers (e.g. to extract JSON API data, etc.)

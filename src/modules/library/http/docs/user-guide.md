@@ -10,6 +10,7 @@ This is a guide for making requests using `@library/http`.
   - [Request middleware reference](#request-middleware-reference)
 - [Parsers](#parsers)
   - [Parser composition](#parser-composition)
+  - [Response parser reference](#response-parser-reference)
 
 ## Key concepts
 
@@ -174,6 +175,10 @@ validation)
 ### Parser composition
 
 The `composeParser` just returns functions, so these can be passed again to `composeParser` to form "higher level" parsers.
+
+### Response parser reference
+
+See [parsers.md]
 
 ## Using in React
 

@@ -14,3 +14,11 @@ export function withResolved<T, U>(
     return callback(value)
   }
 }
+
+export function isRealObject (u: unknown): u is Record<string | number, unknown> {
+  return u !== null && typeof u === 'object'
+}
+
+export function hasProp <K extends string> (key: K, record: Record<string | number, unknown>): record is { [_ in K]: unknown } {
+  return key in record
+}
