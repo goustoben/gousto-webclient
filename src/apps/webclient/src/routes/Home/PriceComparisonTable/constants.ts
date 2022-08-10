@@ -3,30 +3,35 @@ import { ResponsiveValue } from '@gousto-internal/citrus-react/dist/types/theme/
 import { TableItemType, Currency } from 'routes/Home/PriceComparisonTable/enums'
 import { TableItemData } from 'routes/Home/PriceComparisonTable/types'
 
+import { formatPriceText } from './utils'
+
 export const TABLE_DATA: TableItemData[] = [
   {
     id: 'Gousto',
     type: TableItemType.Gousto,
     currency: Currency.PoundSterling,
-    price: 34.99,
+    price: 38.61,
     priceDescription: 'Per box',
     priceDiff: 0,
+    priceText: formatPriceText,
   },
   {
     id: 'HelloFresh',
     type: TableItemType.HelloFresh,
     currency: Currency.PoundSterling,
-    price: 36.98,
+    price: 41.68,
     priceDescription: 'Per box',
-    priceDiff: 1.99,
+    priceDiff: 3.07,
+    priceText: formatPriceText,
   },
   {
     id: 'MindfulChef',
     type: TableItemType.MindfulChef,
     currency: Currency.PoundSterling,
-    price: 60.92,
+    price: 61.37,
     priceDescription: 'Per box',
-    priceDiff: 25.93,
+    priceDiff: 22.76,
+    priceText: formatPriceText,
   },
 ]
 
@@ -41,9 +46,13 @@ export const CTAText = {
 }
 
 export const comparisonTableTexts = {
-  tableHeading: 'Comparison of full prices',
-  tableFooter: 'Based on a box of 4 recipes for 2 people at',
-  tableFooterImportant: 'full price including delivery.',
+  tableHeading: 'Comparison of average prices',
+  tableFooter:
+    'Based on average prices of a 4 recipe 2 person box for all available meals, includes delivery fees and premium recipe surcharges. Read full details:',
+  tableFooterLink: {
+    text: 'Value verification',
+    href: 'https://cook.gousto.co.uk/value/',
+  },
 }
 
 export const BLOCK_WIDTH_LIST: ResponsiveValue<string> = ['21.5rem', '36.5rem', '50%', '50%']

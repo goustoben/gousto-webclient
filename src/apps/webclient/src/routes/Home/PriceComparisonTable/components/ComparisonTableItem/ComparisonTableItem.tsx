@@ -108,7 +108,7 @@ export function ComparisonTableItem({ item }: Props) {
         width="100%"
         minHeight="40px"
         paddingV={[1, 1, 2, 3]}
-        paddingH={[2, 0, 0, 0]}
+        paddingH={[0, 2, 3, 4]}
         borderRadius={1.5}
         style={{ marginTop: '16px' }}
       >
@@ -133,7 +133,7 @@ export function ComparisonTableItem({ item }: Props) {
               size={1}
               fontWeight={FontWeight.Bold}
             >
-              Best value
+              {item.priceText()}
             </Text>
           </Box>
         ) : (
@@ -144,8 +144,7 @@ export function ComparisonTableItem({ item }: Props) {
             fontWeight={FontWeight.Normal}
             textAlign={TextAlign.Center}
           >
-            Pay up to {item.currency}
-            {item.priceDiff} more
+            {item.priceText(item.currency, item.priceDiff)}
           </Text>
         )}
       </Box>

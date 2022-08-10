@@ -68,10 +68,9 @@ export function ComparisonTable({ items }: Props) {
           flexDirection={FlexDirection.Row}
           justifyContent={JustifyContent.SpaceEvenly}
           alignItems={AlignItems.Stretch}
-          gap="24px"
           paddingV={[3, 6, 6, 6]}
           paddingBottom={4}
-          paddingH={[2, 0, 0, 0]}
+          paddingH={[0, 2, 3, 4]}
         >
           {items.map((item) => (
             <ComparisonTableItem key={item.id} item={item} />
@@ -81,19 +80,15 @@ export function ComparisonTable({ items }: Props) {
         <Box
           data-testid="ComparisonTable_Footer"
           paddingV={0}
-          paddingBottom={[4, 6, 6, 6]}
+          paddingBottom={4}
           paddingH={6}
           width="100%"
         >
           <Text size={1} textAlign={TextAlign.Center}>
             {comparisonTableTexts.tableFooter}
-            <Text
-              fontWeight={FontWeight.Bold}
-              textAlign={TextAlign.Center}
-              style={{ display: 'inline' }}
-            >
-              &nbsp;{comparisonTableTexts.tableFooterImportant}
-            </Text>
+            <a href={comparisonTableTexts.tableFooterLink.href}>
+              &nbsp;{comparisonTableTexts.tableFooterLink.text}
+            </a>
           </Text>
         </Box>
       </Box>

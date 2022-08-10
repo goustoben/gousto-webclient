@@ -29,7 +29,7 @@ describe('PriceComparison Table: Table Item', () => {
     expect(screen.getByText(/per box/i)).toBeDefined()
     expect(
       screen.getByText(
-        new RegExp(`pay up to ${helloFresh.currency}${helloFresh.priceDiff} more`, 'i'),
+        new RegExp(`pay on average ${helloFresh.currency}${helloFresh.priceDiff} more`, 'i'),
       ),
     ).toBeDefined()
   })
@@ -43,7 +43,7 @@ describe('PriceComparison Table: Table Item', () => {
     expect(screen.getByText(/per box/i)).toBeDefined()
     expect(
       screen.getByText(
-        new RegExp(`pay up to ${mindfulChef.currency}${mindfulChef.priceDiff} more`, 'i'),
+        new RegExp(`pay on average ${mindfulChef.currency}${mindfulChef.priceDiff} more`, 'i'),
       ),
     ).toBeDefined()
   })
