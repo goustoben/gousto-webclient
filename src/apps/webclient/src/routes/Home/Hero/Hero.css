@@ -67,7 +67,7 @@
 
 .heroImageVariation {
   @media BreakpointToMedium {
-    background-image: url('routes/Home/Hero/images/mobile-brand.png');
+    background-image: url('routes/Home/Hero/images/mobile-brand-v.jpg');
   }
 
   @media BreakpointFromMedium {
@@ -140,11 +140,11 @@
 
 .processImageVariation {
   @media BreakpointFromMedium {
-    background-image: url('routes/Home/Hero/images/tablet-desktop-brand-merch.png');
+    background-image: url('routes/Home/Hero/images/tablet-desktop-brand-merch.jpg');
   }
 
   @media BreakpointFromLarge {
-    background-image: url('routes/Home/Hero/images/desktop-large-brand-merch.png');
+    background-image: url('routes/Home/Hero/images/desktop-large-brand-merch.jpg');
   }
 }
 
