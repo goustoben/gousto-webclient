@@ -9,6 +9,7 @@
     "typecheck": "yarn run --top-level tsc --noEmit"
   },
   "devDependencies": {
+    "@library/dev-babel": "workspace:*",
     "@library/nonjs-imports": "workspace:*"
   }
 }
