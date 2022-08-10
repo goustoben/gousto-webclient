@@ -1,0 +1,11 @@
+{
+  "name": "@features/account-details",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "scripts": {
+    "helloWord": "echo 'hello world'",
+    "test:unit": "yarn run --top-level jest",
+    "lint": "yarn run --top-level eslint ./src/**.(js|jsx|ts|tsx)",
+    "typecheck": "yarn run --top-level tsc --noEmit"
+  }
+}

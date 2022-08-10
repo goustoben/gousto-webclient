@@ -2444,6 +2444,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@features/account-details@workspace:src/modules/features/account-details":
+  version: 0.0.0-use.local
+  resolution: "@features/account-details@workspace:src/modules/features/account-details"
+  languageName: unknown
+  linkType: soft
+
 "@features/recipe-tile@workspace:*, @features/recipe-tile@workspace:src/modules/features/recipe-tile":
   version: 0.0.0-use.local
   resolution: "@features/recipe-tile@workspace:src/modules/features/recipe-tile"
