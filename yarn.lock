@@ -3151,6 +3151,7 @@ __metadata:
     "@library/environment": "workspace:*"
     "@types/isomorphic-fetch": 0.0.36
     isomorphic-fetch: 3.0.0
+    node-fetch: ^2.6.1
     qs: 6.5.2
   peerDependencies:
     "@datadog/browser-logs": ^3.8.0
