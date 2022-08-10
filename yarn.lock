@@ -2447,6 +2447,8 @@ __metadata:
 "@features/account-details@workspace:src/modules/features/account-details":
   version: 0.0.0-use.local
   resolution: "@features/account-details@workspace:src/modules/features/account-details"
+  dependencies:
+    "@library/nonjs-imports": "workspace:*"
   languageName: unknown
   linkType: soft
 
