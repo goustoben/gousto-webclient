@@ -1,4 +1,4 @@
-export async function parseResponseToJSON (resp: Response): Promise<unknown> {
+export async function parseResponseToJSON(resp: Response): Promise<unknown> {
   if (!resp.ok) {
     throw new ResponseError(resp)
   }
