@@ -1,9 +1,11 @@
 import Immutable from 'immutable'
+import moment from 'moment'
 import { createSelector } from 'reselect'
 
 import Cookies from 'utils/GoustoCookies'
 // eslint-disable-next-line import/no-cycle
 import { get } from 'utils/cookieHelper2'
+import { getSlotTimes } from 'utils/deliveries'
 import { parsePhoneNumber } from 'utils/phoneNumber/phoneNumber'
 
 export const getCheckoutUrgency = ({ checkoutUrgency }) => checkoutUrgency
@@ -47,3 +49,17 @@ export const getSignupE2ETestName = ({ features }) =>
  * Returns true if Apple Pay is enabled in browser and supported by Apple Pay API
  */
 export const getIsApplePayEnabled = (state) => state.checkout.get('isApplePayEnabled')
+
+export const getDeliveryTimeAndDate = (state) => {
+  const deliveryDays = state.boxSummaryDeliveryDays
+  const date = state.basket.get('date')
+  const slotId = state.basket.get('slotId')
+
+  const deliveryDate = moment(date).format('dddd Do MMMM')
+  const deliveryTime = getSlotTimes({ date, deliveryDays, slotId })
+
+  return {
+    deliveryDate,
+    deliveryTime,
+  }
+}

@@ -9,7 +9,7 @@ import { CheckoutPaymentContainer } from 'routes/Checkout/Components/CheckoutPay
 import { OrderSummaryAndBoxDetails } from 'routes/Checkout/Components/OrderSummaryAndBoxDetails'
 import { trackCheckoutButtonPressed } from 'routes/Checkout/checkoutActions'
 import { CHECKOUT_STEPS, CheckoutStepIds } from 'routes/Checkout/checkoutConfig'
-import { CommonCheckoutStepProps } from 'routes/Checkout/models/CommonCheckoutStepProps.model'
+import { CommonCheckoutStepProps } from 'routes/Checkout/models/CommonCheckoutStepProps'
 import { useSubmitOrder } from 'routes/Checkout/useSubmitOrder'
 import { openLoginModal } from 'routes/Checkout/utils/loginModal'
 

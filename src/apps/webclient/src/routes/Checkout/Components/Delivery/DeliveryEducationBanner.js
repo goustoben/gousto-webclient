@@ -10,8 +10,9 @@ import {
   IconVariant,
   AlignItems,
 } from '@gousto-internal/citrus-react'
+import PropTypes from 'prop-types'
 
-const DeliveryEducationBanner = () => (
+const DeliveryEducationBanner = ({ deliveryDate, deliveryTime }) => (
   <>
     <Box
       bg={Color.Informative_50}
@@ -24,6 +25,12 @@ const DeliveryEducationBanner = () => (
       display="flex"
       flexDirection="column"
     >
+      {deliveryTime && deliveryDate && (
+        <Text size={2}>
+          Your selected delivery day is <span style={{ fontWeight: 'bold' }}>{deliveryDate}, </span>
+          <span style={{ textTransform: 'uppercase' }}>{deliveryTime}</span>
+        </Text>
+      )}
       <Box display="flex" AlignItems={AlignItems.Center}>
         <Icon name="cool" variant={IconVariant.Informative} />
         <Space size={4} direction="horizontal" />
@@ -39,5 +46,15 @@ const DeliveryEducationBanner = () => (
     <Space size={8} />
   </>
 )
+
+DeliveryEducationBanner.propTypes = {
+  deliveryDate: PropTypes.string,
+  deliveryTime: PropTypes.string,
+}
+
+DeliveryEducationBanner.defaultProps = {
+  deliveryDate: null,
+  deliveryTime: null,
+}
 
 export { DeliveryEducationBanner }
