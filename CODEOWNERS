@@ -91,6 +91,7 @@
 /src/apps/webclient/src/actions/__tests__/recipes.test.js              @Gousto/squad-radishes
 /src/apps/webclient/src/actions/filters.js                             @Gousto/squad-radishes
 /src/apps/webclient/src/actions/__tests__/filters.test.js              @Gousto/squad-radishes
+/src/apps/webclient/src/components/FiveRecipesAwareness                @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/boxSummary.js                         @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/__tests__/boxSummary.test.js          @Gousto/squad-radishes
 /src/apps/webclient/src/reducers/collections.js                        @Gousto/squad-radishes
@@ -197,3 +198,5 @@
 /tests/e2e/tests/systemTests/signupWithPaypal.js                        @Gousto/squad-beetroots
 /tests/regression/fixtures/payments/                                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                                    @Gousto/squad-beetroots
+/src/apps/webclient/src/middlewares/tracking/dataLayerTracker/          @Gousto/squad-beetroots
+
