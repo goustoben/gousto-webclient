@@ -32,6 +32,7 @@ export const OrderTotal = ({ isLoading }: Props) => {
         justifyContent={JustifyContent.Center}
         alignItems={AlignItems.Center}
         minHeight="18.75rem"
+        data-testid="LoadingContainer"
       >
         <Box width="3rem" height="3rem">
           <Loading />
@@ -58,7 +59,7 @@ export const OrderTotal = ({ isLoading }: Props) => {
         isDeliveryFree={prices?.isDeliveryFree}
       />
 
-      {!isGoustoOnDemandEnabled && <PromoCode />}
+      {!isGoustoOnDemandEnabled && <PromoCode data-testid="PromoCode" />}
 
       {prices?.isDeliveryFree && (
         <TickText

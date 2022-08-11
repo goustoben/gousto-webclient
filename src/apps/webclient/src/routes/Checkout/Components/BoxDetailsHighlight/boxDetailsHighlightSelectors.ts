@@ -22,13 +22,3 @@ export const getStoreRecipesSelector = createSelector(
     menuRecipesStore,
   }),
 )
-
-const getOrderTotalData = ({ features }: StateTypePlaceholder) => ({
-  isGoustoOnDemandEnabled: features && features.getIn(['isGoustoOnDemandEnabled', 'value'], false),
-})
-export const getOrderTotalDataSelector = createSelector(
-  getOrderTotalData,
-  ({ isGoustoOnDemandEnabled }) => ({
-    isGoustoOnDemandEnabled,
-  }),
-)

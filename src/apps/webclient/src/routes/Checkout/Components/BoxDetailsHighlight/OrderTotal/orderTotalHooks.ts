@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useBasket } from 'routes/Menu/domains/basket'
 import { usePricing } from 'routes/Menu/domains/pricing'
 
-import { getOrderTotalDataSelector } from '../boxDetailsHighlightSelectors'
+import { getOrderTotalDataSelector } from './orderTotalSelectors'
 
 export const useGetOrderTotalData = () => {
   const { numPortions } = useBasket()
